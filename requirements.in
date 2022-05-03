@@ -1,0 +1,7 @@
+# build tooling
+pyinstaller
+pytest
+yapf
+pylint
+# app dependencies
+flask
