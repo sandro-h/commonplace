@@ -12,6 +12,12 @@ venv:
 clean-venv:
 	rm -rf venv
 
+.PHONY: install
+install: build/.install
+
+build/.install: venv requirements.txt
+	${PIP} install -r requirements.txt && mkdir -p build && touch $@
+
 .PHONY: fresh
 fresh: clean-venv venv
 	${PIP} install -r requirements.in && \
@@ -22,20 +28,20 @@ freeze:
 	${PIP} freeze > requirements.txt
 
 .PHONY: lint
-lint:
+lint: install
 	${PYLINT} commonplace
 
 .PHONY: test
-test:
+test: install
 	${PYTEST} tests
 
 .PHONY: start
-start:
+start: install
 	FLASK_APP=commonplace.__main__ FLASK_ENV=development ${FLASK} run
 
 .PHONY: pkg
 pkg: dist/commonplace.exe
 
-dist/commonplace.exe: venv $(shell find commonplace -type f)
+dist/commonplace.exe: install $(shell find commonplace -type f)
 	${PYINSTALLER} --onefile commonplace/__main__.py --name commonplace
 	ls -lh dist/commonplace.exe
