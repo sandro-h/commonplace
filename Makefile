@@ -3,6 +3,8 @@ PYINSTALLER=venv/Scripts/pyinstaller
 FLASK=venv/Scripts/flask
 PYTEST=venv/Scripts/pytest
 PYLINT=venv/Scripts/pylint
+BUILD_NUMBER=0
+VERSION=$(shell cat version.txt).${BUILD_NUMBER}
 
 venv:
 	python3 -m venv venv
@@ -12,7 +14,6 @@ venv:
 clean-venv:
 	rm -rf venv
 
-.PHONY: install
 install: build/.install
 
 build/.install: venv requirements.txt
@@ -39,9 +40,17 @@ test: install
 start: install
 	FLASK_APP=commonplace.__main__ FLASK_ENV=development ${FLASK} run
 
-.PHONY: pkg
-pkg: dist/commonplace.exe
+.PHONY: update-version
+update-version:
+	sed 's/^VERSION = .*/VERSION = "${VERSION}"/' commonplace/__main__.py > commonplace/__main__.py.tmp
+	diff commonplace/__main__.py commonplace/__main__.py.tmp > /dev/null || mv commonplace/__main__.py.tmp commonplace/__main__.py
+	rm -f commonplace/__main__.py.tmp
 
-dist/commonplace.exe: install $(shell find commonplace -type f)
+.PHONY: pkg
+pkg: update-version dist/commonplace.exe
+	@echo ======================
+	@echo "Size: $(shell ls -lh dist/commonplace.exe | awk '{print $$5}')"
+	@echo "Version: $(shell dist\commonplace.exe --version)"
+
+dist/commonplace.exe: build/.install $(shell find commonplace -name '*.py')
 	${PYINSTALLER} --onefile commonplace/__main__.py --name commonplace
-	ls -lh dist/commonplace.exe

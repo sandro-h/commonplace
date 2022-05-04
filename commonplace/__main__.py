@@ -1,12 +1,23 @@
+import sys
 from flask import Flask
 
-app = Flask(__name__)
+VERSION = "0.1.0.0"
+
+APP = Flask(__name__)
 
 
-@app.route("/")
+@APP.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
 
 
+def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "--version":
+        print(VERSION)
+        return
+
+    APP.run()
+
+
 if __name__ == "__main__":
-    app.run()
+    main()
