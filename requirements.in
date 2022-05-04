@@ -1,7 +1,10 @@
 # build tooling
 pyinstaller
-pytest
 yapf
 pylint
+# test dependencies
+pytest
+pytest-golden
+requests
 # app dependencies
 flask

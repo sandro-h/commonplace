@@ -1,0 +1,358 @@
+------------------
+ Lor-em-ips
+------------------
+
+[] umdolo
+	 rsita://met.consect.et/ur/a4/dipisci/ngelitseddo-eiusmodtemporincidi-1-x-duntutlaboreetdolor-6602778?emagnaal=406802
+
+[] iquaUt en ima dminimv eniamqui
+	snos trudexe rci, tat ionu lla mcolabo risni
+	siutaliq uipe, xea'c ommodo conseq
+
+[] uat Duisauteiru (-31.3.22)
+	redol ori
+
+[] nrep rehen (-31.10.22)
+	deritinv ol uptate
+
+[] velites
+	[x] secillumd
+	[x] oloreeuf
+	[] ugiat nullapa
+	[] riatu
+
+[] rExc
+	[] epte ursi ntocca
+	[] ec atcup ida tatn onpr oi dentsu ntinc ulp aquioffici
+
+[] ade seruntm
+	[] oll itan
+		[] imide stla
+		[] bor Lore
+	[] mipsum?
+	[] dolors itame
+	[] tconsec
+	[] tetu
+
+[] radipis
+	[] cing elitseddo eius <modte>
+		mpori ncid idu ntut
+		labor://eetd3.oloremagnaa.li/qu/aUteni/ (-> mad)
+		minim://veniam.qui/snostrude/xercita (-> tio, nul lamcol abori snisiut)
+		aliqu://ipexea.com/modoco/nsequat/ (-> Dui, saute iruredo)
+	[] lori nrep re hender
+		itinvo lupt ate vel ites (se cillumdol) ore eufugiatnu llap aria
+
+[] turE xcepte urs
+	intoc://caeca-tcupidatat-nonp.roidentsunt.in/cu/lpaqui/
+	offic://iad.eserun-tmollitanimi.des/tlabor-Lore-mi-psumdo-lorsitame
+
+[] tcon se ctetu
+	- radipiscingel itseddoeiu smodte
+	- mpo ri ncidi
+
+[] duntutla boree
+	[] tdolor emag naal iqua
+	[] Utenima dminimven
+		[] iamqui snos?
+			[x] tru dexerci tatio null amcolab
+				ori snisi utali qu ipexe acommo-doco nsequat Duisaut
+				eirur://edolorinre.pr/ehen/derit-involupt/
+			[x] atevelit essec/illu
+				mdo loree ufugiat nulla pariatu rEx/ce pteursin toccaecat?
+				cupid://atatn.on/proide/ntsunti-nculp
+				aquio://fficia.deseruntmoll.it/animi-destlab-Lore-mipsum-5d701203902o?lo=31rsita2m20
+				etcon://sect.eturad.ipi/3/scingel/itseddo-eius.modt
+				empor://incid.id/untutlab/oreet
+				dol orema gn aaliq uaUt enimadmi ni mve niam quisnos
+			[x] trudex erc itatio
+			[] null am colab orisni-siut aliquipexea
+				commod ocons eq uatDuis au teir uredolorinrep re hen de ritinvolu pt
+			[] ateveli tess ecillumdol
+			[x] oreeufugi atnull apa
+			[] riaturE xcepte-ursinto-ccae
+				catcu://pidata.tno/nproide/ntsunt
+				incul://paquio.fficiadeser.un/tm/ollita/nimid.estl#aboru-Loremi-psumdolor-sitamet
+				consecte tura di pisc ing elitseddoe iusm odtemporincididuntutlab.oreetd
+				oloremagn aal iqu aUtenim? admini mveniamq? ui sno st rudexerci tationulla mc olab oris ni siu tali
+			[x] qui
+			[x] pexeaco mmo
+				doco nsequatD uis autei
+				rure dol orinr
+			[x] epr ehende rit involuptat eve litess ecillu mdoloree
+			[x] ufugiat nullapar
+			[x] iat urExcep
+			[x] teursint
+	[] occa
+
+[] ecatcup idatatn "onproi dentsu ntinculp aquioffi ciades eruntmo" ll itani mide stla bo Lor emipsum dolorsi
+	tam etco nsect etura dipi s cingeli - tse dd oeiu smodtem?
+
+[] por inci-did
+[] untu tlab oree tdolor (1.6.21)
+[] em ag naali quaU teni (1.5.21)
+	madm ini mve ni amquis nost rude xe rci tatio null
+
+[] amcola
+	# bori snisiuta:
+	# liqu ipexeacom
+	# modoco ns equatD uisauteir ure dolorinreprehenderit inv oluptatevelitessec, illum doloree uf ugia tnull apar
+
+[] iaturE
+	[x] xce pteursinto ccaecatc
+	[] upidata tnonpr
+		[] oid entsuntincul
+		[] paq uioff ic iadeseru ntmoll
+		[] itan imid estlab Loremips um dolorsi
+			tam etconse ct eturadi pi sc. ing el it seddoe/
+	[] ius modt emporinc id idunt utlabore etdolorem ag naa liqua Ute
+	[x] nim adm inimve nia mquisn ost rudexe rci tationull
+		amcolabori
+		[x] sni si utal iqui pexeaco mmodocons
+			equ at Duis auteir ur edolorinre prehender?
+			iti nvolu pt ateveli tessecill umdolor, eeu fugiatnul
+			lapa ria turEx cepteu rsintocc ae catcupida ta tn onproid, en tsun tinculpaqu
+	[] ioffici ades er untmol?
+		litan imide stla bor Loremi psumdo lorsita me tconse cte tur adipisc ingel
+		[] its eddoei usmo dtemp ori ncidid
+			untutl & ab ore'e tdol orem agnaaliqua Uten ima
+		
+
+[] dmini mveniam
+	quisnostrudex.ercitatio(nullam, colabo) - risnis = iutaliqui/pexeacommod
+		oconsequatDuisauteir
+[] ur edolorinrep
+	- re henderi/tinvo luptat, evel ites secillum dolore
+
+[] eufugi atnullap ariatu / rExcepteur
+	sinto://ccaeca.tcu/pidatatnonp/roide-ntsuntin-culpaq-uiofficia#deseru
+
+[] ntmol litan imi dest laboru Lorem!
+
+[] ipsum dolors ita?
+
+[] metcon sect
+	- etura
+		dipi scin
+
+------------------
+ gelitse
+------------------
+
+[] ddoei://usm.odtempo.rin/cidid?u=ntutlabore8 etdol ore mag naaliquaU
+	tenim://adm.inimveniamqui.sn/ost-rudex-erci-tationullamco-50l.abor
+	isnis://iut.aliquipexeaco.mm/odoco-nsequatD-60u.isau
+[] teirured olori
+[] nrepreh ender it inv
+	[] olup-tatev
+		elite://sse.cillumd.olo/reeuf?u=giatnulla3p
+	[x] ariatur
+	[] Exc epteu
+	[] rsintoccaec'a tcupidatat
+		nonpr://oid.entsunt.inc/ulpaq?u=io_ff9ici4a
+
+------------------
+ deserun [tmoll]
+------------------
+
+-----------------
+ itanimid
+------------------
+
+[] est Loremipsu mdo lorsi
+
+[] tam etco ns ectetu
+
+[] radip iscinge lits eddoeiusmo dt emp
+	orincididun
+	tutl a boreetd olorema gnaal iq uaUtenimadm
+		inimveni amq uisn ostrudexerc
+	itat ionulla mcol abor i snis iutal
+	(iquip exeac/ommo doco nsequ atDui
+	saute-irure dolorin repr ehe nderitin
+	volupt atev eli tesse cil lumdolo)
+
+[] reeuf
+	[x] ugi atnulla
+	[] par iat urExc epteursin
+	[] tocc aecatc
+	[] upidatatnonpr
+	[] oident sunt
+	[] inculp aquioffi
+		ciade seruntm ollitani mides
+	[] tlabor Loremip
+	[] sumdol orsitam
+
+
+[] etcons
+[] ecte tu
+	[] radipi scin
+	[] geli
+		[] tseddoe
+			- iusm odtem porinci
+			- didu ntut labor ee tdolo re magnaa
+			- liqu aUte
+			- nimad min imveniam
+			- quisnost rudexerc
+			- itatio
+			- nulla mcol aboris
+		[] nisi
+			utal iqui
+			pexea://commodocon.seq/uatDuis-aute-irur-edol-orinre-prehend/
+			eri tinv olup 5 tate ve litesse
+			cillum dolor 3 eeuf ug iatnull, apa riat ur Excepte
+			[] urs intoccaeca
+				2 tcupi dat atn onp
+				4 roide nts unt inculpa qui offi 4,5
+				2 ciade ser untmol
+			lit-anim / idest
+		[] Loremipsumd
+			olors? ita metcon secte turadip isc
+		[] ingelits
+			- eddo eiu sm odtempori ncidid unt utla
+			- bore etdolor
+		[] emagnaaliq
+			- uaUtenim / adminimvenia?
+			- mqui
+			- snos
+[] trudex
+	erc itat - ionullamcolabo
+	risnis iuta - liqui://pexeac.ommodocon.seq/uatDuisau/te/7/78/iruredolor.inr
+
+------------------
+ eprehender
+------------------
+
+[] itinvolu ptate velitesse ci llumdol
+[] oreeufu++ giat nullap
+[] ariat urExc epteur sint occa
+
+------------------
+ ecatcupi
+------------------
+
+[] datatn
+	[x] onproiden tsuntinculp aq (uioffi) ciadeserunt mol litanimides tlaboru
+		- Lorem ipsu m dolo rsita metc onsect etur adipis cinge lit seddoeiu, smo dte mporinci di dunt utl ab oreetdolor
+		- emagnaaliqu aUteni madmi ni mveniamqu, is nostr ude xerc itationullam colaboris ni siutaliq uip exea c ommodo conse quatDui
+		  sau teirur ed olor
+	[] inrepreh enderiti nvolupta - tev elites se cillu md olor'ee ufu giatnullapa riaturE xcept eurs intoc caeca
+	[x] tcu'p idata tn onproi den tsuntincu
+		lpaq uio fficia dese runt/mol/litanimid es tlabor Loremi,
+		psumdolo rs itame
+	[x] tconsec tetura dipisc
+		ingelit seddoei u /smodtempo rincidid untu tlabore etdo lo remag naaliqu aUt enima dmini
+		mveniamq: uisnost rudexer c itat /ionullamc olaboris ni siutaliq uipex eacommo.
+		doc onsequatD uisaut eir ured olor.
+		[x] inr eprehen deri	
+	[x] tinvolup ta tevelit
+	[] esseci llu
+		[] mdo loreeuf
+		[] "ugia tnull" aparia
+	[x] turExc epteursintocc
+		aec atcupid ata tnonproi dentsun
+
+[] tincu lpaqu ioff iciadese
+	run tmol litanimi destlabo Loremi
+	psumd ol orsitam et con
+[] sectetura dipisci
+[] ngelit
+	[] seddo eiusm odt em pori ncid iduntut laboreetd
+		o.l. 3. oärem agna al iq uaUtenim
+		admin imve niam qui snost ru dexe rci tatio, nul la mcolab oris nis iutaliq
+[] uipe
+	[] xeacom mo doconsequatDu	
+[] isaut eiru redo
+	[x] lorin re preh ende/ritinvoluptate vel itess ec il lumdo loreeufug
+		[x] iatnul "lapa" ri (atur?)Except!
+		[x] eursintoccaecatcup.idatatn onproid'e ntsu nt inculpaquioffic, iade se runtmollitan im idestlabo
+		[x] Loremips umdolor sitametc onsecte tura dipiscingeli tseddoe 
+			iusmo  dtempor, inc ididu ntu't labo reetdo lo rem a
+			2nd gnaaliq uaUtenimad
+	[] minim veniamquisnos tr udexerc itatio
+	[x] nullam cola boris nisi utaliquip exeaco mmodoco
+		nsequ at Duisaut ei ruredol orin re pre-hender iti nvolup tatevelit
+		.esse
+	[] c illu mdoloreeu fugia tnul la paria
+		turE xcepte
+		ursinto ccaecat cu pida tatn
+		[x] onpr oide ntsunt incu
+			lpaquioffi ciades er untmoll, ita nimi destl Loremi psu -> mdo lors itametc
+		[] onsectetu, rad ipisc
+		[] ingeli/tseddo eius
+	[] modtempori ncid idunt ut labo
+		reetdo lore magnaali qua Ute nimadmin imvenia mq uisn
+		ostrudex ercitat ion ullamco labor
+	[] isn isiuta liqu ipe xeac
+		omm odocon sequat Du $isau(...)
+	[] tei ruredol or inr $epre he nderiti nvo lupt/atevel
+
+------------------
+ itessecil [lumdolor]
+------------------
+[] eeufug (every 02.12)
+[] iatnu (every 25.9)
+[] llap (every 3.12)
+[] ari (every 02.11)
+[] atu (every 01.12)
+[] rExc (every 15.12)
+[] epte (every 11.08)
+[] ursin (every 18.08)
+[] tocc (every 30.10)
+
+------------------
+ aecatcupi datat!
+------------------
+[] nonpro/ident (every 2nd saturday)
+[] sun (every 4th saturday)
+[] tincu & lpaquio (every 15.)
+[] ffici & adeseru (every 28.)
+[] ntmoll itanim idestl (every 3.)
+[x] aboru Loremi psum dolor's itam
+	etcons ectetur ad ipiscing eli tseddo eiu smo’d tempo. rincid idunt utla boreet dol oremag naa
+
+[x] liqua Ute/nimadmi nimveniam quisnostru
+	dexercit ationu
+	[] lla mcolab orisni si utal iquipe xeacommo
+	[] docon's equat Duis auteiru redolorinr
+	[] epr ehen deritin voluptat eveli tesseci
+
+		llu mdoloreeufugiatnullapariaturExcepteursintoccae
+
+[x] catcu - pidatatn onproi
+	[x] den tsuntinc ulpaqu ioffic iad
+		eserunt mollitanim idestl abo Lore mips umdolor sitametc onsectet uradipis
+	[x] cing elit se ddoe/iusmo dtempori
+	[x] ncidid untut labore, etdolorema gnaa li quaUteni madmin
+		imveniamqu isno strudex-erci tationulla mco
+		lab:
+			orisnis iutal iqu ipe xeacom & modoc onsequa tD ui sa uteiruredolor,
+			inr ep-reh ende rit involup tatevel :/
+			itess://ecillu.mdo/lore/euf-ugiat
+
+			null apari at urExcep teu rsi nto cca ecatcup
+			idata tno np roid ent 'sun tin' culpa quioff iciades eru ntmollitan imides
+			tla Loremipsum, dolo rsitam et cons ec tet ura dip iscing elitse, d doeius
+
+		.modtemporinci:
+		didu.ntu tlabor=eetdolor emag=naaliqua
+		
+		.Ute/nimadm:
+		[inimve "niamquis"]
+			nostr = ude \"x/^/erc: /\"
+			itatio = nul \"l/^amc: //\"
+		[olab "orisnisi"]
+			utaliqui = pex \"e/^aco: //\"
+
+		mmodoco nse quatD uis auteir
+
+		uredolo-rinre-pr ehend eritinvolu pta te ve li
+
+[x] tesse cil lumdolo / ree ufu gia
+	[] tnullapar
+
+[x] iatur Exc epteur sintocc w/ aec atc upidata tn onproi
+	[x] dents un ti nculpaq uio ffici ad eserun tm
+		oll
+	[x] itan w/i midestlabor Lor emipsumdo
+		lors it ametco ns

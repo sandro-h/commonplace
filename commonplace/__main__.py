@@ -11,6 +11,11 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
+@APP.route("/format", methods=["POST"])
+def format_todos():
+    return "Not implemented"
+
+
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--version":
         print(VERSION)
