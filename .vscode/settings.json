@@ -5,5 +5,7 @@
         "--style",
         "${workspaceFolder}/.yapfrc"
     ],
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintPath": "venv\\Scripts\\pylint.exe",
+    "python.formatting.yapfPath": "venv\\Scripts\\yapf.exe"
 }

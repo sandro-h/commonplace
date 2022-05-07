@@ -1,19 +1,20 @@
 import sys
-from flask import Flask
+from commonplace.models import ParseConfig
+# from flask import Flask
+
+from commonplace.parse import parse_moments_file
 
 VERSION = "0.1.0.0"
 
-APP = Flask(__name__)
+# APP = Flask(__name__)
 
+# @APP.route("/")
+# def hello_world():
+#     return "<p>Hello, World!</p>"
 
-@APP.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
-
-
-@APP.route("/format", methods=["POST"])
-def format_todos():
-    return "Not implemented"
+# @APP.route("/format", methods=["POST"])
+# def format_todos():
+#     return "Not implemented"
 
 
 def main():
@@ -21,7 +22,9 @@ def main():
         print(VERSION)
         return
 
-    APP.run()
+    # APP.run()
+
+    parse_moments_file("system_tests/testdata/test_todo.txt", ParseConfig())
 
 
 if __name__ == "__main__":
