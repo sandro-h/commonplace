@@ -1,16 +1,18 @@
 from commonplace.line_iterator import StringLineIterator
 from commonplace.models import Line
+from tests.test_util import dedent
+
+TEST_LINES = dedent("""\
+    line1
+    line2
+    line3
+    line4\
+    """)
 
 
 def test_read_lines():
-    lines = """\
-line1
-line2
-line3
-line4\
-"""
 
-    line_iter = StringLineIterator(lines)
+    line_iter = StringLineIterator(TEST_LINES)
 
     assert next(line_iter) == Line("line1", 1, 0)
     assert next(line_iter) == Line("line2", 2, 6)
@@ -20,13 +22,12 @@ line4\
 
 
 def test_read_empty_last_line():
-    lines = """\
-line1
-line2
-line3
-line4
-"""
-
+    lines = dedent("""\
+            line1
+            line2
+            line3
+            line4
+            """)
     line_iter = StringLineIterator(lines)
 
     assert next(line_iter) == Line("line1", 1, 0)
@@ -50,14 +51,7 @@ def test_carrier_return():
 
 
 def test_undo():
-    lines = """\
-line1
-line2
-line3
-line4\
-"""
-
-    line_iter = StringLineIterator(lines)
+    line_iter = StringLineIterator(TEST_LINES)
 
     assert next(line_iter) == Line("line1", 1, 0)
     assert next(line_iter) == Line("line2", 2, 6)
@@ -71,14 +65,8 @@ line4\
 
 
 def test_repeated_undo():
-    lines = """\
-line1
-line2
-line3
-line4\
-"""
 
-    line_iter = StringLineIterator(lines)
+    line_iter = StringLineIterator(TEST_LINES)
 
     assert next(line_iter) == Line("line1", 1, 0)
     assert next(line_iter) == Line("line2", 2, 6)
@@ -94,14 +82,8 @@ line4\
 
 
 def test_undo_last():
-    lines = """\
-line1
-line2
-line3
-line4\
-"""
 
-    line_iter = StringLineIterator(lines)
+    line_iter = StringLineIterator(TEST_LINES)
 
     assert next(line_iter) == Line("line1", 1, 0)
     assert next(line_iter) == Line("line2", 2, 6)

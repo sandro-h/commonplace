@@ -24,7 +24,8 @@ def main():
 
     # APP.run()
 
-    parse_moments_file("system_tests/testdata/test_todo.txt", ParseConfig())
+    todos = parse_moments_file("system_tests/testdata/test_todo.txt", ParseConfig())
+    print(todos)
 
 
 if __name__ == "__main__":
