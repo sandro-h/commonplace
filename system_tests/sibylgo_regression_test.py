@@ -1,4 +1,5 @@
 import base64
+import json
 import os
 
 import pytest
@@ -8,11 +9,23 @@ TESTDATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "testda
 SIBYL_URL = "http://localhost:8082"
 COMMONPLACE_URL = "http://localhost:5000"
 BASE_URL = SIBYL_URL
-FORMAT_ENDPOINT = f"{BASE_URL}/format"
+
+
+@pytest.mark.golden_test("testdata/parse.golden.yml")
+def test_parse(golden):
+    # Given
+    with open(os.path.join(TESTDATA_DIR, golden["input"]["todo_file"]), "rb") as file:
+        todo = file.read()
+
+    # When
+    resp = requests.post(f"{BASE_URL}/parse", data=base64.b64encode(todo))
+
+    # Then
+    assert json.dumps(resp.json(), indent=2, sort_keys=True) == golden.out["output"]
 
 
 @pytest.mark.golden_test("testdata/format_*.golden.yml")
-def test_format_optimized(golden):
+def test_format(golden):
     # Given
     with open(os.path.join(TESTDATA_DIR, golden["input"]["todo_file"]), "rb") as file:
         todo = file.read()
@@ -20,7 +33,7 @@ def test_format_optimized(golden):
     optimize = "true" if golden['input']['optimize'] else "false"
 
     # When
-    resp = requests.post(f"{FORMAT_ENDPOINT}?optimize={optimize}", data=base64.b64encode(todo))
+    resp = requests.post(f"{BASE_URL}/format?optimize={optimize}", data=base64.b64encode(todo))
     body = resp.content.decode("utf8")
 
     # Then
