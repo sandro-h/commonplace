@@ -8,7 +8,6 @@ VERSION=$(shell cat version.txt).${BUILD_NUMBER}
 
 venv:
 	python3 -m venv venv
-	${PIP} install --upgrade pip setuptools wheel
 
 .PHONY: clean-venv
 clean-venv:

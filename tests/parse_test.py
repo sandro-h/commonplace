@@ -13,7 +13,7 @@ from tests.test_util import dedent
              a cat
             ------------------
             """,
-            Category(name="a cat", doc_pos=DocPosition(2, 19, 6)),
+            Category(name="a cat", doc_pos=DocPosition(1, 19, 6)),
         ),
         (
             """\
@@ -21,7 +21,7 @@ from tests.test_util import dedent
              a cat [blue]
             ------------------
             """,
-            Category(name="a cat", color="blue", doc_pos=DocPosition(2, 19, 13)),
+            Category(name="a cat", color="blue", doc_pos=DocPosition(1, 19, 13)),
         ),
         (
             """\
@@ -29,7 +29,7 @@ from tests.test_util import dedent
              a cat!!
             ------------------
             """,
-            Category(name="a cat", priority=2, doc_pos=DocPosition(2, 19, 8)),
+            Category(name="a cat", priority=2, doc_pos=DocPosition(1, 19, 8)),
         ),
         (
             """\
@@ -37,7 +37,7 @@ from tests.test_util import dedent
              a cat! [red]
             ------------------
             """,
-            Category(name="a cat", priority=1, color="red", doc_pos=DocPosition(2, 19, 13)),
+            Category(name="a cat", priority=1, color="red", doc_pos=DocPosition(1, 19, 13)),
         ),
     ],
 )

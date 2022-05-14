@@ -14,10 +14,10 @@ def test_read_lines():
 
     line_iter = StringLineIterator(TEST_LINES)
 
-    assert next(line_iter) == Line("line1", 1, 0)
-    assert next(line_iter) == Line("line2", 2, 6)
-    assert next(line_iter) == Line("line3", 3, 12)
-    assert next(line_iter) == Line("line4", 4, 18)
+    assert next(line_iter) == Line("line1", 0, 0)
+    assert next(line_iter) == Line("line2", 1, 6)
+    assert next(line_iter) == Line("line3", 2, 12)
+    assert next(line_iter) == Line("line4", 3, 18)
     assert next(line_iter, None) is None
 
 
@@ -30,11 +30,11 @@ def test_read_empty_last_line():
             """)
     line_iter = StringLineIterator(lines)
 
-    assert next(line_iter) == Line("line1", 1, 0)
-    assert next(line_iter) == Line("line2", 2, 6)
-    assert next(line_iter) == Line("line3", 3, 12)
-    assert next(line_iter) == Line("line4", 4, 18)
-    assert next(line_iter) == Line("", 5, 24)
+    assert next(line_iter) == Line("line1", 0, 0)
+    assert next(line_iter) == Line("line2", 1, 6)
+    assert next(line_iter) == Line("line3", 2, 12)
+    assert next(line_iter) == Line("line4", 3, 18)
+    assert next(line_iter) == Line("", 4, 24)
     assert next(line_iter, None) is None
 
 
@@ -43,24 +43,24 @@ def test_carrier_return():
 
     line_iter = StringLineIterator(lines)
 
-    assert next(line_iter) == Line("line1", 1, 0)
-    assert next(line_iter) == Line("line2", 2, 7)
-    assert next(line_iter) == Line("line3", 3, 14)
-    assert next(line_iter) == Line("line4", 4, 21)
+    assert next(line_iter) == Line("line1", 0, 0)
+    assert next(line_iter) == Line("line2", 1, 7)
+    assert next(line_iter) == Line("line3", 2, 14)
+    assert next(line_iter) == Line("line4", 3, 21)
     assert next(line_iter, None) is None
 
 
 def test_undo():
     line_iter = StringLineIterator(TEST_LINES)
 
-    assert next(line_iter) == Line("line1", 1, 0)
-    assert next(line_iter) == Line("line2", 2, 6)
+    assert next(line_iter) == Line("line1", 0, 0)
+    assert next(line_iter) == Line("line2", 1, 6)
     line_iter.undo()
-    assert next(line_iter) == Line("line2", 2, 6)
-    assert next(line_iter) == Line("line3", 3, 12)
+    assert next(line_iter) == Line("line2", 1, 6)
+    assert next(line_iter) == Line("line3", 2, 12)
     line_iter.undo()
-    assert next(line_iter) == Line("line3", 3, 12)
-    assert next(line_iter) == Line("line4", 4, 18)
+    assert next(line_iter) == Line("line3", 2, 12)
+    assert next(line_iter) == Line("line4", 3, 18)
     assert next(line_iter, None) is None
 
 
@@ -68,16 +68,16 @@ def test_repeated_undo():
 
     line_iter = StringLineIterator(TEST_LINES)
 
-    assert next(line_iter) == Line("line1", 1, 0)
-    assert next(line_iter) == Line("line2", 2, 6)
-    assert next(line_iter) == Line("line3", 3, 12)
+    assert next(line_iter) == Line("line1", 0, 0)
+    assert next(line_iter) == Line("line2", 1, 6)
+    assert next(line_iter) == Line("line3", 2, 12)
     line_iter.undo()
-    assert next(line_iter) == Line("line3", 3, 12)
+    assert next(line_iter) == Line("line3", 2, 12)
     line_iter.undo()
-    assert next(line_iter) == Line("line3", 3, 12)
+    assert next(line_iter) == Line("line3", 2, 12)
     line_iter.undo()
-    assert next(line_iter) == Line("line3", 3, 12)
-    assert next(line_iter) == Line("line4", 4, 18)
+    assert next(line_iter) == Line("line3", 2, 12)
+    assert next(line_iter) == Line("line4", 3, 18)
     assert next(line_iter, None) is None
 
 
@@ -85,10 +85,10 @@ def test_undo_last():
 
     line_iter = StringLineIterator(TEST_LINES)
 
-    assert next(line_iter) == Line("line1", 1, 0)
-    assert next(line_iter) == Line("line2", 2, 6)
-    assert next(line_iter) == Line("line3", 3, 12)
-    assert next(line_iter) == Line("line4", 4, 18)
+    assert next(line_iter) == Line("line1", 0, 0)
+    assert next(line_iter) == Line("line2", 1, 6)
+    assert next(line_iter) == Line("line3", 2, 12)
+    assert next(line_iter) == Line("line4", 3, 18)
     line_iter.undo()
-    assert next(line_iter) == Line("line4", 4, 18)
+    assert next(line_iter) == Line("line4", 3, 18)
     assert next(line_iter, None) is None

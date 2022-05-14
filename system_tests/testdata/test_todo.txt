@@ -244,7 +244,7 @@
 		ingelit seddoei u /smodtempo rincidid untu tlabore etdo lo remag naaliqu aUt enima dmini
 		mveniamq: uisnost rudexer c itat /ionullamc olaboris ni siutaliq uipex eacommo.
 		doc onsequatD uisaut eir ured olor.
-		[x] inr eprehen deri	
+		[x] inr eprehen deri
 	[x] tinvolup ta tevelit
 	[] esseci llu
 		[] mdo loreeuf
@@ -261,12 +261,12 @@
 		o.l. 3. oärem agna al iq uaUtenim
 		admin imve niam qui snost ru dexe rci tatio, nul la mcolab oris nis iutaliq
 [] uipe
-	[] xeacom mo doconsequatDu	
+	[] xeacom mo doconsequatDu
 [] isaut eiru redo
 	[x] lorin re preh ende/ritinvoluptate vel itess ec il lumdo loreeufug
 		[x] iatnul "lapa" ri (atur?)Except!
 		[x] eursintoccaecatcup.idatatn onproid'e ntsu nt inculpaquioffic, iade se runtmollitan im idestlabo
-		[x] Loremips umdolor sitametc onsecte tura dipiscingeli tseddoe 
+		[x] Loremips umdolor sitametc onsecte tura dipiscingeli tseddoe
 			iusmo  dtempor, inc ididu ntu't labo reetdo lo rem a
 			2nd gnaaliq uaUtenimad
 	[] minim veniamquisnos tr udexerc itatio
@@ -336,7 +336,7 @@
 
 		.modtemporinci:
 		didu.ntu tlabor=eetdolor emag=naaliqua
-		
+
 		.Ute/nimadm:
 		[inimve "niamquis"]
 			nostr = ude \"x/^/erc: /\"
