@@ -56,7 +56,7 @@ class LineIterator:
         return result
 
 
-def StringLineIterator(content: str) -> LineIterator:  # pylint: disable=invalid-name
+def StringLineIterator(content: str) -> LineIterator:  # pylint: disable=invalid-name # NOSONAR
     return LineIterator(split_like_file(content))
 
 

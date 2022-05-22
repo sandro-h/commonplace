@@ -29,7 +29,7 @@ class ParseConfig:  # pylint: disable=too-many-instance-attributes
     n_weekly_pattern = re.compile(f"every ({'|'.join(nths)}) ({'|'.join(week_days)})", re.IGNORECASE)
     monthly_pattern = re.compile(r"every (\d{1,2})\.?$", re.IGNORECASE)
     yearly_pattern = re.compile(r"every (\d{1,2})\.(\d{1,2})\.?$", re.IGNORECASE)
-    fixed_time: datetime = None
+    fixed_time: datetime | None = None
 
     def now(self):
         return self.fixed_time if self.fixed_time else datetime.now()
@@ -73,7 +73,7 @@ class WorkState(str, Enum):
 @dataclass
 class MomentDateTime:
     dt: datetime  # pylint: disable=invalid-name
-    doc_pos: DocPosition = None
+    doc_pos: DocPosition | None = None
 
 
 @dataclass
@@ -83,15 +83,15 @@ class Moment:  # pylint: disable=too-many-instance-attributes
     sub_moments: List = field(default_factory=list)
     work_state: WorkState = WorkState.NEW
     priority: int = 0
-    category: Category = None
-    time_of_day: MomentDateTime = None
-    doc_pos: DocPosition = None
+    category: Category | None = None
+    time_of_day: MomentDateTime | None = None
+    doc_pos: DocPosition | None = None
 
 
 @dataclass
 class SingleMoment(Moment):
-    start: MomentDateTime = None
-    end: MomentDateTime = None
+    start: MomentDateTime | None = None
+    end: MomentDateTime | None = None
 
 
 class RecurrenceType(str, Enum):
@@ -112,7 +112,7 @@ class Recurrence:
 
 @dataclass
 class RecurringMoment(Moment):
-    recurrence: Recurrence = None
+    recurrence: Recurrence | None = None
 
 
 @dataclass

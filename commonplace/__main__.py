@@ -53,23 +53,6 @@ def main():
 
     APP.run()
 
-    # with open("system_tests/testdata/test_todo.txt", "r") as file:
-    #     data = file.read()
-
-    # durs = []
-    # for _ in range(0, 1):
-    #     now = datetime.now()
-    #     # todos = parse_moments_string(data, ParseConfig())
-    #     todos = parse_moments_file("system_tests/testdata/test_todo.txt", ParseConfig())
-
-    #     dur = (datetime.now() - now).total_seconds() * 1000
-    #     durs.append(dur)
-
-    # print(f"{median(durs)} ms")
-
-    # with open("commonplace_parse.json", "w", encoding="utf8") as file:
-    #     json.dump(todos, file, indent=2, sort_keys=True, cls=EnhancedJSONEncoder)
-
 
 if __name__ == "__main__":
     main()

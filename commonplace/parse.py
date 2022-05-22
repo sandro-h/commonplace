@@ -116,7 +116,7 @@ def _parse_moment_block(line: Line, line_content: str, state: ParseState, indent
     return mom
 
 
-def _parse_moment(line: Line, line_content: str, config: ParseConfig) -> Moment:
+def _parse_moment(line: Line, line_content: str, config: ParseConfig) -> Moment | None:
     mom, line_content = _parse_recurring_moment(line, line_content, config)
     if not mom:
         mom, line_content = _parse_single_moment(line, line_content, config)
@@ -162,7 +162,7 @@ def _parse_recurrence(line: Line, line_content: str, config: ParseConfig) -> Tup
     if time_of_day:
         time_of_day.doc_pos.offset += line.offset + untrimmed_pos
 
-    recur: Recurrence = None
+    recur = None
     for parse in [try_parse_daily, try_parse_weekly, try_parse_n_weekly, try_parse_monthly, try_parse_yearly]:
         recur = parse(recur_str, config)
         if recur:
@@ -180,7 +180,7 @@ def _parse_recurrence(line: Line, line_content: str, config: ParseConfig) -> Tup
     return recur, time_of_day, line_content[:lbracket_pos].strip()
 
 
-def try_parse_daily(content: str, config: ParseConfig) -> Recurrence:
+def try_parse_daily(content: str, config: ParseConfig) -> Recurrence | None:
     if not config.daily_pattern.search(content):
         return None
 
@@ -190,7 +190,7 @@ def try_parse_daily(content: str, config: ParseConfig) -> Recurrence:
     )
 
 
-def try_parse_weekly(content: str, config: ParseConfig) -> Recurrence:
+def try_parse_weekly(content: str, config: ParseConfig) -> Recurrence | None:
     match = config.weekly_pattern.search(content)
     if not match:
         return None
@@ -224,7 +224,7 @@ def _with_start_of_day(date: datetime) -> datetime:
     return date.replace(hour=0, minute=0, second=0, microsecond=0)
 
 
-def try_parse_n_weekly(content: str, config: ParseConfig) -> Recurrence:
+def try_parse_n_weekly(content: str, config: ParseConfig) -> Recurrence | None:
     match = config.n_weekly_pattern.search(content)
     if not match:
         return None
@@ -266,7 +266,7 @@ def _epoch_week(date: datetime) -> int:
     return int(int(date.astimezone(timezone.utc).timestamp()) / 604800)
 
 
-def try_parse_monthly(content: str, config: ParseConfig) -> Recurrence:
+def try_parse_monthly(content: str, config: ParseConfig) -> Recurrence | None:
     match = config.monthly_pattern.search(content)
     if not match:
         return None
@@ -284,7 +284,7 @@ def try_parse_monthly(content: str, config: ParseConfig) -> Recurrence:
     )
 
 
-def try_parse_yearly(content: str, config: ParseConfig) -> Recurrence:
+def try_parse_yearly(content: str, config: ParseConfig) -> Recurrence | None:
     match = config.yearly_pattern.search(content)
     if not match:
         return None
@@ -361,8 +361,8 @@ def _parse_date_suffix(line: Line, line_content: str,
 
 
 def _parse_date_range(line_content: str, dash_pos: int, config: ParseConfig) -> Tuple[MomentDateTime, MomentDateTime]:
-    start: MomentDateTime = None
-    end: MomentDateTime = None
+    start: MomentDateTime | None = None
+    end: MomentDateTime | None = None
     start_str = line_content[:dash_pos]
     end_str = line_content[dash_pos + 1:]
 
@@ -391,7 +391,7 @@ def _parse_date_range(line_content: str, dash_pos: int, config: ParseConfig) -> 
     return start, end
 
 
-def _parse_date_single(line_content: str, config: ParseConfig) -> MomentDateTime:
+def _parse_date_single(line_content: str, config: ParseConfig) -> MomentDateTime | None:
     date = _parse_date(line_content, config)
 
     if not date:
@@ -511,7 +511,7 @@ def _parse_sub_line(mom: Moment, line: Line, line_content: str, indent: int, sta
                 )))
 
 
-def _parse_date(content, config: ParseConfig) -> datetime:
+def _parse_date(content, config: ParseConfig) -> datetime | None:
     stripped = content.strip()
     for fmt in config.date_formats:
         try:
@@ -522,7 +522,7 @@ def _parse_date(content, config: ParseConfig) -> datetime:
     return None
 
 
-def _parse_time(content, config: ParseConfig) -> datetime:
+def _parse_time(content, config: ParseConfig) -> datetime | None:
     stripped = content.strip()
     try:
         return datetime.strptime(stripped, config.time_format)
