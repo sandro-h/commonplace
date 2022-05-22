@@ -1,11 +1,11 @@
 import dataclasses
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from typing import Iterable, Tuple
 
 from commonplace.line_iterator import LineIterator, StringLineIterator
-from commonplace.models import (Category, Comment, DocPosition, Line, Moment, MomentDateTime, ParseConfig, RecurringMoment,
-                                SingleMoment, Todos, WorkState)
+from commonplace.models import (Category, Comment, DocPosition, Line, Moment, MomentDateTime, ParseConfig, Recurrence,
+                                RecurrenceType, RecurringMoment, SingleMoment, Todos, WorkState)
 
 
 @dataclass
@@ -134,9 +134,173 @@ def _parse_moment(line: Line, line_content: str, config: ParseConfig) -> Moment:
 
 
 def _parse_recurring_moment(line: Line, line_content: str, config: ParseConfig) -> Tuple[RecurringMoment, str]:
-    print(line)
-    print(config)
-    return None, line_content
+    if not line_content.endswith(config.right_date_bracket):
+        return None, line_content
+
+    recur, time_of_day, new_line_content = _parse_recurrence(line, line_content, config)
+    if not recur:
+        return None, line_content
+
+    mom = RecurringMoment(recurrence=recur,
+                          time_of_day=time_of_day,
+                          doc_pos=DocPosition(
+                              line_num=line.line_num,
+                              offset=line.offset,
+                              length=len(line.content),
+                          ))
+    return mom, new_line_content
+
+
+def _parse_recurrence(line: Line, line_content: str, config: ParseConfig) -> Tuple[Recurrence, MomentDateTime, str]:
+    lbracket_pos = line_content.rfind(config.left_date_bracket)
+    if lbracket_pos < 0:
+        return None, None, line_content
+
+    untrimmed_pos = line.content.rfind(config.left_date_bracket) + 1
+    recur_str = line_content[lbracket_pos + 1:-1]
+    time_of_day, recur_str = _parse_time_suffix(recur_str, config)
+    if time_of_day:
+        time_of_day.doc_pos.offset += line.offset + untrimmed_pos
+
+    recur: Recurrence = None
+    for parse in [try_parse_daily, try_parse_weekly, try_parse_n_weekly, try_parse_monthly, try_parse_yearly]:
+        recur = parse(recur_str, config)
+        if recur:
+            break
+
+    if not recur:
+        return None, None, line_content
+
+    recur.ref_date.doc_pos = DocPosition(
+        line_num=line.line_num,
+        offset=line.offset + untrimmed_pos,
+        length=len(recur_str),
+    )
+
+    return recur, time_of_day, line_content[:lbracket_pos].strip()
+
+
+def try_parse_daily(content: str, config: ParseConfig) -> Recurrence:
+    if not config.daily_pattern.search(content):
+        return None
+
+    return Recurrence(
+        recurrence_type=RecurrenceType.DAILY,
+        ref_date=MomentDateTime(dt=config.now()),
+    )
+
+
+def try_parse_weekly(content: str, config: ParseConfig) -> Recurrence:
+    match = config.weekly_pattern.search(content)
+    if not match:
+        return None
+
+    weekday = _parse_weekday(match.group(1), config)
+    if weekday < 0:
+        return None
+
+    ref_date = _with_weekday(config.now(), weekday)
+    return Recurrence(
+        recurrence_type=RecurrenceType.WEEKLY,
+        ref_date=MomentDateTime(dt=_with_start_of_day(ref_date.astimezone(tz=None))),
+    )
+
+
+def _parse_weekday(content: str, config: ParseConfig) -> int:
+    return config.week_days.index(content.lower())
+
+
+def _with_weekday(date: datetime, weekday: int) -> datetime:
+    return date + timedelta(days=with_golang_weekdays(weekday) - with_golang_weekdays(date.weekday()))
+
+
+def with_golang_weekdays(weekday):
+    """ rearrange weekday from Python Monday=0...Sunday=6 to Golang Sunday=0...Saturday=6 """
+    # only really needed for system tests so we get exact same reference date
+    return (weekday + 1) % 7
+
+
+def _with_start_of_day(date: datetime) -> datetime:
+    return date.replace(hour=0, minute=0, second=0, microsecond=0)
+
+
+def try_parse_n_weekly(content: str, config: ParseConfig) -> Recurrence:
+    match = config.n_weekly_pattern.search(content)
+    if not match:
+        return None
+
+    nth, nth_recur_type = _parse_nth(match.group(1), config)
+    if not nth_recur_type:
+        return None
+
+    weekday = _parse_weekday(match.group(2), config)
+    if weekday < 0:
+        return None
+
+    ref_date = _with_weekday(config.now(), weekday)
+    week_offset = _epoch_week(ref_date) % nth
+    ref_date += timedelta(days=-7 * week_offset)
+    return Recurrence(
+        recurrence_type=nth_recur_type,
+        ref_date=MomentDateTime(dt=_with_start_of_day(ref_date.astimezone(tz=None))),
+    )
+
+
+def _parse_nth(content: str, config: ParseConfig) -> Tuple[int, RecurrenceType]:
+    nth = config.nths.index(content.lower())
+    if nth == 0:
+        return 2, RecurrenceType.BI_WEEKLY
+    if nth == 1:
+        return 3, RecurrenceType.TRI_WEEKLY
+    if nth == 2:
+        return 4, RecurrenceType.QUADRI_WEEKLY
+
+    return None, None
+
+
+def _epoch_week(date: datetime) -> int:
+    """ returns the number of weeks passed since January 1, 1970 UTC.
+        Note this does not mean it's aligned for weekdays, i.e. the Monday after
+        Sunday does not necessary have a higher EpochWeek number. """
+
+    return int(int(date.astimezone(timezone.utc).timestamp()) / 604800)
+
+
+def try_parse_monthly(content: str, config: ParseConfig) -> Recurrence:
+    match = config.monthly_pattern.search(content)
+    if not match:
+        return None
+
+    try:
+        day = int(match.group(1))
+    except ValueError:
+        return None
+
+    now = config.now()
+    ref_date = datetime(year=now.year, month=now.month, day=day, hour=0, minute=0, second=0, microsecond=0)
+    return Recurrence(
+        recurrence_type=RecurrenceType.MONTHLY,
+        ref_date=MomentDateTime(dt=ref_date.astimezone(tz=None)),
+    )
+
+
+def try_parse_yearly(content: str, config: ParseConfig) -> Recurrence:
+    match = config.yearly_pattern.search(content)
+    if not match:
+        return None
+
+    try:
+        day = int(match.group(1))
+        month = int(match.group(2))
+    except ValueError:
+        return None
+
+    now = config.now()
+    ref_date = datetime(year=now.year, month=month, day=day, hour=0, minute=0, second=0, microsecond=0)
+    return Recurrence(
+        recurrence_type=RecurrenceType.YEARLY,
+        ref_date=MomentDateTime(dt=ref_date.astimezone(tz=None)),
+    )
 
 
 def _parse_single_moment(line: Line, line_content: str, config: ParseConfig) -> Tuple[SingleMoment, str]:
@@ -351,7 +515,7 @@ def _parse_date(content, config: ParseConfig) -> datetime:
     stripped = content.strip()
     for fmt in config.date_formats:
         try:
-            return datetime.strptime(stripped, fmt)
+            return datetime.strptime(stripped, fmt).astimezone(tz=None)
         except ValueError:
             pass
 
@@ -412,18 +576,3 @@ def _count_start_whitespaces(content: str):
 
 def _stripped_length(content: str):
     return len(content.strip())
-    # start = -1
-    # end = -1
-    # i = 0
-    # clen = len(content)
-    # while i < clen:
-    #     if start < 0 and not content[i].isspace():
-    #         start = i
-    #     if end < 0 and not content[-i-1].isspace():
-    #                 start = i
-    #     i+=1
-    # }
-
-    # if start < 0:
-    #     return 0
-    # return clen - start - end

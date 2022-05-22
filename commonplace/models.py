@@ -1,7 +1,10 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
+import re
 from typing import List
+
+WEEKDAY_OPTIONS = "monday|tuesday|wednesday|thursday|friday|saturday|sunday"
 
 
 @dataclass
@@ -19,6 +22,17 @@ class ParseConfig:  # pylint: disable=too-many-instance-attributes
     done_mark: str = "x"
     waiting_mark: str = "w"
     in_progress_mark: str = "p"
+    week_days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+    daily_pattern = re.compile("(every day|today)", re.IGNORECASE)
+    weekly_pattern = re.compile(f"every ({'|'.join(week_days)})", re.IGNORECASE)
+    nths = ["2nd", "3rd", "4th"]
+    n_weekly_pattern = re.compile(f"every ({'|'.join(nths)}) ({'|'.join(week_days)})", re.IGNORECASE)
+    monthly_pattern = re.compile(r"every (\d{1,2})\.?$", re.IGNORECASE)
+    yearly_pattern = re.compile(r"every (\d{1,2})\.(\d{1,2})\.?$", re.IGNORECASE)
+    fixed_time: datetime = None
+
+    def now(self):
+        return self.fixed_time if self.fixed_time else datetime.now()
 
 
 @dataclass
@@ -59,17 +73,18 @@ class WorkState(str, Enum):
 @dataclass
 class MomentDateTime:
     dt: datetime  # pylint: disable=invalid-name
-    doc_pos: DocPosition
+    doc_pos: DocPosition = None
 
 
 @dataclass
-class Moment:
+class Moment:  # pylint: disable=too-many-instance-attributes
     name: str = ""
     comments: List[Comment] = field(default_factory=list)
     sub_moments: List = field(default_factory=list)
     work_state: WorkState = WorkState.NEW
     priority: int = 0
     category: Category = None
+    time_of_day: MomentDateTime = None
     doc_pos: DocPosition = None
 
 
@@ -77,12 +92,27 @@ class Moment:
 class SingleMoment(Moment):
     start: MomentDateTime = None
     end: MomentDateTime = None
-    time_of_day: MomentDateTime = None
+
+
+class RecurrenceType(str, Enum):
+    DAILY = "daily"
+    WEEKLY = "weekly"
+    MONTHLY = "monthly"
+    YEARLY = "yearly"
+    BI_WEEKLY = "biweekly"
+    TRI_WEEKLY = "triweekly"
+    QUADRI_WEEKLY = "quadriweekly"
+
+
+@dataclass
+class Recurrence:
+    recurrence_type: RecurrenceType
+    ref_date: MomentDateTime
 
 
 @dataclass
 class RecurringMoment(Moment):
-    pass
+    recurrence: Recurrence = None
 
 
 @dataclass

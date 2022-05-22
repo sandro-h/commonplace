@@ -29,3 +29,7 @@ jobs:
       run: .\makew.cmd test
     - name: Package
       run: .\makew.cmd pkg BUILD_NUMBER=$env:GITHUB_RUN_NUMBER-$($env:GITHUB_SHA.Substring(0,7))
+    - name: Run app
+      run: .\makew.cmd start-background
+    - name: System test
+      run: .\makew.cmd system_test
