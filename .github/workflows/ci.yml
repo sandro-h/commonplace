@@ -32,4 +32,4 @@ jobs:
     - name: Run app
       run: .\makew.cmd start-background
     - name: System test
-      run: .\makew.cmd system_test
+      run: .\makew.cmd system-test

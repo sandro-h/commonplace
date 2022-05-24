@@ -36,7 +36,7 @@ test: install
 	${PYTEST} tests
 
 .PHONY: system_tests
-system_test: install
+system-test: install
 	${PYTEST} system_tests
 
 .PHONY: start

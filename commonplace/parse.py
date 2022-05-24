@@ -42,7 +42,7 @@ def _parse_line(line: Line, state: ParseState):
 
     if _is_category_delimiter(line, state.config):
         _parse_category_block(state)
-    else:
+    elif line.content.startswith(state.config.left_state_bracket):
         _parse_top_moment_block(line, state)
 
 
