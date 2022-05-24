@@ -4,7 +4,12 @@ from enum import Enum
 import re
 from typing import List
 
-WEEKDAY_OPTIONS = "monday|tuesday|wednesday|thursday|friday|saturday|sunday"
+
+class WorkState(str, Enum):
+    NEW = "new"
+    WAITING = "waiting"
+    IN_PROGRESS = "in_progress"
+    DONE = "done"
 
 
 @dataclass
@@ -19,9 +24,12 @@ class ParseConfig:  # pylint: disable=too-many-instance-attributes
     right_date_bracket: str = ")"
     date_formats: List[str] = field(default_factory=lambda: ["%d.%m.%y", "%d.%m.%Y"])
     time_format: str = "%H:%M"
-    done_mark: str = "x"
-    waiting_mark: str = "w"
-    in_progress_mark: str = "p"
+    state_marks = dict = {
+        "x": WorkState.DONE,
+        "w": WorkState.WAITING,
+        "p": WorkState.IN_PROGRESS,
+    }
+    state_mark_pattern = re.compile(f"^\\{left_state_bracket}\\s*([{''.join(state_marks.keys())}]?)\\s*\\{right_state_bracket}")
     week_days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
     daily_pattern = re.compile("(every day|today)", re.IGNORECASE)
     weekly_pattern = re.compile(f"every ({'|'.join(week_days)})", re.IGNORECASE)
@@ -61,13 +69,6 @@ class Category:
 class Comment:
     content: str
     doc_pos: DocPosition
-
-
-class WorkState(str, Enum):
-    NEW = "new"
-    WAITING = "waiting"
-    IN_PROGRESS = "in_progress"
-    DONE = "done"
 
 
 @dataclass

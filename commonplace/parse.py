@@ -436,35 +436,12 @@ def _with_end_of_day(date: datetime) -> datetime:
 
 
 def _parse_state_mark(line_content: str, config: ParseConfig) -> Tuple[WorkState, str]:  # pylint: disable=too-many-return-statements
-    rbracket_pos = 0
-    inner_content = " "
-    # [1:] to skip left bracket
-    for i, char in enumerate(line_content[1:]):
-        if char == config.right_state_bracket:
-            # +1 because [1:]
-            rbracket_pos = i + 1
-            break
-
-        if char not in (" ", "\t"):
-            if inner_content == " ":
-                inner_content = char
-            else:
-                return None, line_content
-
-    if rbracket_pos == 0:
+    match_res = config.state_mark_pattern.match(line_content)
+    if not match_res:
         return None, line_content
 
-    leftover = line_content[rbracket_pos + 1:].strip()
-    if inner_content == " ":
-        return WorkState.NEW, leftover
-    if inner_content == config.done_mark:
-        return WorkState.DONE, leftover
-    if inner_content == config.in_progress_mark:
-        return WorkState.IN_PROGRESS, leftover
-    if inner_content == config.waiting_mark:
-        return WorkState.WAITING, leftover
-
-    return None, line_content
+    leftover = line_content[match_res.end() + 1:].strip()
+    return config.state_marks.get(match_res.group(1), WorkState.NEW), leftover
 
 
 def _parse_comments_and_sub_moments(mom: Moment, state: ParseState, indent: int):

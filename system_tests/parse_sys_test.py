@@ -19,6 +19,8 @@ from system_tests.sys_test_util import (TESTDATA_DIR, dataclass_to_dict, dedent,
         ("[x ] foobar", "done"),
         ("[   x ] foobar", "done"),
         ("[\tx ] foobar", "done"),
+        ("[ ] foobar", "new"),
+        ("[ \t] foobar", "new"),
         ("[xp] foobar", None),
         ("[x foobar", None),
         ("x] foobar", None),
@@ -86,7 +88,7 @@ def test_parse_category(content, expected_category):
 
 
 @pytest.mark.golden_test("testdata/parse.golden.yml")
-def test_parse(golden):
+def test_full_parse(golden):
     # Given
     with open(os.path.join(TESTDATA_DIR, golden["input"]["todo_file"]), "r", encoding="utf8") as file:
         todo = file.read()

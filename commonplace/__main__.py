@@ -1,4 +1,5 @@
 import base64
+from contextlib import contextmanager
 import dataclasses
 import json
 import sys
@@ -14,6 +15,18 @@ VERSION = "0.1.0.0"
 APP = Flask(__name__)
 
 
+@contextmanager
+def measure_time(label):
+    if APP.config["ENV"] != "development":
+        yield
+    else:
+        start = datetime.now()
+        try:
+            yield
+        finally:
+            print(f"{label}: {(datetime.now() - start).total_seconds() * 1000}ms")
+
+
 @APP.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
@@ -21,13 +34,19 @@ def hello_world():
 
 @APP.route("/parse", methods=["POST"])
 def parse_todos():
-    content = base64.b64decode(request.data).decode("utf8")
+    with measure_time("b64decode"):
+        content = base64.b64decode(request.data).decode("utf8")
+
     fixed_time = None
     if "fixed_time" in request.args:
         fixed_time = datetime.strptime(request.args["fixed_time"], "%Y-%m-%d")
 
-    todos = parse_moments_string(content, ParseConfig(fixed_time=fixed_time))
-    data = json.dumps(todos, cls=EnhancedJSONEncoder)
+    with measure_time("parse"):
+        todos = parse_moments_string(content, ParseConfig(fixed_time=fixed_time))
+
+    with measure_time("json.dumps"):
+        data = json.dumps(todos, cls=EnhancedJSONEncoder)
+
     return data
 
 
@@ -52,13 +71,6 @@ def main():
         return
 
     APP.run()
-
-    # bla = {"content": "\tinr ep-reh ende rit involup tatevel :/", "doc_pos": {"length": 39, "line_num": 329, "offset": 10196}}
-    # match bla:
-    #     #
-    #     case {"doc_pos": {"length": 40}}:
-    #         print("jiiii")
-    # print("hi")
 
 
 if __name__ == "__main__":
