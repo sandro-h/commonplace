@@ -1,4 +1,5 @@
 import base64
+from datetime import datetime
 import json
 import os
 import re
@@ -6,6 +7,7 @@ from functools import reduce
 
 import requests
 from commonplace.__main__ import EnhancedJSONEncoder
+from commonplace.util import format_ymd
 
 TESTDATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "testdata")
 SIBYL_URL = "http://localhost:8082"
@@ -13,18 +15,29 @@ COMMONPLACE_URL = "http://127.0.0.1:5000"
 
 
 def request_parse(content, target="commonplace"):
-    if target == "commonplace":
-        url = COMMONPLACE_URL
-    elif target == "sibyl":
-        url = SIBYL_URL
-    else:
-        assert False, f"Invalid target {target}"
-
-    resp = requests.post(f"{url}/parse?fixed_time=2022-05-22", data=base64.b64encode(content.encode("utf8")))
+    resp = requests.post(f"{get_url(target)}/parse?fixed_time=2022-05-22", data=base64.b64encode(content.encode("utf8")))
     if target == "sibyl":
         return align_sibylgo_result(resp.json())
 
     return resp.json()
+
+
+def request_instances(content, start: str, end: str, target="commonplace"):
+    resp = requests.post(f"{get_url(target)}/instances?start={reformat_to_ymd(start)}&end={reformat_to_ymd(end)}",
+                         data=base64.b64encode(content.encode("utf8")))
+    if target == "sibyl":
+        return align_sibylgo_result(resp.json())
+
+    return resp.json()
+
+
+def get_url(target):
+    if target == "commonplace":
+        return COMMONPLACE_URL
+    elif target == "sibyl":
+        return SIBYL_URL
+    else:
+        assert False, f"Invalid target {target}"
 
 
 def align_sibylgo_result(data):
@@ -71,3 +84,11 @@ def dedent(content):
 
 def dataclass_to_dict(dcl):
     return json.loads(json.dumps(dcl, cls=EnhancedJSONEncoder))
+
+
+def reformat_to_ymd(dmy_str):
+    return format_ymd(parse_dmy(dmy_str))
+
+
+def parse_dmy(dmy_str):
+    return datetime.strptime(dmy_str, "%d.%m.%Y").astimezone(tz=None)

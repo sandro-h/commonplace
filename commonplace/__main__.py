@@ -3,12 +3,14 @@ from contextlib import contextmanager
 import dataclasses
 import json
 import sys
-from datetime import datetime
+from datetime import datetime, time
 
 from flask import Flask, request
+from commonplace.instantiate import generate_instances
 
 from commonplace.models import ParseConfig
 from commonplace.parse import parse_moments_string
+from commonplace.util import parse_ymd
 
 VERSION = "0.1.0.0"
 
@@ -27,11 +29,6 @@ def measure_time(label):
             print(f"{label}: {(datetime.now() - start).total_seconds() * 1000}ms")
 
 
-@APP.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
-
-
 @APP.route("/parse", methods=["POST"])
 def parse_todos():
     with measure_time("b64decode"):
@@ -39,13 +36,33 @@ def parse_todos():
 
     fixed_time = None
     if "fixed_time" in request.args:
-        fixed_time = datetime.strptime(request.args["fixed_time"], "%Y-%m-%d")
+        fixed_time = parse_ymd(request.args["fixed_time"])
 
     with measure_time("parse"):
         todos = parse_moments_string(content, ParseConfig(fixed_time=fixed_time))
 
     with measure_time("json.dumps"):
         data = json.dumps(todos, cls=EnhancedJSONEncoder)
+
+    return data
+
+
+@APP.route("/instances", methods=["POST"])
+def generate_moment_instances():
+    with measure_time("b64decode"):
+        content = base64.b64decode(request.data).decode("utf8")
+
+    start = parse_ymd(request.args["start"]).astimezone(tz=None)
+    end = parse_ymd(request.args["end"]).astimezone(tz=None)
+
+    with measure_time("parse"):
+        todos = parse_moments_string(content, ParseConfig())
+
+    with measure_time("instantiate"):
+        instances = generate_instances(todos.moments, start, end)
+
+    with measure_time("json.dumps"):
+        data = json.dumps(instances, cls=EnhancedJSONEncoder)
 
     return data
 
@@ -61,6 +78,8 @@ class EnhancedJSONEncoder(json.JSONEncoder):
         if dataclasses.is_dataclass(o):
             return dataclasses.asdict(o)
         if isinstance(o, datetime):
+            return o.isoformat()
+        if isinstance(o, time):
             return o.isoformat()
         return super().default(o)
 

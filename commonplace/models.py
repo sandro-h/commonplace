@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, time
 from enum import Enum
 import re
 from typing import List
@@ -60,7 +60,7 @@ class DocPosition:
 @dataclass
 class Category:
     name: str
-    doc_pos: DocPosition
+    doc_pos: DocPosition | None = False
     color: str = ""
     priority: int = 0
 
@@ -120,3 +120,18 @@ class RecurringMoment(Moment):
 class Todos:
     categories: List[Category] = field(default_factory=list)
     moments: List[Moment] = field(default_factory=list)
+
+
+@dataclass
+class Instance:  # pylint: disable=too-many-instance-attributes
+    name: str
+    start: datetime
+    end: datetime
+    ends_in_range: bool
+    origin_doc_pos: DocPosition | None = None
+    time_of_day: time | None = None
+    priority: int = 0
+    category: Category | None = None
+    done: bool = False
+    work_state: WorkState = WorkState.NEW
+    sub_instances: List = field(default_factory=list)

@@ -1,11 +1,12 @@
 import dataclasses
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from typing import Iterable, Tuple
 
 from commonplace.line_iterator import LineIterator, StringLineIterator
 from commonplace.models import (Category, Comment, DocPosition, Line, Moment, MomentDateTime, ParseConfig, Recurrence,
                                 RecurrenceType, RecurringMoment, SingleMoment, Todos, WorkState)
+from commonplace.util import epoch_week, with_end_of_day, with_weekday
 
 
 @dataclass
@@ -107,7 +108,7 @@ def _parse_top_moment_block(line: Line, state: ParseState):
 
 
 def _parse_moment_block(line: Line, line_content: str, state: ParseState, indent=0):
-    mom = _parse_moment(line, line_content, state.config)
+    mom = _parse_moment_line(line, line_content, state.config)
     if not mom:
         return None
 
@@ -116,7 +117,7 @@ def _parse_moment_block(line: Line, line_content: str, state: ParseState, indent
     return mom
 
 
-def _parse_moment(line: Line, line_content: str, config: ParseConfig) -> Moment | None:
+def _parse_moment_line(line: Line, line_content: str, config: ParseConfig) -> Moment | None:
     mom, line_content = _parse_recurring_moment(line, line_content, config)
     if not mom:
         mom, line_content = _parse_single_moment(line, line_content, config)
@@ -199,7 +200,7 @@ def try_parse_weekly(content: str, config: ParseConfig) -> Recurrence | None:
     if weekday < 0:
         return None
 
-    ref_date = _with_weekday(config.now(), weekday)
+    ref_date = with_weekday(config.now(), weekday)
     return Recurrence(
         recurrence_type=RecurrenceType.WEEKLY,
         ref_date=MomentDateTime(dt=_with_start_of_day(ref_date.astimezone(tz=None))),
@@ -208,16 +209,6 @@ def try_parse_weekly(content: str, config: ParseConfig) -> Recurrence | None:
 
 def _parse_weekday(content: str, config: ParseConfig) -> int:
     return config.week_days.index(content.lower())
-
-
-def _with_weekday(date: datetime, weekday: int) -> datetime:
-    return date + timedelta(days=with_golang_weekdays(weekday) - with_golang_weekdays(date.weekday()))
-
-
-def with_golang_weekdays(weekday):
-    """ rearrange weekday from Python Monday=0...Sunday=6 to Golang Sunday=0...Saturday=6 """
-    # only really needed for system tests so we get exact same reference date
-    return (weekday + 1) % 7
 
 
 def _with_start_of_day(date: datetime) -> datetime:
@@ -237,8 +228,8 @@ def try_parse_n_weekly(content: str, config: ParseConfig) -> Recurrence | None:
     if weekday < 0:
         return None
 
-    ref_date = _with_weekday(config.now(), weekday)
-    week_offset = _epoch_week(ref_date) % nth
+    ref_date = with_weekday(config.now(), weekday)
+    week_offset = epoch_week(ref_date) % nth
     ref_date += timedelta(days=-7 * week_offset)
     return Recurrence(
         recurrence_type=nth_recur_type,
@@ -256,14 +247,6 @@ def _parse_nth(content: str, config: ParseConfig) -> Tuple[int, RecurrenceType]:
         return 4, RecurrenceType.QUADRI_WEEKLY
 
     return None, None
-
-
-def _epoch_week(date: datetime) -> int:
-    """ returns the number of weeks passed since January 1, 1970 UTC.
-        Note this does not mean it's aligned for weekdays, i.e. the Monday after
-        Sunday does not necessary have a higher EpochWeek number. """
-
-    return int(int(date.astimezone(timezone.utc).timestamp()) / 604800)
 
 
 def try_parse_monthly(content: str, config: ParseConfig) -> Recurrence | None:
@@ -350,7 +333,7 @@ def _parse_date_suffix(line: Line, line_content: str,
             end.doc_pos = dataclasses.replace(start.doc_pos)
 
     if end:
-        end.dt = _with_end_of_day(end.dt)
+        end.dt = with_end_of_day(end.dt)
 
     if start or end:
         _finalize_doc_pos(start, line, untrimmed_pos)
@@ -429,10 +412,6 @@ def _finalize_doc_pos(date: MomentDateTime, line: Line, offset_delta):
     if date:
         date.doc_pos.line_num = line.line_num
         date.doc_pos.offset += line.offset + offset_delta
-
-
-def _with_end_of_day(date: datetime) -> datetime:
-    return date.replace(hour=23, minute=59, second=59, microsecond=999999)
 
 
 def _parse_state_mark(line_content: str, config: ParseConfig) -> Tuple[WorkState, str]:  # pylint: disable=too-many-return-statements
