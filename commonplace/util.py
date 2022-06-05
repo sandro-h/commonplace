@@ -1,6 +1,10 @@
 from datetime import datetime, timedelta, timezone
 
 
+def with_start_of_day(date: datetime) -> datetime:
+    return date.replace(hour=0, minute=0, second=0, microsecond=0)
+
+
 def with_end_of_day(date: datetime) -> datetime:
     return date.replace(hour=23, minute=59, second=59, microsecond=999999)
 

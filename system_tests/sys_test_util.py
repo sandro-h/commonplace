@@ -31,6 +31,13 @@ def request_instances(content, start: str, end: str, target="commonplace"):
     return resp.json()
 
 
+def request_format(content, optimize=True, fixed_time="2022-06-05", target="commonplace"):
+    resp = requests.post(f"{get_url(target)}/format?fixed_time={fixed_time}&optimize={optimize}",
+                         data=base64.b64encode(content.encode("utf8")))
+
+    return resp.content.decode("utf8")
+
+
 def get_url(target):
     if target == "commonplace":
         return COMMONPLACE_URL
@@ -78,7 +85,7 @@ def dedent(content):
     """Removes the base indentation from a multi-line string.
     Allows to properly indent multiline strings in these tests for better readability."""
     parts = content.split("\n")
-    indent = len(re.match(r"^(\s*)", parts[0]).group(1))
+    indent = len(re.match(r"^(\s*)", parts[0] if parts[0] else parts[1]).group(1))
     return "\n".join([p[indent:] for p in parts])
 
 

@@ -1,17 +1,130 @@
-import base64
-import json
 import os
-import re
 
 import pytest
-import requests
 
-from system_tests.sys_test_util import TESTDATA_DIR, request_parse
+from system_tests.sys_test_util import TESTDATA_DIR, dedent, request_format
 
 
-@pytest.mark.skip()
-@pytest.mark.golden_test("testdata/format_*.golden.yml")
-def test_format(golden):
+@pytest.mark.parametrize(
+    "content,expected_format",
+    [
+        # Categories
+        (
+            """
+            ------------------
+            cat1
+            ------------------
+
+            [] bla
+
+            ------------------
+            cat2
+            ------------------
+
+            [] foo
+            """,
+            """\
+            20,24,cat
+            72,76,cat
+            45,51,mom
+            97,103,mom
+            """,
+        ),
+        # Comments
+        (
+            """\
+            [] bla1
+                [x] sub
+            [] bla2
+                comments
+                comments
+            [x] bla3
+                comments
+	            comments
+            """,
+            """\
+            0,7,mom
+            8,19,mom.done
+            20,27,mom
+            54,62,mom.done
+            67,75,com.done
+            """,
+        ),
+        # Due soon. Note fixed date is 2022-06-05
+        (
+            """\
+            [] bla1 (7.6.22)
+            [] bla2 (7.6.22-15.6.22)
+            [] bla3 (7.6.22-16.6.22)
+            [] bla4 (every day)
+            [] bla5 (4.6.22)
+            """,
+            """\
+            0,16,mom.until2
+            9,15,date
+            17,41,mom.until10
+            26,32,date
+            33,40,date
+            42,66,mom
+            51,57,date
+            58,65,date
+            67,86,mom.until0
+            76,85,date
+            87,103,mom
+            96,102,date
+            """,
+        ),
+        # Optimized format with comments after subcomments
+        (
+            """
+            [] bla1
+                [] bla2
+                comments
+                comments
+
+            [] bla3
+            """,
+            """\
+            1,20,mom
+            48,55,mom
+            """,
+        ),
+    ],
+)
+def test_format(content, expected_format):
+    # When
+    fmt = request_format(dedent(content))
+
+    # Then
+    assert fmt == dedent(expected_format)
+
+
+def test_due_soon_daylight_savings():
+    # Scenario:
+    # It's the 23.3
+    # Daylight savings time happens on 31.3
+    # The moment date 3.4. will be seen as 263 hours away, instead of 264 (=11 days)
+
+    # Given
+    content = """
+        [] bla1 (3.4.19)
+        [] bla2 (2.4.19)
+    """
+
+    # When
+    fmt = request_format(dedent(content), fixed_time="2019-03-23")
+
+    # Then
+    assert fmt == dedent("""\
+    1,17,mom
+    10,16,date
+    18,34,mom.until10
+    27,33,date
+    """)
+
+
+@pytest.mark.golden_test("testdata/format_optimized.golden.yml")
+def test_full_format(golden):
     # Given
     with open(os.path.join(TESTDATA_DIR, golden["input"]["todo_file"]), "rb") as file:
         todo = file.read()
@@ -19,9 +132,7 @@ def test_format(golden):
     optimize = "true" if golden['input']['optimize'] else "false"
 
     # When
-    resp = requests.post(f"http://localhost:8082/format?optimize={optimize}", data=base64.b64encode(todo))
-    body = resp.content.decode("utf8")
+    fmt = request_format(todo.decode("utf8"), optimize)
 
     # Then
-    assert resp.status_code == 200
-    assert body == golden.out["output"]
+    assert fmt == golden.out["output"]

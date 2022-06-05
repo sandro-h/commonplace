@@ -6,6 +6,7 @@ import sys
 from datetime import datetime, time
 
 from flask import Flask, request
+from commonplace.format import format_todos
 from commonplace.instantiate import generate_instances
 
 from commonplace.models import ParseConfig
@@ -68,8 +69,19 @@ def generate_moment_instances():
 
 
 @APP.route("/format", methods=["POST"])
-def format_todos():
-    return "Not implemented"
+def do_format_todos():
+    with measure_time("b64decode"):
+        content = base64.b64decode(request.data).decode("utf8")
+
+    fixed_time = None
+    if "fixed_time" in request.args:
+        fixed_time = parse_ymd(request.args["fixed_time"])
+
+    with measure_time("parse"):
+        todos = parse_moments_string(content, ParseConfig())
+
+    with measure_time("format"):
+        return format_todos(todos, content, fixed_time=fixed_time)
 
 
 class EnhancedJSONEncoder(json.JSONEncoder):
