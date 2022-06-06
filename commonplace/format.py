@@ -12,6 +12,7 @@ DATE_STYLE = "date"
 TIME_STYLE = "time"
 DONE_SUFFIX = ".done"
 PRIORITY_SUFFIX = ".priority"
+UNTIL_SUFFIX = ".until"
 
 
 @dataclass
@@ -96,7 +97,7 @@ def format_due_soon(mom: Moment, fixed_time=None):
             earliest = due_days
 
     if earliest < cutoff:
-        return f".until{earliest}"
+        return UNTIL_SUFFIX + str(earliest)
 
     return ""
 

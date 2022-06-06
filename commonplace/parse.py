@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Iterable, Tuple
 
-from commonplace.line_iterator import LineIterator, StringLineIterator
+from commonplace.line_iterator import LineIterator, StringLineIterator, each_line
 from commonplace.models import (Category, Comment, DocPosition, Line, Moment, MomentDateTime, ParseConfig, Recurrence,
                                 RecurrenceType, RecurringMoment, SingleMoment, Todos, WorkState)
 from commonplace.util import epoch_week, with_end_of_day, with_weekday
@@ -31,7 +31,7 @@ def parse_moments(lines: Iterable[str], config: ParseConfig) -> Todos:
 
 def _parse_moments(line_iter: LineIterator, config: ParseConfig) -> Todos:
     state = ParseState(config=config, line_iter=line_iter, todos=Todos())
-    for line in _each_line(state.line_iter):
+    for line in each_line(state.line_iter):
         _parse_line(line, state)
 
     return state.todos
@@ -425,7 +425,7 @@ def _parse_state_mark(line_content: str, config: ParseConfig) -> Tuple[WorkState
 
 def _parse_comments_and_sub_moments(mom: Moment, state: ParseState, indent: int):
     next_indent = indent + state.config.tab_size
-    for line in _each_line(state.line_iter):
+    for line in each_line(state.line_iter):
         line_indent, indent_char_cnt = _count_indent(line.content, state.config.tab_size, next_indent)
 
         if line_indent >= next_indent:
@@ -509,14 +509,6 @@ def _count_indent(content, tab_size, max_indent) -> Tuple[int, int]:
             break
 
     return indent, cnt
-
-
-def _each_line(line_iter: LineIterator):
-    while True:
-        line = next(line_iter, None)
-        if line is None:
-            break
-        yield line
 
 
 def _is_blank(content: str):

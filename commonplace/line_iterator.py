@@ -73,3 +73,11 @@ def split_like_file(content):
 
     if prev:  # deliberately also ignoring empty string
         yield prev
+
+
+def each_line(line_iter: LineIterator):
+    while True:
+        line = next(line_iter, None)
+        if line is None:
+            break
+        yield line

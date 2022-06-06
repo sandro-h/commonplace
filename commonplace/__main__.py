@@ -6,6 +6,7 @@ import sys
 from datetime import datetime, time
 
 from flask import Flask, request
+from commonplace.clean import clean_done_moments, trash_done_moments
 from commonplace.format import format_todos
 from commonplace.instantiate import generate_instances
 
@@ -82,6 +83,33 @@ def do_format_todos():
 
     with measure_time("format"):
         return format_todos(todos, content, fixed_time=fixed_time)
+
+
+@APP.route("/clean", methods=["POST"])
+def clean_todos():
+    # TODO: if no todo_file/trash_file arg, use the configured files
+    todo_file = request.args["todo_file"]
+
+    with measure_time("clean"):
+        clean_done_moments(todo_file, ParseConfig())
+
+    return ("", 204)
+
+
+@APP.route("/trash", methods=["POST"])
+def trash_todos():
+    # TODO: if no todo_file/trash_file arg, use the configured files
+    todo_file = request.args["todo_file"]
+    trash_file = request.args["trash_file"]
+
+    fixed_time = None
+    if "fixed_time" in request.args:
+        fixed_time = parse_ymd(request.args["fixed_time"])
+
+    with measure_time("clean"):
+        trash_done_moments(todo_file, trash_file, ParseConfig(), fixed_time=fixed_time)
+
+    return ("", 204)
 
 
 class EnhancedJSONEncoder(json.JSONEncoder):
