@@ -16,15 +16,15 @@ TEST_INPUT = """\
 """
 
 
-def test_clean(tmp_path):
+def test_clean(test_app_todo_dir):
     # Given
 
-    todo_file = tmp_path / "todo.txt"
+    todo_file = test_app_todo_dir / "todo.txt"
     with open(todo_file, "w", encoding="utf8") as file:
         file.write(TEST_INPUT)
 
     # When
-    request_clean(todo_file)
+    request_clean()
 
     with open(todo_file, "r", encoding="utf8") as file:
         updated_content = file.read()
@@ -46,16 +46,16 @@ def test_clean(tmp_path):
 """
 
 
-def test_trash(tmp_path):
+def test_trash(test_app_todo_dir):
     # Given
-    todo_file = tmp_path / "todo.txt"
-    trash_file = tmp_path / "trash.txt"
+    todo_file = test_app_todo_dir / "todo.txt"
+    trash_file = test_app_todo_dir / "todo-trash.txt"
 
     with open(todo_file, "w", encoding="utf8") as file:
         file.write(TEST_INPUT)
 
     # When
-    request_trash(todo_file, trash_file)
+    request_trash()
 
     with open(todo_file, "r", encoding="utf8") as file:
         updated_content = file.read()

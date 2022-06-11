@@ -38,12 +38,12 @@ def request_format(content, optimize=True, fixed_time="2022-06-05", target="comm
     return resp.content.decode("utf8")
 
 
-def request_clean(todo_file, target="commonplace"):
-    requests.post(f"{get_url(target)}/clean?todo_file={todo_file}")
+def request_clean(target="commonplace"):
+    requests.post(f"{get_url(target)}/clean")
 
 
-def request_trash(todo_file, trash_file, fixed_time="2022-06-05", target="commonplace"):
-    requests.post(f"{get_url(target)}/trash?fixed_time={fixed_time}&todo_file={todo_file}&trash_file={trash_file}")
+def request_trash(fixed_time="2022-06-05", target="commonplace"):
+    requests.post(f"{get_url(target)}/trash?fixed_time={fixed_time}")
 
 
 def get_url(target):

@@ -41,11 +41,19 @@ system-test: install
 
 .PHONY: start
 start: install
-	FLASK_APP=commonplace.__main__ FLASK_ENV=development ${FLASK} run
+	COMMONPLACE_CONFIG=system_test_config.yaml \
+	FLASK_APP=commonplace.__main__ \
+	FLASK_ENV=development \
+	${FLASK} run
 
 .PHONY: start-background
 start-background: install
-	(FLASK_APP=commonplace.__main__ FLASK_ENV=development ${FLASK} run > commonplace.log 2>&1 &)
+	( \
+		COMMONPLACE_CONFIG=system_test_config.yaml \
+		FLASK_APP=commonplace.__main__ \
+		FLASK_ENV=development \
+		${FLASK} run > commonplace.log 2>&1 & \
+	)
 
 .PHONY: update-version
 update-version:

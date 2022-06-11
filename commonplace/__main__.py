@@ -48,13 +48,25 @@ def load_config() -> Config:
 
 
 def load_yaml_config() -> YamlConfig:
-    if not os.path.exists("config.yaml"):
+    config_file = Path("config.yaml")
+    if "COMMONPLACE_CONFIG" in os.environ:
+        config_file = Path(os.environ["COMMONPLACE_CONFIG"])
+        print(config_file)
+        # if passed explicitly and doesn't exist, throw an error:
+        if not config_file.exists():
+            raise CliException(f"COMMONPLACE_CONFIG {config_file.absolute()} does not exist.")
+
+    if not config_file.exists():
         return YamlConfig()
 
-    with open("config.yaml", "r", encoding="utf8") as file:
+    with open(config_file, "r", encoding="utf8") as file:
         data = yaml.safe_load(file)
 
     return from_dict(data_class=YamlConfig, data=data)
+
+
+class CliException(Exception):
+    pass
 
 
 if __name__ == "__main__":
