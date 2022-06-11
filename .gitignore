@@ -5,3 +5,4 @@ dist/
 *.spec
 notes.txt
 commonplace.log
+config.yaml

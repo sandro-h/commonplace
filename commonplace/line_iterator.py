@@ -62,7 +62,6 @@ def StringLineIterator(content: str) -> LineIterator:  # pylint: disable=invalid
 
 def split_like_file(content):
     prev = None
-    print(content[0:40].encode('utf8'))
     for line in NEWLINE_PATTERN.split(content):
         if prev is None:
             prev = line

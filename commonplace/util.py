@@ -28,7 +28,7 @@ def epoch_week(date: datetime) -> int:
 
 
 def parse_ymd(date_str: str) -> datetime:
-    return datetime.strptime(date_str, "%Y-%m-%d")
+    return datetime.strptime(date_str, "%Y-%m-%d") if date_str else None
 
 
 def format_ymd(date: datetime) -> str:

@@ -8,7 +8,7 @@ from commonplace.parse import parse_moments_string
 def clean_done_moments(todo_file, parse_config: ParseConfig):
     updated_content, deleted_content = _clean_done_moments(todo_file, parse_config)
 
-    with open(todo_file, "w", encoding="utf8") as file:
+    with open(todo_file, "w", encoding="utf8") as file:  # NOSONAR: path injection - localhost only, file args only in dev mode
         file.write(with_newline(updated_content) + with_newline(deleted_content))
 
 
@@ -16,7 +16,7 @@ def trash_done_moments(todo_file, trash_file, parse_config: ParseConfig, fixed_t
     updated_content, deleted_content = _clean_done_moments(todo_file, parse_config)
 
     trash_time = fixed_time if fixed_time else datetime.now()
-    with open(trash_file, "a", encoding="utf8") as file:
+    with open(trash_file, "a", encoding="utf8") as file:  # NOSONAR: path injection - localhost only, file args only in dev mode
         file.write(f"""\
 ------------------
   Trash from {trash_time.strftime("%d.%m.%Y %H:%M:%S")}
@@ -24,12 +24,12 @@ def trash_done_moments(todo_file, trash_file, parse_config: ParseConfig, fixed_t
 """)
         file.write(with_newline(deleted_content))
 
-    with open(todo_file, "w", encoding="utf8") as file:
+    with open(todo_file, "w", encoding="utf8") as file:  # NOSONAR: path injection - localhost only, file args only in dev mode
         file.write(with_newline(updated_content))
 
 
 def _clean_done_moments(todo_file, parse_config: ParseConfig):
-    with open(todo_file, "r", encoding="utf8") as file:
+    with open(todo_file, "r", encoding="utf8") as file:  # NOSONAR: path injection - localhost only, file args only in dev mode
         content = file.read()
 
     todos = parse_moments_string(content, parse_config)

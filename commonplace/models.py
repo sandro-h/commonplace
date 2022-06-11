@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime, time
 from enum import Enum
+from pathlib import Path
 import re
 from typing import List
 
@@ -41,6 +42,20 @@ class ParseConfig:  # pylint: disable=too-many-instance-attributes
 
     def now(self):
         return self.fixed_time if self.fixed_time else datetime.now()
+
+
+@dataclass
+class YamlConfig:
+    todo_file: str = str(Path("todo.txt").absolute())
+    parse_config: ParseConfig = field(default_factory=ParseConfig)
+
+
+@dataclass
+class Config:
+    todo_dir: Path
+    todo_file: Path
+    trash_file: Path
+    parse_config: ParseConfig = field(default_factory=ParseConfig)
 
 
 @dataclass

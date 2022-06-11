@@ -6,7 +6,7 @@ import re
 from functools import reduce
 
 import requests
-from commonplace.__main__ import EnhancedJSONEncoder
+from commonplace.rest import EnhancedJSONEncoder
 from commonplace.util import format_ymd
 
 TESTDATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "testdata")

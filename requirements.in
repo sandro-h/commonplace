@@ -8,3 +8,5 @@ pytest-golden
 requests
 # app dependencies
 flask
+pyyaml
+dacite
