@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 from pathlib import Path
@@ -18,10 +19,13 @@ def main():
         print(VERSION)
         return
 
-    create_app().run(host="127.0.0.1")
+    create_app().run(host="127.0.0.1", port=load_config().port)
 
 
 def create_app():
+    log = logging.getLogger("werkzeug")
+    log.setLevel(logging.ERROR)
+
     app = Flask(__name__)
     app.register_blueprint(root)
     app.config["commonplace"] = load_config()
@@ -34,9 +38,11 @@ def load_config() -> Config:
     todo_file = Path(yaml_config.todo_file).absolute()
     todo_dir = todo_file.parent.absolute()
     return Config(
+        port=yaml_config.port,
         todo_dir=todo_dir,
         todo_file=todo_file,
         trash_file=todo_dir / f"{todo_file.stem}-trash.txt",
+        backup_dir=todo_dir / "backup",
         parse_config=yaml_config.parse_config,
     )
 

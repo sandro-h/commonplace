@@ -31,5 +31,9 @@ def parse_ymd(date_str: str) -> datetime:
     return datetime.strptime(date_str, "%Y-%m-%d") if date_str else None
 
 
+def parse_ymd_hms(date_str: str) -> datetime:
+    return datetime.strptime(date_str, "%Y-%m-%d_%H-%M-%S") if date_str else None
+
+
 def format_ymd(date: datetime) -> str:
     return date.strftime("%Y-%m-%d")

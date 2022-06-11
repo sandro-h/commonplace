@@ -46,15 +46,18 @@ class ParseConfig:  # pylint: disable=too-many-instance-attributes
 
 @dataclass
 class YamlConfig:
+    port: int = 5000
     todo_file: str = str(Path("todo.txt").absolute())
     parse_config: ParseConfig = field(default_factory=ParseConfig)
 
 
 @dataclass
 class Config:
+    port: int
     todo_dir: Path
     todo_file: Path
     trash_file: Path
+    backup_dir: Path
     parse_config: ParseConfig = field(default_factory=ParseConfig)
 
 

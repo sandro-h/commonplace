@@ -3,8 +3,10 @@ import dataclasses
 import json
 from contextlib import contextmanager
 from datetime import datetime, time
+from pathlib import Path
 
 from flask import Blueprint, current_app, request
+from commonplace.backup import backup
 
 from commonplace.clean import clean_done_moments, trash_done_moments
 from commonplace.format import format_todos
@@ -69,9 +71,13 @@ def do_format_todos():
 @root.route("/clean", methods=["POST"])
 def clean_todos():
     todo_file = config().todo_file
+    backup_dir = config().backup_dir
 
-    if is_development():
-        todo_file = request.args.get("todo_file", todo_file)
+    if is_development() and "todo_file" in request.args:
+        todo_file = Path(request.args["todo_file"])
+        backup_dir = todo_file.parent / "backup"
+
+    backup(todo_file, backup_dir)
 
     with measure_time("clean"):
         clean_done_moments(todo_file, ParseConfig())
@@ -83,11 +89,19 @@ def clean_todos():
 def trash_todos():
     todo_file = config().todo_file
     trash_file = config().trash_file
+    backup_dir = config().backup_dir
     fixed_time = parse_ymd(request.args.get("fixed_time"))
 
     if is_development():
-        todo_file = request.args.get("todo_file", todo_file)
-        trash_file = request.args.get("trash_file", trash_file)
+        if "todo_file" in request.args:
+            todo_file = Path(request.args["todo_file"])
+            backup_dir = todo_file.parent / "backup"
+        if "trash_file" in request.args:
+            trash_file = Path(request.args["trash_file"])
+
+    backup(todo_file, backup_dir)
+    if trash_file.exists():
+        backup(trash_file, backup_dir)
 
     with measure_time("clean"):
         trash_done_moments(todo_file, trash_file, ParseConfig(), fixed_time=fixed_time)
