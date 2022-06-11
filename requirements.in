@@ -2,6 +2,7 @@
 pyinstaller
 yapf
 pylint
+pillow
 # test dependencies
 pytest
 pytest-golden

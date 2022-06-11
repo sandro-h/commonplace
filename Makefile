@@ -62,10 +62,19 @@ update-version:
 	rm -f commonplace/__main__.py.tmp
 
 .PHONY: pkg
-pkg: update-version dist/commonplace.exe
+pkg: update-version dist/commonplace.tar
 	@echo ======================
-	@echo "Size: $(shell ls -lh dist/commonplace.exe | awk '{print $$5}')"
 	@echo "Version: $(shell dist\commonplace.exe --version)"
+	@echo "Executable size: $(shell ls -lh dist/commonplace.exe | awk '{print $$5}')"
+	@echo "Archive size: $(shell ls -lh dist/commonplace-${VERSION}.tar | awk '{print $$5}')"
 
-dist/commonplace.exe: build/.install $(shell find commonplace -name '*.py')
-	${PYINSTALLER} --onefile commonplace/__main__.py --name commonplace
+dist/commonplace.tar: dist/commonplace.exe config_sample.yml
+	cp config_sample.yml dist/config.yml
+	touch dist/todo.txt
+	cd dist && tar cf "commonplace-${VERSION}.tar" *
+
+dist/commonplace.exe: build/.install $(shell find commonplace -name '*.py') icon.png
+	${PYINSTALLER} \
+		--icon icon.png \
+		--onefile commonplace/__main__.py \
+		--name commonplace
