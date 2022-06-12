@@ -19,7 +19,9 @@ def main():
         print(VERSION)
         return
 
-    create_app().run(host="127.0.0.1", port=load_config().port)
+    cfg = load_config()
+    print(f"Starting server at 127.0.0.1:{cfg.port}")
+    create_app().run(host="127.0.0.1", port=cfg.port)
 
 
 def create_app():
@@ -48,21 +50,32 @@ def load_config() -> Config:
 
 
 def load_yaml_config() -> YamlConfig:
-    config_file = Path("config.yaml")
+    config_file = get_my_path() / "config.yml"
+    print(config_file)
     if "COMMONPLACE_CONFIG" in os.environ:
         config_file = Path(os.environ["COMMONPLACE_CONFIG"])
-        print(config_file)
         # if passed explicitly and doesn't exist, throw an error:
         if not config_file.exists():
             raise CliException(f"COMMONPLACE_CONFIG {config_file.absolute()} does not exist.")
 
     if not config_file.exists():
+        print("Using default config")
         return YamlConfig()
 
+    print(f"Loading config from {config_file.absolute()}")
     with open(config_file, "r", encoding="utf8") as file:
         data = yaml.safe_load(file)
 
     return from_dict(data_class=YamlConfig, data=data)
+
+
+def get_my_path() -> Path:
+    if getattr(sys, 'frozen', False):
+        # Note: the real directory where PyInstaller extracts and runs the code from is sys._MEIPASS
+        # But we want the path of the executable so we can access neighboring files like the config.
+        return Path(sys.executable).parent
+
+    return Path(os.path.dirname(os.path.abspath(__file__)))
 
 
 class CliException(Exception):

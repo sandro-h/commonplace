@@ -1,0 +1,110 @@
+{
+  "name": "commonplace",
+  "displayName": "Commonplace",
+  "description": "Commonplace VSCode extension",
+  "publisher": "sandro-h",
+  "repository": "commonplace",
+  "version": "0.1.0",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.47.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "commonplace.clean",
+        "title": "Clean Done Todos"
+      },
+      {
+        "command": "commonplace.trash",
+        "title": "Trash Done Todos"
+      },
+      {
+        "command": "commonplace.copy",
+        "title": "Copy Without Indentation"
+      },
+      {
+        "command": "commonplace.showPreview",
+        "title": "Show Commonplace preview",
+        "icon": "$(open-preview)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "commonplace.clean",
+          "when": "resourceFilename =~ /todo.txt$/",
+          "group": "commonplace@1"
+        },
+        {
+          "command": "commonplace.trash",
+          "when": "resourceFilename =~ /todo.txt$/",
+          "group": "commonplace@2"
+        },
+        {
+          "command": "commonplace.copy",
+          "when": "resourceFilename =~ /todo.txt$/",
+          "group": "commonplace@3"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "commonplace.showPreview",
+          "when": "resourceFilename =~ /todo.txt$/",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Commonplace",
+      "properties": {
+        "commonplace.todoFileName": {
+          "type": "string",
+          "default": "todo.txt",
+          "description": "Filename recognized as a todo file by Commonplace."
+        },
+        "commonplace.restUrl": {
+          "type": "string",
+          "default": "http://localhost:8082",
+          "description": "REST url of the Commonplace backend"
+        },
+        "commonplace.ticketPattern": {
+          "type": "string",
+          "default": "",
+          "description": "Regex pattern of tickets keys (e.g. JIRA). Commonplace will tell VSCode to treat them as links."
+        },
+        "commonplace.ticketUrl": {
+          "type": "string",
+          "default": "",
+          "description": "URL to use for the tickets identified by commonplace.ticketPattern. The string $1 will be replaced by the ticket key."
+        }
+      }
+    }
+  },
+  "main": "./out/extension",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "package": "vsce package -o commonplace.vsix",
+    "watch": "tsc -watch -p ./"
+  },
+  "dependencies": {
+    "fullcalendar": "^3.9.0",
+    "jquery": "^3.6.0",
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^10.14.17",
+    "@types/node-fetch": "^2.5.7",
+    "@types/vscode": "^1.47.0",
+    "typescript": "^3.5.1",
+    "vsce": "^2.6.7"
+  }
+}

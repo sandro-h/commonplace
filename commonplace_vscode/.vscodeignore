@@ -1,0 +1,10 @@
+playground/
+node_modules/**/*
+!node_modules/node-fetch/**/*
+!node_modules/whatwg-url/**/*
+!node_modules/webidl-conversions/**/*
+!node_modules/tr46/**/*
+!node_modules/fullcalendar/dist/fullcalendar.min.js
+!node_modules/fullcalendar/dist/fullcalendar.min.css
+!node_modules/moment/min/moment.min.js
+!node_modules/jquery/dist/jquery.min.js

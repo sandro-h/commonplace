@@ -6,3 +6,6 @@ dist/
 notes.txt
 commonplace.log
 config.yaml
+commonplace_vscode/node_modules
+commonplace_vscode/out
+commonplace_vscode/*.vsix

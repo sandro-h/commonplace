@@ -3,8 +3,9 @@ PYINSTALLER=venv/Scripts/pyinstaller
 FLASK=venv/Scripts/flask
 PYTEST=venv/Scripts/pytest
 PYLINT=venv/Scripts/pylint
+BASE_VERSION=$(shell cat version.txt)
 BUILD_NUMBER=0
-VERSION=$(shell cat version.txt).${BUILD_NUMBER}
+VERSION=${BASE_VERSION}.${BUILD_NUMBER}
 
 venv:
 	python3 -m venv venv
@@ -55,6 +56,16 @@ start-background: install
 		${FLASK} run > commonplace.log 2>&1 & \
 	)
 
+.PHONY: vscode_extension
+vscode_extension: commonplace_vscode/node_modules
+	cd commonplace_vscode && \
+	npm version ${BASE_VERSION} --allow-same-version && \
+	npm run package
+
+commonplace_vscode/node_modules: commonplace_vscode/package.json
+	cd commonplace_vscode && \
+	npm install --unsafe-perm
+
 .PHONY: update-version
 update-version:
 	sed 's/^VERSION = .*/VERSION = "${VERSION}"/' commonplace/__main__.py > commonplace/__main__.py.tmp
@@ -68,9 +79,10 @@ pkg: update-version dist/commonplace.tar
 	@echo "Executable size: $(shell ls -lh dist/commonplace.exe | awk '{print $$5}')"
 	@echo "Archive size: $(shell ls -lh dist/commonplace-${VERSION}.tar | awk '{print $$5}')"
 
-dist/commonplace.tar: dist/commonplace.exe config_sample.yml
+dist/commonplace.tar: dist/commonplace.exe config_sample.yml vscode_extension
 	cp config_sample.yml dist/config.yml
 	touch dist/todo.txt
+	cp commonplace_vscode/commonplace.vsix dist/
 	cd dist && tar cf "commonplace-${VERSION}.tar" *
 
 dist/commonplace.exe: build/.install $(shell find commonplace -name '*.py') icon.png
@@ -78,3 +90,4 @@ dist/commonplace.exe: build/.install $(shell find commonplace -name '*.py') icon
 		--icon icon.png \
 		--onefile commonplace/__main__.py \
 		--name commonplace
+

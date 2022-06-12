@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es5",
+		"outDir": "out",
+		"lib": [
+			"es2019"
+		],
+		"sourceMap": true,
+		"rootDir": "src"
+	},
+	"exclude": [
+		"node_modules"
+	]
+}
