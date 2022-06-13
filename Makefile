@@ -74,6 +74,7 @@ update-version:
 
 .PHONY: pkg
 pkg: update-version dist/commonplace.tar
+	@echo "::set-output name=version::${VERSION}"
 	@echo ======================
 	@echo "Version: $(shell dist\commonplace.exe --version)"
 	@echo "Executable size: $(shell ls -lh dist/commonplace.exe | awk '{print $$5}')"
@@ -91,3 +92,7 @@ dist/commonplace.exe: build/.install $(shell find commonplace -name '*.py') icon
 		--onefile commonplace/__main__.py \
 		--name commonplace
 
+.PHONY: release
+release:
+	git tag v${VERSION}
+	git push origin v${VERSION}
