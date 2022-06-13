@@ -3,7 +3,7 @@ PYINSTALLER=venv/Scripts/pyinstaller
 FLASK=venv/Scripts/flask
 PYTEST=venv/Scripts/pytest
 PYLINT=venv/Scripts/pylint
-BASE_VERSION=$(shell cat version.txt)
+BASE_VERSION=0.1.0
 BUILD_NUMBER=0
 VERSION=${BASE_VERSION}.${BUILD_NUMBER}
 
@@ -94,5 +94,5 @@ dist/commonplace.exe: build/.install $(shell find commonplace -name '*.py') icon
 
 .PHONY: release
 release:
-	git tag v${VERSION}
-	git push origin v${VERSION}
+	git tag v${BASE_VERSION}
+	git push origin v${BASE_VERSION}
