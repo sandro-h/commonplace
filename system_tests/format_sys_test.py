@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from system_tests.sys_test_util import TESTDATA_DIR, dedent, request_format
+from system_tests.sys_test_util import TESTDATA_DIR, dedent, request_fold, request_format
 
 
 @pytest.mark.parametrize(
@@ -136,3 +136,46 @@ def test_full_format(golden):
 
     # Then
     assert fmt == golden.out["output"]
+
+
+@pytest.mark.parametrize(
+    "content,expected_fold",
+    [
+        (
+            """\
+            [] bla1
+            [] bla2
+            [x] bla3
+            """,
+            "",
+        ),
+        (
+            """\
+            [] bla1
+                [x] sub
+                    comments
+                    blaa
+            [] bla2
+                comments
+                comments
+                comments
+                comments
+                comments
+            [x] bla3
+                comments
+                comments
+            """,
+            """\
+            0-3
+            4-9
+            10-12
+            """,
+        ),
+    ],
+)
+def test_fold(content, expected_fold):
+    # When
+    fmt = request_fold(dedent(content))
+
+    # Then
+    assert fmt == dedent(expected_fold)

@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from commonplace.instantiate import generate_instances_of_moment
 from commonplace.models import (DocPosition, Moment, RecurringMoment, SingleMoment, Todos, WorkState)
-from commonplace.util import with_start_of_day
+from commonplace.util import get_bottom_line, with_start_of_day
 
 CAT_STYLE = "cat"
 MOM_STYLE = "mom"
@@ -120,3 +120,14 @@ def flush_last_style(state: FormatState):
 
 def only_whitespace_between(start, end, raw_content):
     return all((c.isspace() for c in raw_content[start:end]))
+
+
+def fold_todos(todos: Todos) -> str:
+    folds = ""
+    for mom in todos.moments:
+        start = mom.doc_pos.line_num
+        end = get_bottom_line(mom)
+        if end > start:
+            folds += f"{start}-{end}\n"
+
+    return folds

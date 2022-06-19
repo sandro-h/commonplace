@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
+from commonplace.models import Moment
+
 
 def with_start_of_day(date: datetime) -> datetime:
     return date.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -37,3 +39,11 @@ def parse_ymd_hms(date_str: str) -> datetime:
 
 def format_ymd(date: datetime) -> str:
     return date.strftime("%Y-%m-%d")
+
+
+def get_bottom_line(mom: Moment):
+    return max(
+        mom.doc_pos.line_num,
+        mom.comments[-1].doc_pos.line_num if mom.comments else -1,
+        get_bottom_line(mom.sub_moments[-1]) if mom.sub_moments else -1,
+    )

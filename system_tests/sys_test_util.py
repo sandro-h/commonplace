@@ -38,6 +38,12 @@ def request_format(content, optimize=True, fixed_time="2022-06-05", target="comm
     return resp.content.decode("utf8")
 
 
+def request_fold(content, target="commonplace"):
+    resp = requests.post(f"{get_url(target)}/folding", data=base64.b64encode(content.encode("utf8")))
+
+    return resp.content.decode("utf8")
+
+
 def request_clean(target="commonplace"):
     requests.post(f"{get_url(target)}/clean")
 
@@ -92,6 +98,8 @@ def align_sibylgo_result(data):
 def dedent(content):
     """Removes the base indentation from a multi-line string.
     Allows to properly indent multiline strings in these tests for better readability."""
+    if not content:
+        return content
     parts = content.split("\n")
     indent = len(re.match(r"^(\s*)", parts[0] if parts[0] else parts[1]).group(1))
     return "\n".join([p[indent:] for p in parts])

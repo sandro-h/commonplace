@@ -3,7 +3,7 @@ PYINSTALLER=venv/Scripts/pyinstaller
 FLASK=venv/Scripts/flask
 PYTEST=venv/Scripts/pytest
 PYLINT=venv/Scripts/pylint
-BASE_VERSION=0.1.0
+BASE_VERSION=0.2.0
 BUILD_NUMBER=0
 VERSION=${BASE_VERSION}.${BUILD_NUMBER}
 

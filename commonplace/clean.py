@@ -3,6 +3,7 @@ from typing import List, Tuple
 from commonplace.line_iterator import StringLineIterator, each_line
 from commonplace.models import Moment, ParseConfig, WorkState
 from commonplace.parse import parse_moments_string
+from commonplace.util import get_bottom_line
 
 
 def clean_done_moments(todo_file, parse_config: ParseConfig):
@@ -71,14 +72,6 @@ def decide_delete(line, to_delete, to_delete_index, prev_line_was_deleted):
 
 def get_line_range(mom: Moment):
     return (mom.doc_pos.line_num, get_bottom_line(mom))
-
-
-def get_bottom_line(mom: Moment):
-    return max(
-        mom.doc_pos.line_num,
-        mom.comments[-1].doc_pos.line_num if mom.comments else -1,
-        get_bottom_line(mom.sub_moments[-1]) if mom.sub_moments else -1,
-    )
 
 
 def with_newline(content):
