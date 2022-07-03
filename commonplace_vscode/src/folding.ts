@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { CommonplaceConfig } from './config';
 import { foldTodos } from './client';
-import { todoOrTrashSelector } from './util';
+import { todoOrTrashSelector, trashLangId } from './util';
 
 export function activate(cfg: CommonplaceConfig) {
 	vscode.languages.registerFoldingRangeProvider(
@@ -19,9 +19,7 @@ class CommonplaceFoldingRangeProvider implements vscode.FoldingRangeProvider {
 	}
 
 	async provideFoldingRanges(document: vscode.TextDocument, context: vscode.FoldingContext, token: vscode.CancellationToken): Promise<vscode.FoldingRange[]> {
-		const text = document.getText();
-
-		const foldLines = await foldTodos(this.restUrl, text);
+		const foldLines = await foldTodos(document, this.restUrl);
 		return foldLines.map(line => {
 			let parts = line.split('-');
 			return new vscode.FoldingRange(

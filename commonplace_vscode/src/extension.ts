@@ -5,6 +5,7 @@ import * as commands from './commands';
 import * as preview from './preview';
 import * as links from './links';
 import { VSCodeCommonplaceConfig } from './config';
+import { todoOrTrashSelector } from './util';
 
 // this method is called when vs code is activated
 export function activate(context: vscode.ExtensionContext) {

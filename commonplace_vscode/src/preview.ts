@@ -122,7 +122,7 @@ class CommonplacePreviewPanel {
 
 	public async updatePreview() {
 		try {
-			const previewResp = await preview(this._cfg.getRestUrl(), this._editor.document.getText());
+			const previewResp = await preview(this._editor.document, this._cfg.getRestUrl());
 			this._panel.webview.postMessage({ command: 'update', preview: previewResp });
 		}
 		catch (err) {

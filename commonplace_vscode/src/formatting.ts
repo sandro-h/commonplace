@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { CommonplaceConfig } from './config';
 import { formatTodos } from './client';
-import { todoOrTrashSelector, trashLangId } from './util';
+import { todoOrTrashSelector } from './util';
 
 type FormatDefinition = {
 	dec: vscode.TextEditorDecorationType;
@@ -126,30 +126,20 @@ function parseFormatting(formattingLines: string[], formats: Record<string, Form
 export function activate(context: vscode.ExtensionContext, cfg: CommonplaceConfig) {
 	const formats = initFormats(context);
 	let activeEditor: vscode.TextEditor | null = null;
-	let timeout = null;
 
 	setActiveEditor(vscode.window.activeTextEditor);
-	triggerUpdateDecorations();
+	updateDecorations();
 
 	vscode.window.onDidChangeActiveTextEditor(editor => {
 		setActiveEditor(editor);
-		triggerUpdateDecorations();
+		updateDecorations();
 	}, null, context.subscriptions);
 
 	vscode.workspace.onDidChangeTextDocument(event => {
 		if (activeEditor && event.document === activeEditor.document) {
-			triggerUpdateDecorations();
+			updateDecorations();
 		}
 	}, null, context.subscriptions);
-
-
-	function triggerUpdateDecorations() {
-		if (!activeEditor) return;
-		if (timeout) {
-			clearTimeout(timeout);
-		}
-		timeout = setTimeout(updateDecorations, 250);
-	}
 
 	function setActiveEditor(editor: vscode.TextEditor) {
 		activeEditor = isTodoEditor(editor) ? editor : null;
@@ -163,11 +153,9 @@ export function activate(context: vscode.ExtensionContext, cfg: CommonplaceConfi
 	async function updateDecorations() {
 		if (!activeEditor) return;
 
-		const text = activeEditor.document.getText();
-
 		let formatLines: string[];
 		try {
-			formatLines = await formatTodos(cfg.getRestUrl(), text, activeEditor.document.languageId == trashLangId);
+			formatLines = await formatTodos(activeEditor.document, cfg.getRestUrl());
 		}
 		catch (err) {
 			vscode.window.showErrorMessage(`Failed format todos: ${err}`);

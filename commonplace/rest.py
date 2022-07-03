@@ -80,6 +80,30 @@ def do_fold_todos():
         return fold_todos(todos)
 
 
+@root.route("/all", methods=["POST"])
+def do_all():
+    with measure_time("b64decode"):
+        content = base64.b64decode(request.data).decode("utf8")
+
+    fixed_time = parse_ymd(request.args.get("fixed_time"))
+    format_type = request.args.get("type", TODO_FORMAT)
+
+    with measure_time("parse"):
+        todos = parse_moments_string(content, ParseConfig())
+
+    result = {}
+    with measure_time("format"):
+        result["format"] = format_todos(todos, content, format_type=format_type, fixed_time=fixed_time)
+
+    with measure_time("fold"):
+        result["fold"] = fold_todos(todos)
+
+    # Not implemented yet:
+    result["preview"] = {}
+
+    return result
+
+
 @root.route("/clean", methods=["POST"])
 def clean_todos():
     backup(config().todo_file, config().backup_dir)
