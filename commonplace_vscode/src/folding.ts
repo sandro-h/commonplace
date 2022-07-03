@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { CommonplaceConfig } from './config';
 import { foldTodos } from './client';
-import { todoOrTrashSelector, trashLangId } from './util';
+import { todoOrTrashSelector } from './util';
 
 export function activate(cfg: CommonplaceConfig) {
 	vscode.languages.registerFoldingRangeProvider(

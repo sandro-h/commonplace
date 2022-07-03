@@ -3,7 +3,7 @@ import os
 import pytest
 from commonplace.format import TRASH_FORMAT
 
-from system_tests.sys_test_util import TESTDATA_DIR, dedent, request_fold, request_format
+from system_tests.sys_test_util import TESTDATA_DIR, dedent, request_fold, request_format, request_outline
 
 
 @pytest.mark.parametrize(
@@ -191,3 +191,29 @@ def test_fold(content, expected_fold):
 
     # Then
     assert fmt == dedent(expected_fold)
+
+
+@pytest.mark.golden_test("testdata/outline.golden.yml")
+def test_outline(golden):
+    # Given
+    with open(os.path.join(TESTDATA_DIR, golden["input"]["todo_file"]), "rb") as file:
+        todo = file.read()
+
+    # When
+    fmt = request_outline(todo.decode("utf8"))
+
+    # Then
+    assert fmt == golden.out["output"]
+
+
+@pytest.mark.golden_test("testdata/outline_trash.golden.yml")
+def test_outline_trash(golden):
+    # Given
+    with open(os.path.join(TESTDATA_DIR, golden["input"]["todo_file"]), "rb") as file:
+        todo = file.read()
+
+    # When
+    fmt = request_outline(todo.decode("utf8"), format_type=TRASH_FORMAT)
+
+    # Then
+    assert fmt == golden.out["output"]

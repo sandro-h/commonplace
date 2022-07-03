@@ -71,6 +71,11 @@ export async function foldTodos(document: vscode.TextDocument, restUrl: string):
     return res["fold"].split(/\r?\n/);
 }
 
+export async function outlineTodos(document: vscode.TextDocument, restUrl: string): Promise<Object[]> {
+    const res = await fetchAll(document, restUrl);
+    return res["outline"];
+}
+
 export async function preview(document: vscode.TextDocument, restUrl: string): Promise<string[]> {
     const res = await fetchAll(document, restUrl);
     return res["preview"];

@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from typing import List
 
 from commonplace.instantiate import generate_instances_of_moment
-from commonplace.models import (DocPosition, Moment, RecurringMoment, SingleMoment, Todos, WorkState)
+from commonplace.models import (DocPosition, Moment, Outline, RecurringMoment, SingleMoment, Todos, WorkState)
 from commonplace.util import get_bottom_line, with_start_of_day
 
 TODO_FORMAT = "todo"
@@ -146,3 +147,31 @@ def fold_todos(todos: Todos) -> str:
             folds += f"{start}-{end}\n"
 
     return folds
+
+
+def outline_todos(todos: Todos, raw_content: str, format_type: str = TODO_FORMAT) -> List[Outline]:
+    outline = []
+    for mom in todos.moments:
+        if format_type == TODO_FORMAT and mom.work_state == WorkState.DONE:
+            continue
+
+        detail = ""
+        if isinstance(mom, SingleMoment):
+            if mom.start:
+                detail += extract(raw_content, mom.start.doc_pos)
+            if mom.end and (not mom.start or mom.end.doc_pos != mom.start.doc_pos):
+                detail += " - " + extract(raw_content, mom.end.doc_pos)
+
+        elif isinstance(mom, RecurringMoment):
+            detail += extract(raw_content, mom.recurrence.ref_date.doc_pos)
+
+        if mom.time_of_day:
+            detail += " " + extract(raw_content, mom.time_of_day.doc_pos)
+
+        outline.append(Outline(name=mom.name, line=mom.doc_pos.line_num, detail=detail))
+
+    return outline
+
+
+def extract(content: str, doc_pos: DocPosition) -> str:
+    return content[doc_pos.offset:doc_pos.offset + doc_pos.length]

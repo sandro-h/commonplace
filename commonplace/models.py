@@ -153,3 +153,10 @@ class Instance:  # pylint: disable=too-many-instance-attributes
     done: bool = False
     work_state: WorkState = WorkState.NEW
     sub_instances: List = field(default_factory=list)
+
+
+@dataclass
+class Outline:
+    name: str
+    line: int
+    detail: str = ""

@@ -45,6 +45,12 @@ def request_fold(content, target="commonplace"):
     return resp.content.decode("utf8")
 
 
+def request_outline(content, format_type=TODO_FORMAT, target="commonplace"):
+    resp = requests.post(f"{get_url(target)}/outline?type={format_type}", data=base64.b64encode(content.encode("utf8")))
+
+    return resp.content.decode("utf8")
+
+
 def request_clean(target="commonplace"):
     requests.post(f"{get_url(target)}/clean")
 

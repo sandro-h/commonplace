@@ -1,0 +1,287 @@
+input:
+  todo_file: test_todo.txt
+output: |
+  {
+    "outline": [
+      {
+        "detail": "", 
+        "line": 4, 
+        "name": "umdolo"
+      }, 
+      {
+        "detail": "", 
+        "line": 7, 
+        "name": "iquaUt en ima dminimv eniamqui"
+      }, 
+      {
+        "detail": " - 31.3.22", 
+        "line": 11, 
+        "name": "uat Duisauteiru"
+      }, 
+      {
+        "detail": " - 31.10.22", 
+        "line": 14, 
+        "name": "nrep rehen"
+      }, 
+      {
+        "detail": "", 
+        "line": 17, 
+        "name": "velites"
+      }, 
+      {
+        "detail": "", 
+        "line": 23, 
+        "name": "rExc"
+      }, 
+      {
+        "detail": "", 
+        "line": 27, 
+        "name": "ade seruntm"
+      }, 
+      {
+        "detail": "", 
+        "line": 36, 
+        "name": "radipis"
+      }, 
+      {
+        "detail": "", 
+        "line": 45, 
+        "name": "turE xcepte urs"
+      }, 
+      {
+        "detail": "", 
+        "line": 49, 
+        "name": "tcon se ctetu"
+      }, 
+      {
+        "detail": "", 
+        "line": 53, 
+        "name": "duntutla boree"
+      }, 
+      {
+        "detail": "", 
+        "line": 87, 
+        "name": "ecatcup idatatn \"onproi dentsu ntinculp aquioffi ciades eruntmo\" ll itani mide stla bo Lor emipsum dolorsi"
+      }, 
+      {
+        "detail": "", 
+        "line": 90, 
+        "name": "por inci-did"
+      }, 
+      {
+        "detail": "1.6.21", 
+        "line": 91, 
+        "name": "untu tlab oree tdolor"
+      }, 
+      {
+        "detail": "1.5.21", 
+        "line": 92, 
+        "name": "em ag naali quaU teni"
+      }, 
+      {
+        "detail": "", 
+        "line": 95, 
+        "name": "amcola"
+      }, 
+      {
+        "detail": "", 
+        "line": 100, 
+        "name": "iaturE"
+      }, 
+      {
+        "detail": "", 
+        "line": 120, 
+        "name": "dmini mveniam"
+      }, 
+      {
+        "detail": "", 
+        "line": 123, 
+        "name": "ur edolorinrep"
+      }, 
+      {
+        "detail": "", 
+        "line": 126, 
+        "name": "eufugi atnullap ariatu / rExcepteur"
+      }, 
+      {
+        "detail": "", 
+        "line": 129, 
+        "name": "ntmol litan imi dest laboru Lorem"
+      }, 
+      {
+        "detail": "", 
+        "line": 131, 
+        "name": "ipsum dolors ita?"
+      }, 
+      {
+        "detail": "", 
+        "line": 133, 
+        "name": "metcon sect"
+      }, 
+      {
+        "detail": "", 
+        "line": 141, 
+        "name": "ddoei://usm.odtempo.rin/cidid?u=ntutlabore8 etdol ore mag naaliquaU"
+      }, 
+      {
+        "detail": "", 
+        "line": 144, 
+        "name": "teirured olori"
+      }, 
+      {
+        "detail": "", 
+        "line": 145, 
+        "name": "nrepreh ender it inv"
+      }, 
+      {
+        "detail": "", 
+        "line": 161, 
+        "name": "est Loremipsu mdo lorsi"
+      }, 
+      {
+        "detail": "", 
+        "line": 163, 
+        "name": "tam etco ns ectetu"
+      }, 
+      {
+        "detail": "", 
+        "line": 165, 
+        "name": "radip iscinge lits eddoeiusmo dt emp"
+      }, 
+      {
+        "detail": "", 
+        "line": 174, 
+        "name": "reeuf"
+      }, 
+      {
+        "detail": "", 
+        "line": 186, 
+        "name": "etcons"
+      }, 
+      {
+        "detail": "", 
+        "line": 187, 
+        "name": "ecte tu"
+      }, 
+      {
+        "detail": "", 
+        "line": 217, 
+        "name": "trudex"
+      }, 
+      {
+        "detail": "", 
+        "line": 225, 
+        "name": "itinvolu ptate velitesse ci llumdol"
+      }, 
+      {
+        "detail": "", 
+        "line": 226, 
+        "name": "oreeufu++ giat nullap"
+      }, 
+      {
+        "detail": "", 
+        "line": 227, 
+        "name": "ariat urExc epteur sint occa"
+      }, 
+      {
+        "detail": "", 
+        "line": 233, 
+        "name": "datatn"
+      }, 
+      {
+        "detail": "", 
+        "line": 254, 
+        "name": "tincu lpaqu ioff iciadese"
+      }, 
+      {
+        "detail": "", 
+        "line": 257, 
+        "name": "sectetura dipisci"
+      }, 
+      {
+        "detail": "", 
+        "line": 258, 
+        "name": "ngelit"
+      }, 
+      {
+        "detail": "", 
+        "line": 262, 
+        "name": "uipe"
+      }, 
+      {
+        "detail": "", 
+        "line": 264, 
+        "name": "isaut eiru redo"
+      }, 
+      {
+        "detail": "every 02.12", 
+        "line": 292, 
+        "name": "eeufug"
+      }, 
+      {
+        "detail": "every 25.9", 
+        "line": 293, 
+        "name": "iatnu"
+      }, 
+      {
+        "detail": "every 3.12", 
+        "line": 294, 
+        "name": "llap"
+      }, 
+      {
+        "detail": "every 02.11", 
+        "line": 295, 
+        "name": "ari"
+      }, 
+      {
+        "detail": "every 01.12", 
+        "line": 296, 
+        "name": "atu"
+      }, 
+      {
+        "detail": "every 15.12", 
+        "line": 297, 
+        "name": "rExc"
+      }, 
+      {
+        "detail": "every 11.08", 
+        "line": 298, 
+        "name": "epte"
+      }, 
+      {
+        "detail": "every 18.08", 
+        "line": 299, 
+        "name": "ursin"
+      }, 
+      {
+        "detail": "every 30.10", 
+        "line": 300, 
+        "name": "tocc"
+      }, 
+      {
+        "detail": "every 2nd saturday", 
+        "line": 305, 
+        "name": "nonpro/ident"
+      }, 
+      {
+        "detail": "every 4th saturday", 
+        "line": 306, 
+        "name": "sun"
+      }, 
+      {
+        "detail": "every 15.", 
+        "line": 307, 
+        "name": "tincu & lpaquio"
+      }, 
+      {
+        "detail": "every 28.", 
+        "line": 308, 
+        "name": "ffici & adeseru"
+      }, 
+      {
+        "detail": "every 3.", 
+        "line": 309, 
+        "name": "ntmoll itanim idestl"
+      }
+    ]
+  }
