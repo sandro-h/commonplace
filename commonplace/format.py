@@ -150,27 +150,29 @@ def fold_todos(todos: Todos) -> str:
 
 
 def outline_todos(todos: Todos, raw_content: str, format_type: str = TODO_FORMAT) -> List[Outline]:
-    outline = []
-    for mom in todos.moments:
-        if format_type == TODO_FORMAT and mom.work_state == WorkState.DONE:
-            continue
+    return [outline(mom, raw_content) for mom in todos.moments if format_type != TODO_FORMAT or mom.work_state != WorkState.DONE]
 
-        detail = ""
-        if isinstance(mom, SingleMoment):
-            if mom.start:
-                detail += extract(raw_content, mom.start.doc_pos)
-            if mom.end and (not mom.start or mom.end.doc_pos != mom.start.doc_pos):
-                detail += " - " + extract(raw_content, mom.end.doc_pos)
 
-        elif isinstance(mom, RecurringMoment):
-            detail += extract(raw_content, mom.recurrence.ref_date.doc_pos)
+def outline(mom: Moment, raw_content: str) -> Outline:
+    detail = ""
+    if isinstance(mom, SingleMoment):
+        if mom.start:
+            detail += extract(raw_content, mom.start.doc_pos)
+        if mom.end and (not mom.start or mom.end.doc_pos != mom.start.doc_pos):
+            detail += " - " + extract(raw_content, mom.end.doc_pos)
 
-        if mom.time_of_day:
-            detail += " " + extract(raw_content, mom.time_of_day.doc_pos)
+    elif isinstance(mom, RecurringMoment):
+        detail += extract(raw_content, mom.recurrence.ref_date.doc_pos)
 
-        outline.append(Outline(name=mom.name, line=mom.doc_pos.line_num, detail=detail))
+    if mom.time_of_day:
+        detail += " " + extract(raw_content, mom.time_of_day.doc_pos)
 
-    return outline
+    return Outline(
+        name=mom.name,
+        start_line=mom.doc_pos.line_num,
+        end_line=get_bottom_line(mom),
+        detail=detail,
+    )
 
 
 def extract(content: str, doc_pos: DocPosition) -> str:

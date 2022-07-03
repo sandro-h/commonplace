@@ -158,5 +158,6 @@ class Instance:  # pylint: disable=too-many-instance-attributes
 @dataclass
 class Outline:
     name: str
-    line: int
+    start_line: int
+    end_line: int
     detail: str = ""

@@ -23,8 +23,8 @@ class CommonplaceSymbolProvider implements vscode.DocumentSymbolProvider {
 		return outline.map(o => new vscode.DocumentSymbol(
 			o["name"], o["detail"],
 			vscode.SymbolKind.Event,
-			new vscode.Range(o["line"], 0, o["line"], 0),
-			new vscode.Range(o["line"], 0, o["line"], 0)
+			new vscode.Range(o["start_line"], 0, o["end_line"], 1000),
+			new vscode.Range(o["start_line"], 0, o["end_line"], 1000),
 		));
 	}
 }
