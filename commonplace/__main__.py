@@ -11,7 +11,7 @@ from commonplace.models import Config, YamlConfig
 from commonplace.rest import root
 
 # Will be set to VERSION in Makefile during make pkg:
-VERSION = "0.1.0.0"
+VERSION = "0.2.0.0"
 
 
 def main():

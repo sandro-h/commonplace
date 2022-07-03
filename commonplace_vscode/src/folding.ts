@@ -1,10 +1,11 @@
 import * as vscode from 'vscode';
 import { CommonplaceConfig } from './config';
 import { foldTodos } from './client';
+import { todoOrTrashSelector } from './util';
 
 export function activate(cfg: CommonplaceConfig) {
 	vscode.languages.registerFoldingRangeProvider(
-		{ pattern: `**/${cfg.getTodoFileName()}` },
+		todoOrTrashSelector,
 		new CommonplaceFoldingRangeProvider(cfg.getRestUrl())
 	);
 }

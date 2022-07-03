@@ -8,7 +8,7 @@ from flask import Blueprint, current_app, request
 from commonplace.backup import backup
 
 from commonplace.clean import clean_done_moments, trash_done_moments
-from commonplace.format import fold_todos, format_todos
+from commonplace.format import fold_todos, format_todos, TODO_FORMAT
 from commonplace.instantiate import generate_instances
 from commonplace.models import Config, ParseConfig
 from commonplace.parse import parse_moments_string
@@ -59,12 +59,13 @@ def do_format_todos():
         content = base64.b64decode(request.data).decode("utf8")
 
     fixed_time = parse_ymd(request.args.get("fixed_time"))
+    format_type = request.args.get("type", TODO_FORMAT)
 
     with measure_time("parse"):
         todos = parse_moments_string(content, ParseConfig())
 
     with measure_time("format"):
-        return format_todos(todos, content, fixed_time=fixed_time)
+        return format_todos(todos, content, format_type=format_type, fixed_time=fixed_time)
 
 
 @root.route("/folding", methods=["POST"])

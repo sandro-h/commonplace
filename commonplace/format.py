@@ -5,6 +5,8 @@ from commonplace.instantiate import generate_instances_of_moment
 from commonplace.models import (DocPosition, Moment, RecurringMoment, SingleMoment, Todos, WorkState)
 from commonplace.util import get_bottom_line, with_start_of_day
 
+TODO_FORMAT = "todo"
+TRASH_FORMAT = "trash"
 CAT_STYLE = "cat"
 MOM_STYLE = "mom"
 COM_STYLE = "com"
@@ -25,14 +27,19 @@ class FormatState:
     fixed_time: datetime | None = None
 
 
-def format_todos(todos: Todos, raw_content: str, fixed_time=None) -> str:
+def format_todos(todos: Todos, raw_content: str, format_type: str = TODO_FORMAT, fixed_time=None) -> str:
     state = FormatState(raw_content=raw_content, fixed_time=fixed_time)
 
     for cat in todos.categories:
         add_format_line(state, CAT_STYLE, cat.doc_pos)
 
     for mom in todos.moments:
-        format_moment(state, mom)
+        if format_type == TODO_FORMAT:
+            format_moment(state, mom)
+        elif format_type == TRASH_FORMAT:
+            format_trash_moment(state, mom)
+        else:
+            raise ValueError(f"Unknown format '{format_type}'")
 
     if state.last_style:
         flush_last_style(state)
@@ -60,6 +67,14 @@ def format_moment(state: FormatState, mom: Moment, parent_done=False):
 
     for sub in mom.sub_moments:
         format_moment(state, sub, parent_done=done)
+
+
+def format_trash_moment(state: FormatState, mom: Moment):
+    add_format_line(state, MOM_STYLE, mom.doc_pos)
+    format_dates(state, mom)
+
+    for sub in mom.sub_moments:
+        format_trash_moment(state, sub)
 
 
 def format_dates(state: FormatState, mom: Moment):

@@ -16,6 +16,20 @@
     "onStartupFinished"
   ],
   "contributes": {
+    "languages": [
+      {
+        "id": "todo",
+        "filenames": [
+          "todo.txt"
+        ]
+      },
+      {
+        "id": "todo-trash",
+        "filenames": [
+          "todo-trash.txt"
+        ]
+      }
+    ],
     "commands": [
       {
         "command": "commonplace.clean",
@@ -39,24 +53,24 @@
       "editor/context": [
         {
           "command": "commonplace.clean",
-          "when": "resourceFilename =~ /todo.txt$/",
+          "when": "resourceLangId == todo",
           "group": "commonplace@1"
         },
         {
           "command": "commonplace.trash",
-          "when": "resourceFilename =~ /todo.txt$/",
+          "when": "resourceLangId == todo",
           "group": "commonplace@2"
         },
         {
           "command": "commonplace.copy",
-          "when": "resourceFilename =~ /todo.txt$/",
+          "when": "resourceLangId == todo || resourceLangId == todo-trash",
           "group": "commonplace@3"
         }
       ],
       "editor/title": [
         {
           "command": "commonplace.showPreview",
-          "when": "resourceFilename =~ /todo.txt$/",
+          "when": "resourceLangId == todo",
           "group": "navigation"
         }
       ]
@@ -64,11 +78,6 @@
     "configuration": {
       "title": "Commonplace",
       "properties": {
-        "commonplace.todoFileName": {
-          "type": "string",
-          "default": "todo.txt",
-          "description": "Filename recognized as a todo file by Commonplace."
-        },
         "commonplace.restUrl": {
           "type": "string",
           "default": "http://localhost:8082",

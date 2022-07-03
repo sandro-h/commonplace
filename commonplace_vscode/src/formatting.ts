@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { CommonplaceConfig } from './config';
 import { formatTodos } from './client';
+import { todoOrTrashSelector, trashLangId } from './util';
 
 type FormatDefinition = {
 	dec: vscode.TextEditorDecorationType;
@@ -150,13 +151,13 @@ export function activate(context: vscode.ExtensionContext, cfg: CommonplaceConfi
 		timeout = setTimeout(updateDecorations, 250);
 	}
 
-	function isTodoEditor(editor: vscode.TextEditor) {
-		if (!editor || !editor.document) return false;
-		return editor.document.fileName.indexOf(cfg.getTodoFileName()) === editor.document.fileName.length - cfg.getTodoFileName().length;
-	}
-
 	function setActiveEditor(editor: vscode.TextEditor) {
 		activeEditor = isTodoEditor(editor) ? editor : null;
+	}
+
+	function isTodoEditor(editor: vscode.TextEditor) {
+		if (!editor || !editor.document) return false;
+		return vscode.languages.match(todoOrTrashSelector, editor.document) > 0;
 	}
 
 	async function updateDecorations() {
@@ -166,7 +167,7 @@ export function activate(context: vscode.ExtensionContext, cfg: CommonplaceConfi
 
 		let formatLines: string[];
 		try {
-			formatLines = await formatTodos(cfg.getRestUrl(), text);
+			formatLines = await formatTodos(cfg.getRestUrl(), text, activeEditor.document.languageId == trashLangId);
 		}
 		catch (err) {
 			vscode.window.showErrorMessage(`Failed format todos: ${err}`);

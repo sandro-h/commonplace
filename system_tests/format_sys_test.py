@@ -1,6 +1,7 @@
 import os
 
 import pytest
+from commonplace.format import TRASH_FORMAT
 
 from system_tests.sys_test_util import TESTDATA_DIR, dedent, request_fold, request_format
 
@@ -123,16 +124,27 @@ def test_due_soon_daylight_savings():
     """)
 
 
-@pytest.mark.golden_test("testdata/format_optimized.golden.yml")
+@pytest.mark.golden_test("testdata/format.golden.yml")
 def test_full_format(golden):
     # Given
     with open(os.path.join(TESTDATA_DIR, golden["input"]["todo_file"]), "rb") as file:
         todo = file.read()
 
-    optimize = "true" if golden['input']['optimize'] else "false"
+    # When
+    fmt = request_format(todo.decode("utf8"))
+
+    # Then
+    assert fmt == golden.out["output"]
+
+
+@pytest.mark.golden_test("testdata/format_trash.golden.yml")
+def test_format_trash(golden):
+    # Given
+    with open(os.path.join(TESTDATA_DIR, golden["input"]["todo_file"]), "rb") as file:
+        todo = file.read()
 
     # When
-    fmt = request_format(todo.decode("utf8"), optimize)
+    fmt = request_format(todo.decode("utf8"), format_type=TRASH_FORMAT)
 
     # Then
     assert fmt == golden.out["output"]

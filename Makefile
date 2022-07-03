@@ -3,7 +3,7 @@ PYINSTALLER=venv/Scripts/pyinstaller
 FLASK=venv/Scripts/flask
 PYTEST=venv/Scripts/pytest
 PYLINT=venv/Scripts/pylint
-BASE_VERSION=0.2.0
+BASE_VERSION=0.3.0
 BUILD_NUMBER=0
 VERSION=${BASE_VERSION}.${BUILD_NUMBER}
 
@@ -45,7 +45,7 @@ start: install
 	COMMONPLACE_CONFIG=system_test_config.yaml \
 	FLASK_APP=commonplace.__main__ \
 	FLASK_ENV=development \
-	${FLASK} run
+	${FLASK} run --port=$(shell grep port system_test_config.yaml | grep -Eo "[0-9]+")
 
 .PHONY: start-background
 start-background: install

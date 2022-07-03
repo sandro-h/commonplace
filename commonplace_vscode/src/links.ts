@@ -1,10 +1,11 @@
 import * as vscode from 'vscode';
 import { CommonplaceConfig } from './config';
+import { todoOrTrashSelector } from './util';
 
 export function activate(cfg: CommonplaceConfig) {
 
 	vscode.languages.registerDocumentLinkProvider(
-		{ pattern: `**/${cfg.getTodoFileName()}` },
+		todoOrTrashSelector,
 		new CommonplaceDocumentLinkProvider(cfg)
 	);
 }

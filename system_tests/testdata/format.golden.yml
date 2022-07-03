@@ -1,6 +1,5 @@
 input:
   todo_file: test_todo.txt
-  optimize: true
 output: |
   20,31,cat
   4339,4347,cat

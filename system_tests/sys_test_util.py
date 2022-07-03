@@ -6,6 +6,7 @@ import re
 from functools import reduce
 
 import requests
+from commonplace.format import TODO_FORMAT
 from commonplace.rest import EnhancedJSONEncoder
 from commonplace.util import format_ymd
 
@@ -31,8 +32,8 @@ def request_instances(content, start: str, end: str, target="commonplace"):
     return resp.json()
 
 
-def request_format(content, optimize=True, fixed_time="2022-06-05", target="commonplace"):
-    resp = requests.post(f"{get_url(target)}/format?fixed_time={fixed_time}&optimize={optimize}",
+def request_format(content, format_type=TODO_FORMAT, fixed_time="2022-06-05", target="commonplace"):
+    resp = requests.post(f"{get_url(target)}/format?fixed_time={fixed_time}&type={format_type}",
                          data=base64.b64encode(content.encode("utf8")))
 
     return resp.content.decode("utf8")
