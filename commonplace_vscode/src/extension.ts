@@ -6,6 +6,7 @@ import * as commands from './commands';
 import * as preview from './preview';
 import * as links from './links';
 import { VSCodeCommonplaceConfig } from './config';
+import { foo } from '@commonplace/lib';
 
 // this method is called when vs code is activated
 export function activate(context: vscode.ExtensionContext) {
@@ -15,4 +16,6 @@ export function activate(context: vscode.ExtensionContext) {
 	commands.activate(context, VSCodeCommonplaceConfig);
 	preview.activate(context, VSCodeCommonplaceConfig);
 	links.activate(VSCodeCommonplaceConfig);
+	let orange = vscode.window.createOutputChannel("Orange");
+	orange.appendLine(foo());
 }
