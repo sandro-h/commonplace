@@ -1,3 +1,5 @@
-export function foo(): string {
-    return 'bar';
-}
+import { foo } from "./foo";
+import { bar } from "./bar";
+
+export { foo };
+export { bar };

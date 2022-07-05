@@ -1,3 +1,5 @@
-import { foo } from '@commonplace/lib';
+import { foo, bar } from '@commonplace/lib';
+// import { bar } from '@commonplace/lib/bar';
 
-foo();
+console.log(foo());
+console.log(bar());
