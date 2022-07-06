@@ -1,5 +1,11 @@
 {
     "extends": "../../tsconfig.base.json",
+    "exclude": [
+        "**/*.test.ts",
+        "**/*.stub.ts",
+        "node_modules",
+        "dist"
+    ],
     "compilerOptions": {
         "outDir": "./dist/"
     },
