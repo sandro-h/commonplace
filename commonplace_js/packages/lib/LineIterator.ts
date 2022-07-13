@@ -1,5 +1,26 @@
 import { Line } from './models';
 
+export function StringLineIterator(content: string): LineIterator {
+    return new LineIterator(splitLikeFile(content));
+}
+
+function* splitLikeFile(content: string) {
+    let prev: string | null = null;
+    for (const line of content.split(/(\n)/)) {
+        if (prev === null) {
+            prev = line
+        }
+        else {
+            yield prev + '\n'
+            prev = null
+        }
+    }
+
+    if (prev) { // deliberately also ignoring empty string
+        yield prev
+    }
+}
+
 export class LineIterator implements Iterator<Line> {
 
     private lines: Iterator<string>
@@ -20,7 +41,7 @@ export class LineIterator implements Iterator<Line> {
         if (this.lastLine === null) {
             throw new Error('Cannot undo before reading at least one line')
         }
-        this.undoing = false
+        this.undoing = true
     }
 
     next(): IteratorResult<Line, any> {
@@ -33,6 +54,7 @@ export class LineIterator implements Iterator<Line> {
         }
         else {
             const next = this.lines.next()
+            console.log('', next)
             line = next.done ? null : next.value
             // Explicitly return last line if empty, since we'd lose this information because
             // we strip newlines in the returned content
