@@ -1,3 +1,5 @@
+import { getWeekOfMonthWithOptions } from "date-fns/fp"
+
 export enum WorkState {
     NEW = 'new',
     WAITING = 'waiting',
@@ -25,10 +27,14 @@ export interface ParseConfig {
     nWeeklyPattern: RegExp
     monthlyPattern: RegExp
     yearlyPattern: RegExp
-    // fixedTime: datetime | None = None
+    fixedTime: Date | null
 }
 
-export function NewParseConfig(): ParseConfig {
+export function getNow(config: ParseConfig): Date {
+    return config.fixedTime ? config.fixedTime : new Date()
+}
+
+export function createParseConfig(): ParseConfig {
     const defaultConfig = {
         categoryDelim: '------',
         priorityMark: '!',
@@ -37,21 +43,22 @@ export function NewParseConfig(): ParseConfig {
         rightStateBracket: ']',
         leftDateBracket: '(',
         rightDateBracket: ')',
-        dateFormats: ['%d.%m.%y', '%d.%m.%Y'],
-        timeFormat: '%H:%M',
+        dateFormats: ['dd.MM.yy', 'dd.M.yy', 'd.M.yy', 'dd.MM.yyyy', 'd.M.yyyy', 'd.MM.yyyy'],
+        timeFormat: 'HH:mm',
         stateMarks: {
             'x': WorkState.DONE,
             'w': WorkState.WAITING,
             'p': WorkState.IN_PROGRESS,
         },
         stateMarkPattern: new RegExp(/^\[\s*([xwp]?)\s*\]/),
-        weekDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+        weekDays: ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
         dailyPattern: new RegExp(/(every day|today)/, 'i'),
         weeklyPattern: new RegExp(/every (monday|tuesday|wednesday|thursday|friday|saturday|sunday)/, 'i'),
         nths: ['2nd', '3rd', '4th'],
         nWeeklyPattern: new RegExp(/every (2nd|3rd|4th) (monday|tuesday|wednesday|thursday|friday|saturday|sunday)/, 'i'),
         monthlyPattern: new RegExp(/every (\d{1,2})\.?$/, 'i'),
         yearlyPattern: new RegExp(/every (\d{1,2})\.(\d{1,2})\.?$/, 'i'),
+        fixedTime: null
     }
 
     return { ...defaultConfig }
@@ -83,7 +90,7 @@ export interface Comment {
 
 export interface MomentDateTime {
     dt: Date
-    docPos: DocPosition
+    docPos?: DocPosition
 }
 
 export interface Moment {
@@ -92,14 +99,14 @@ export interface Moment {
     subMoments: Moment[]
     workState: WorkState
     priority: number
-    category: Category
-    timeOfDay: MomentDateTime
+    category: Category | null
+    timeOfDay: MomentDateTime | null
     docPos: DocPosition
 }
 
 export interface SingleMoment extends Moment {
-    start: MomentDateTime
-    end: MomentDateTime
+    start: MomentDateTime | null
+    end: MomentDateTime | null
 }
 
 export enum RecurrenceType {
@@ -124,6 +131,13 @@ export interface RecurringMoment extends Moment {
 export interface Todos {
     categories: Category[]
     moments: Moment[]
+}
+
+export function createTodos() {
+    return {
+        categories: [],
+        moments: []
+    }
 }
 
 export interface Instance {

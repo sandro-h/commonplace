@@ -13,12 +13,17 @@ from commonplace.util import format_ymd
 TESTDATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "testdata")
 SIBYL_URL = "http://localhost:8082"
 COMMONPLACE_URL = "http://127.0.0.1:5000"
+COMMONPLACE_JS_URL = "http://127.0.0.1:3000"
 
 
-def request_parse(content, target="commonplace"):
-    resp = requests.post(f"{get_url(target)}/parse?fixed_time=2022-05-22", data=base64.b64encode(content.encode("utf8")))
+def request_parse(content, target="commonplace_js"):
+    resp = requests.post(f"{get_url(target)}/parse?fixed_time=2022-05-22&localTime=true",
+                         data=base64.b64encode(content.encode("utf8")),
+                         headers={"Content-Type": "application/text"})
     if target == "sibyl":
         return align_sibylgo_result(resp.json())
+    if target == "commonplace_js":
+        return align_commonplace_js_result(resp.json())
 
     return resp.json()
 
@@ -32,7 +37,7 @@ def request_instances(content, start: str, end: str, target="commonplace"):
     return resp.json()
 
 
-def request_format(content, format_type=TODO_FORMAT, fixed_time="2022-06-05", target="commonplace"):
+def request_format(content, format_type=TODO_FORMAT, fixed_time="2022-06-05", target="commonplace_js"):
     resp = requests.post(f"{get_url(target)}/format?fixed_time={fixed_time}&type={format_type}",
                          data=base64.b64encode(content.encode("utf8")))
 
@@ -64,6 +69,9 @@ def get_url(target):
         return COMMONPLACE_URL
     elif target == "sibyl":
         return SIBYL_URL
+    elif target == "commonplace_js":
+        print("ja")
+        return COMMONPLACE_JS_URL
     else:
         assert False, f"Invalid target {target}"
 
@@ -97,6 +105,31 @@ def align_sibylgo_result(data):
     ]
 
     del data["MomentsByID"]
+    j = json.dumps(data, indent=2, sort_keys=True)
+    aligned = reduce(lambda c, r: c.replace(r[0], r[1]), repls, j)
+    return json.loads(aligned)
+
+
+def align_commonplace_js_result(data):
+    repls = [
+        ('"docPos"', '"doc_pos"'),
+        ('"lineNum"', '"line_num"'),
+        ('"timeOfDay"', '"time_of_day"'),
+        ('"workState"', '"work_state"'),
+        ('"subMoments"', '"sub_moments"'),
+        ('"sub_moments": null', '"sub_moments": []'),
+        ('"comments": null', '"comments": []'),
+        ("999+02:00", "+02:00"),
+        ("999+01:00", "+01:00"),
+        (".000", ""),
+        (".999", ".999999"),
+        ('"recurrence": {', '"recurrence": {'),
+        ('"recurrence": "', '"recurrence_type": "'),
+        ("refDate", "ref_date"),
+        ("inProgress", "in_progress"),
+        ("recurrenceType", "recurrence_type"),
+    ]
+
     j = json.dumps(data, indent=2, sort_keys=True)
     aligned = reduce(lambda c, r: c.replace(r[0], r[1]), repls, j)
     return json.loads(aligned)

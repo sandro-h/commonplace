@@ -54,7 +54,6 @@ export class LineIterator implements Iterator<Line> {
         }
         else {
             const next = this.lines.next()
-            console.log('', next)
             line = next.done ? null : next.value
             // Explicitly return last line if empty, since we'd lose this information because
             // we strip newlines in the returned content
