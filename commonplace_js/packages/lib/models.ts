@@ -109,6 +109,10 @@ export interface SingleMoment extends Moment {
     end: MomentDateTime | null
 }
 
+export function isSingleMoment(mom: Moment) {
+    return 'start' in mom;
+}
+
 export enum RecurrenceType {
     DAILY = 'daily',
     WEEKLY = 'weekly',
@@ -126,6 +130,10 @@ export interface Recurrence {
 
 export interface RecurringMoment extends Moment {
     recurrence: Recurrence
+}
+
+export function isRecurringMoment(mom: Moment) {
+    return 'recurrence' in mom;
 }
 
 export interface Todos {
@@ -146,9 +154,9 @@ export interface Instance {
     end: Date
     endsInRange: boolean
     originDocPos: DocPosition
-    timeOfDay: Date
+    timeOfDay: Date | null
     priority: number
-    category: Category
+    category: Category | null
     done: boolean
     workState: WorkState
     subInstances: Instance[]

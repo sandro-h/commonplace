@@ -1,5 +1,12 @@
 import { parseMomentsString } from './parse'
-import { inLocalTimezone } from './util'
+import { generateInstances, generateInstancesOfMoment } from './instantiate'
+import { inLocalTimezone, isoTimezoneOffset } from './util'
 
-export { parseMomentsString }
-export { inLocalTimezone }
+
+export {
+    parseMomentsString,
+    generateInstances,
+    generateInstancesOfMoment,
+    inLocalTimezone,
+    isoTimezoneOffset
+}

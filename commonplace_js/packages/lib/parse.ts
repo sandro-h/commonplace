@@ -1,6 +1,9 @@
 import { addDays, endOfDay, isValid, parse, setDay, startOfDay } from "date-fns"
 import { LineIterator, StringLineIterator } from "./LineIterator"
-import { Category, createTodos as createTodos, getNow, Line, Moment, MomentDateTime, ParseConfig, Recurrence, RecurrenceType, RecurringMoment, SingleMoment, Todos, WorkState } from "./models"
+import {
+    Category, createTodos as createTodos, getNow, Line, Moment, MomentDateTime, ParseConfig, Recurrence, RecurrenceType,
+    RecurringMoment, SingleMoment, Todos, WorkState
+} from "./models"
 import { epochWeek } from "./util"
 
 interface ParseState {
@@ -298,6 +301,7 @@ function tryParseMonthly(content: string, config: ParseConfig): Recurrence | nul
 
     const now = getNow(config)
     const refDate = new Date(now.getFullYear(), now.getMonth(), day)
+
     return {
         recurrenceType: RecurrenceType.MONTHLY,
         refDate: { dt: refDate },

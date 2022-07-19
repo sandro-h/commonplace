@@ -28,12 +28,17 @@ def request_parse(content, target="commonplace_js"):
     return resp.json()
 
 
-def request_instances(content, start: str, end: str, target="commonplace"):
-    resp = requests.post(f"{get_url(target)}/instances?start={reformat_to_ymd(start)}&end={reformat_to_ymd(end)}",
-                         data=base64.b64encode(content.encode("utf8")))
+def request_instances(content, start: str, end: str, target="commonplace_js"):
+    resp = requests.post(f"{get_url(target)}/instances?start={reformat_to_ymd(start)}&end={reformat_to_ymd(end)}&localTime=true",
+                         data=base64.b64encode(content.encode("utf8")),
+                         headers={"Content-Type": "application/text"})
+
     if target == "sibyl":
         return align_sibylgo_result(resp.json())
-
+    if target == "commonplace_js":
+        res = align_commonplace_js_result(resp.json())
+        add_null_categories(res)
+        return res
     return resp.json()
 
 
@@ -119,8 +124,6 @@ def align_commonplace_js_result(data):
         ('"subMoments"', '"sub_moments"'),
         ('"sub_moments": null', '"sub_moments": []'),
         ('"comments": null', '"comments": []'),
-        ("999+02:00", "+02:00"),
-        ("999+01:00", "+01:00"),
         (".000", ""),
         (".999", ".999999"),
         ('"recurrence": {', '"recurrence": {'),
@@ -128,11 +131,22 @@ def align_commonplace_js_result(data):
         ("refDate", "ref_date"),
         ("inProgress", "in_progress"),
         ("recurrenceType", "recurrence_type"),
+        ("originDocPos", "origin_doc_pos"),
+        ("subInstances", "sub_instances"),
+        ("endsInRange", "ends_in_range"),
     ]
 
     j = json.dumps(data, indent=2, sort_keys=True)
     aligned = reduce(lambda c, r: c.replace(r[0], r[1]), repls, j)
     return json.loads(aligned)
+
+
+def add_null_categories(instances):
+    for i in instances:
+        if "category" not in i:
+            i["category"] = None
+
+        add_null_categories(i.get("sub_instances", []))
 
 
 def dedent(content):
