@@ -44,21 +44,26 @@ def request_instances(content, start: str, end: str, target="commonplace_js"):
 
 def request_format(content, format_type=TODO_FORMAT, fixed_time="2022-06-05", target="commonplace_js"):
     resp = requests.post(f"{get_url(target)}/format?fixed_time={fixed_time}&type={format_type}",
-                         data=base64.b64encode(content.encode("utf8")))
+                         data=base64.b64encode(content.encode("utf8")),
+                         headers={"Content-Type": "application/text"})
 
     return resp.content.decode("utf8")
 
 
-def request_fold(content, target="commonplace"):
-    resp = requests.post(f"{get_url(target)}/folding", data=base64.b64encode(content.encode("utf8")))
+def request_fold(content, target="commonplace_js"):
+    resp = requests.post(f"{get_url(target)}/folding",
+                         data=base64.b64encode(content.encode("utf8")),
+                         headers={"Content-Type": "application/text"})
 
     return resp.content.decode("utf8")
 
 
-def request_outline(content, format_type=TODO_FORMAT, target="commonplace"):
-    resp = requests.post(f"{get_url(target)}/outline?type={format_type}", data=base64.b64encode(content.encode("utf8")))
+def request_outline(content, format_type=TODO_FORMAT, target="commonplace_js"):
+    resp = requests.post(f"{get_url(target)}/outline?type={format_type}",
+                         data=base64.b64encode(content.encode("utf8")),
+                         headers={"Content-Type": "application/text"})
 
-    return resp.content.decode("utf8")
+    return resp.json()
 
 
 def request_clean(target="commonplace"):

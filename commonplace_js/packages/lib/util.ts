@@ -1,4 +1,5 @@
 import { format, getUnixTime, minutesToHours } from "date-fns"
+import { Moment } from "./models";
 
 /**
  * returns the number of weeks passed since January 1, 1970 UTC.
@@ -19,4 +20,12 @@ export function isoTimezoneOffset(date: Date): string {
     const hours = minutesToHours(offsetMinutes) + '';
     const minutes = (offsetMinutes % 60) + '';
     return `${sign}${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`
+}
+
+export function getBottomLine(mom: Moment): number {
+    return Math.max(
+        mom.docPos.lineNum,
+        mom.comments.length > 0 ? mom.comments[mom.comments.length - 1].docPos.lineNum : -1,
+        mom.subMoments.length > 0 ? getBottomLine(mom.subMoments[mom.subMoments.length - 1]) : -1,
+    )
 }

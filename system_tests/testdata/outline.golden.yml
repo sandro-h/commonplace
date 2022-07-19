@@ -1,343 +1,229 @@
 input:
   todo_file: test_todo.txt
-output: |
-  {
-    "outline": [
-      {
-        "detail": "", 
-        "end_line": 5, 
-        "name": "umdolo", 
-        "start_line": 4
-      }, 
-      {
-        "detail": "", 
-        "end_line": 9, 
-        "name": "iquaUt en ima dminimv eniamqui", 
-        "start_line": 7
-      }, 
-      {
-        "detail": " - 31.3.22", 
-        "end_line": 12, 
-        "name": "uat Duisauteiru", 
-        "start_line": 11
-      }, 
-      {
-        "detail": " - 31.10.22", 
-        "end_line": 15, 
-        "name": "nrep rehen", 
-        "start_line": 14
-      }, 
-      {
-        "detail": "", 
-        "end_line": 21, 
-        "name": "velites", 
-        "start_line": 17
-      }, 
-      {
-        "detail": "", 
-        "end_line": 25, 
-        "name": "rExc", 
-        "start_line": 23
-      }, 
-      {
-        "detail": "", 
-        "end_line": 34, 
-        "name": "ade seruntm", 
-        "start_line": 27
-      }, 
-      {
-        "detail": "", 
-        "end_line": 43, 
-        "name": "radipis", 
-        "start_line": 36
-      }, 
-      {
-        "detail": "", 
-        "end_line": 47, 
-        "name": "turE xcepte urs", 
-        "start_line": 45
-      }, 
-      {
-        "detail": "", 
-        "end_line": 51, 
-        "name": "tcon se ctetu", 
-        "start_line": 49
-      }, 
-      {
-        "detail": "", 
-        "end_line": 85, 
-        "name": "duntutla boree", 
-        "start_line": 53
-      }, 
-      {
-        "detail": "", 
-        "end_line": 88, 
-        "name": "ecatcup idatatn \"onproi dentsu ntinculp aquioffi ciades eruntmo\" ll itani mide stla bo Lor emipsum dolorsi", 
-        "start_line": 87
-      }, 
-      {
-        "detail": "", 
-        "end_line": 90, 
-        "name": "por inci-did", 
-        "start_line": 90
-      }, 
-      {
-        "detail": "1.6.21", 
-        "end_line": 91, 
-        "name": "untu tlab oree tdolor", 
-        "start_line": 91
-      }, 
-      {
-        "detail": "1.5.21", 
-        "end_line": 93, 
-        "name": "em ag naali quaU teni", 
-        "start_line": 92
-      }, 
-      {
-        "detail": "", 
-        "end_line": 98, 
-        "name": "amcola", 
-        "start_line": 95
-      }, 
-      {
-        "detail": "", 
-        "end_line": 117, 
-        "name": "iaturE", 
-        "start_line": 100
-      }, 
-      {
-        "detail": "", 
-        "end_line": 122, 
-        "name": "dmini mveniam", 
-        "start_line": 120
-      }, 
-      {
-        "detail": "", 
-        "end_line": 124, 
-        "name": "ur edolorinrep", 
-        "start_line": 123
-      }, 
-      {
-        "detail": "", 
-        "end_line": 127, 
-        "name": "eufugi atnullap ariatu / rExcepteur", 
-        "start_line": 126
-      }, 
-      {
-        "detail": "", 
-        "end_line": 129, 
-        "name": "ntmol litan imi dest laboru Lorem", 
-        "start_line": 129
-      }, 
-      {
-        "detail": "", 
-        "end_line": 131, 
-        "name": "ipsum dolors ita?", 
-        "start_line": 131
-      }, 
-      {
-        "detail": "", 
-        "end_line": 135, 
-        "name": "metcon sect", 
-        "start_line": 133
-      }, 
-      {
-        "detail": "", 
-        "end_line": 143, 
-        "name": "ddoei://usm.odtempo.rin/cidid?u=ntutlabore8 etdol ore mag naaliquaU", 
-        "start_line": 141
-      }, 
-      {
-        "detail": "", 
-        "end_line": 144, 
-        "name": "teirured olori", 
-        "start_line": 144
-      }, 
-      {
-        "detail": "", 
-        "end_line": 151, 
-        "name": "nrepreh ender it inv", 
-        "start_line": 145
-      }, 
-      {
-        "detail": "", 
-        "end_line": 161, 
-        "name": "est Loremipsu mdo lorsi", 
-        "start_line": 161
-      }, 
-      {
-        "detail": "", 
-        "end_line": 163, 
-        "name": "tam etco ns ectetu", 
-        "start_line": 163
-      }, 
-      {
-        "detail": "", 
-        "end_line": 172, 
-        "name": "radip iscinge lits eddoeiusmo dt emp", 
-        "start_line": 165
-      }, 
-      {
-        "detail": "", 
-        "end_line": 183, 
-        "name": "reeuf", 
-        "start_line": 174
-      }, 
-      {
-        "detail": "", 
-        "end_line": 186, 
-        "name": "etcons", 
-        "start_line": 186
-      }, 
-      {
-        "detail": "", 
-        "end_line": 216, 
-        "name": "ecte tu", 
-        "start_line": 187
-      }, 
-      {
-        "detail": "", 
-        "end_line": 219, 
-        "name": "trudex", 
-        "start_line": 217
-      }, 
-      {
-        "detail": "", 
-        "end_line": 225, 
-        "name": "itinvolu ptate velitesse ci llumdol", 
-        "start_line": 225
-      }, 
-      {
-        "detail": "", 
-        "end_line": 226, 
-        "name": "oreeufu++ giat nullap", 
-        "start_line": 226
-      }, 
-      {
-        "detail": "", 
-        "end_line": 227, 
-        "name": "ariat urExc epteur sint occa", 
-        "start_line": 227
-      }, 
-      {
-        "detail": "", 
-        "end_line": 252, 
-        "name": "datatn", 
-        "start_line": 233
-      }, 
-      {
-        "detail": "", 
-        "end_line": 256, 
-        "name": "tincu lpaqu ioff iciadese", 
-        "start_line": 254
-      }, 
-      {
-        "detail": "", 
-        "end_line": 257, 
-        "name": "sectetura dipisci", 
-        "start_line": 257
-      }, 
-      {
-        "detail": "", 
-        "end_line": 261, 
-        "name": "ngelit", 
-        "start_line": 258
-      }, 
-      {
-        "detail": "", 
-        "end_line": 263, 
-        "name": "uipe", 
-        "start_line": 262
-      }, 
-      {
-        "detail": "", 
-        "end_line": 287, 
-        "name": "isaut eiru redo", 
-        "start_line": 264
-      }, 
-      {
-        "detail": "every 02.12", 
-        "end_line": 292, 
-        "name": "eeufug", 
-        "start_line": 292
-      }, 
-      {
-        "detail": "every 25.9", 
-        "end_line": 293, 
-        "name": "iatnu", 
-        "start_line": 293
-      }, 
-      {
-        "detail": "every 3.12", 
-        "end_line": 294, 
-        "name": "llap", 
-        "start_line": 294
-      }, 
-      {
-        "detail": "every 02.11", 
-        "end_line": 295, 
-        "name": "ari", 
-        "start_line": 295
-      }, 
-      {
-        "detail": "every 01.12", 
-        "end_line": 296, 
-        "name": "atu", 
-        "start_line": 296
-      }, 
-      {
-        "detail": "every 15.12", 
-        "end_line": 297, 
-        "name": "rExc", 
-        "start_line": 297
-      }, 
-      {
-        "detail": "every 11.08", 
-        "end_line": 298, 
-        "name": "epte", 
-        "start_line": 298
-      }, 
-      {
-        "detail": "every 18.08", 
-        "end_line": 299, 
-        "name": "ursin", 
-        "start_line": 299
-      }, 
-      {
-        "detail": "every 30.10", 
-        "end_line": 300, 
-        "name": "tocc", 
-        "start_line": 300
-      }, 
-      {
-        "detail": "every 2nd saturday", 
-        "end_line": 305, 
-        "name": "nonpro/ident", 
-        "start_line": 305
-      }, 
-      {
-        "detail": "every 4th saturday", 
-        "end_line": 306, 
-        "name": "sun", 
-        "start_line": 306
-      }, 
-      {
-        "detail": "every 15.", 
-        "end_line": 307, 
-        "name": "tincu & lpaquio", 
-        "start_line": 307
-      }, 
-      {
-        "detail": "every 28.", 
-        "end_line": 308, 
-        "name": "ffici & adeseru", 
-        "start_line": 308
-      }, 
-      {
-        "detail": "every 3.", 
-        "end_line": 309, 
-        "name": "ntmoll itanim idestl", 
-        "start_line": 309
-      }
-    ]
-  }
+output:
+  outline:
+  - name: umdolo
+    startLine: 4
+    endLine: 5
+    detail: ''
+  - name: iquaUt en ima dminimv eniamqui
+    startLine: 7
+    endLine: 9
+    detail: ''
+  - name: uat Duisauteiru
+    startLine: 11
+    endLine: 12
+    detail: ' - 31.3.22'
+  - name: nrep rehen
+    startLine: 14
+    endLine: 15
+    detail: ' - 31.10.22'
+  - name: velites
+    startLine: 17
+    endLine: 21
+    detail: ''
+  - name: rExc
+    startLine: 23
+    endLine: 25
+    detail: ''
+  - name: ade seruntm
+    startLine: 27
+    endLine: 34
+    detail: ''
+  - name: radipis
+    startLine: 36
+    endLine: 43
+    detail: ''
+  - name: turE xcepte urs
+    startLine: 45
+    endLine: 47
+    detail: ''
+  - name: tcon se ctetu
+    startLine: 49
+    endLine: 51
+    detail: ''
+  - name: duntutla boree
+    startLine: 53
+    endLine: 85
+    detail: ''
+  - name: ecatcup idatatn "onproi dentsu ntinculp aquioffi ciades eruntmo" ll itani
+      mide stla bo Lor emipsum dolorsi
+    startLine: 87
+    endLine: 88
+    detail: ''
+  - name: por inci-did
+    startLine: 90
+    endLine: 90
+    detail: ''
+  - name: untu tlab oree tdolor
+    startLine: 91
+    endLine: 91
+    detail: 1.6.21 - 1.6.21
+  - name: em ag naali quaU teni
+    startLine: 92
+    endLine: 93
+    detail: 1.5.21 - 1.5.21
+  - name: amcola
+    startLine: 95
+    endLine: 98
+    detail: ''
+  - name: iaturE
+    startLine: 100
+    endLine: 117
+    detail: ''
+  - name: dmini mveniam
+    startLine: 120
+    endLine: 122
+    detail: ''
+  - name: ur edolorinrep
+    startLine: 123
+    endLine: 124
+    detail: ''
+  - name: eufugi atnullap ariatu / rExcepteur
+    startLine: 126
+    endLine: 127
+    detail: ''
+  - name: ntmol litan imi dest laboru Lorem
+    startLine: 129
+    endLine: 129
+    detail: ''
+  - name: ipsum dolors ita?
+    startLine: 131
+    endLine: 131
+    detail: ''
+  - name: metcon sect
+    startLine: 133
+    endLine: 135
+    detail: ''
+  - name: ddoei://usm.odtempo.rin/cidid?u=ntutlabore8 etdol ore mag naaliquaU
+    startLine: 141
+    endLine: 143
+    detail: ''
+  - name: teirured olori
+    startLine: 144
+    endLine: 144
+    detail: ''
+  - name: nrepreh ender it inv
+    startLine: 145
+    endLine: 151
+    detail: ''
+  - name: est Loremipsu mdo lorsi
+    startLine: 161
+    endLine: 161
+    detail: ''
+  - name: tam etco ns ectetu
+    startLine: 163
+    endLine: 163
+    detail: ''
+  - name: radip iscinge lits eddoeiusmo dt emp
+    startLine: 165
+    endLine: 172
+    detail: ''
+  - name: reeuf
+    startLine: 174
+    endLine: 183
+    detail: ''
+  - name: etcons
+    startLine: 186
+    endLine: 186
+    detail: ''
+  - name: ecte tu
+    startLine: 187
+    endLine: 216
+    detail: ''
+  - name: trudex
+    startLine: 217
+    endLine: 219
+    detail: ''
+  - name: itinvolu ptate velitesse ci llumdol
+    startLine: 225
+    endLine: 225
+    detail: ''
+  - name: oreeufu++ giat nullap
+    startLine: 226
+    endLine: 226
+    detail: ''
+  - name: ariat urExc epteur sint occa
+    startLine: 227
+    endLine: 227
+    detail: ''
+  - name: datatn
+    startLine: 233
+    endLine: 252
+    detail: ''
+  - name: tincu lpaqu ioff iciadese
+    startLine: 254
+    endLine: 256
+    detail: ''
+  - name: sectetura dipisci
+    startLine: 257
+    endLine: 257
+    detail: ''
+  - name: ngelit
+    startLine: 258
+    endLine: 261
+    detail: ''
+  - name: uipe
+    startLine: 262
+    endLine: 263
+    detail: ''
+  - name: isaut eiru redo
+    startLine: 264
+    endLine: 287
+    detail: ''
+  - name: eeufug
+    startLine: 292
+    endLine: 292
+    detail: every 02.12
+  - name: iatnu
+    startLine: 293
+    endLine: 293
+    detail: every 25.9
+  - name: llap
+    startLine: 294
+    endLine: 294
+    detail: every 3.12
+  - name: ari
+    startLine: 295
+    endLine: 295
+    detail: every 02.11
+  - name: atu
+    startLine: 296
+    endLine: 296
+    detail: every 01.12
+  - name: rExc
+    startLine: 297
+    endLine: 297
+    detail: every 15.12
+  - name: epte
+    startLine: 298
+    endLine: 298
+    detail: every 11.08
+  - name: ursin
+    startLine: 299
+    endLine: 299
+    detail: every 18.08
+  - name: tocc
+    startLine: 300
+    endLine: 300
+    detail: every 30.10
+  - name: nonpro/ident
+    startLine: 305
+    endLine: 305
+    detail: every 2nd saturday
+  - name: sun
+    startLine: 306
+    endLine: 306
+    detail: every 4th saturday
+  - name: tincu & lpaquio
+    startLine: 307
+    endLine: 307
+    detail: every 15.
+  - name: ffici & adeseru
+    startLine: 308
+    endLine: 308
+    detail: every 28.
+  - name: ntmoll itanim idestl
+    startLine: 309
+    endLine: 309
+    detail: every 3.
