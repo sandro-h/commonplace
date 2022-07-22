@@ -1,30 +1,23 @@
 import * as vscode from 'vscode';
-import { outlineTodos } from './client';
-import { CommonplaceConfig } from './config';
+import { requestOutline } from './lib';
 import { todoOrTrashSelector } from './util';
 
-export function activate(cfg: CommonplaceConfig) {
+export function activate() {
 	vscode.languages.registerDocumentSymbolProvider(
 		todoOrTrashSelector,
-		new CommonplaceSymbolProvider(cfg.getRestUrl())
+		new CommonplaceSymbolProvider()
 	);
 }
 
 class CommonplaceSymbolProvider implements vscode.DocumentSymbolProvider {
 
-	restUrl: string;
-
-	constructor(restUrl: string) {
-		this.restUrl = restUrl
-	}
-
 	async provideDocumentSymbols(document: vscode.TextDocument, token: vscode.CancellationToken): Promise<vscode.DocumentSymbol[]> {
-		const outline = await outlineTodos(document, this.restUrl);
+		const outline = await requestOutline(document);
 		return outline.map(o => new vscode.DocumentSymbol(
-			o["name"], o["detail"],
+			o.name, o.detail,
 			vscode.SymbolKind.Event,
-			new vscode.Range(o["start_line"], 0, o["end_line"], 1000),
-			new vscode.Range(o["start_line"], 0, o["end_line"], 1000),
+			new vscode.Range(o.startLine, 0, o.endLine, 1000),
+			new vscode.Range(o.startLine, 0, o.endLine, 1000),
 		));
 	}
 }

@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import { CommonplaceConfig } from './config';
-import { formatTodos } from './client';
 import { todoOrTrashSelector } from './util';
+import { FormatStyle, } from '@commonplace/lib';
+import { requestFormat } from './lib';
 
 type FormatDefinition = {
 	dec: vscode.TextEditorDecorationType;
@@ -95,7 +95,7 @@ function initFormats(context: vscode.ExtensionContext): Record<string, FormatDef
 	return fmts;
 }
 
-function parseFormatting(formattingLines: string[], formats: Record<string, FormatDefinition>, document: vscode.TextDocument): Record<string, Format> {
+function applyFormatting(styles: FormatStyle[], formats: Record<string, FormatDefinition>, document: vscode.TextDocument): Record<string, Format> {
 	const res: Record<string, Format> = {};
 	for (let key in formats) {
 		res[key] = {
@@ -104,17 +104,12 @@ function parseFormatting(formattingLines: string[], formats: Record<string, Form
 		};
 	}
 
-	formattingLines.forEach(line => {
-		const parts = line.split(',');
-		if (parts.length !== 3) return;
-
-		const startPos = document.positionAt(parseInt(parts[0]));
-		const endPos = document.positionAt(parseInt(parts[1]));
-		const fmt = res[parts[2]];
+	styles.forEach(style => {
+		const fmt = res[style.style];
 
 		if (fmt) {
 			fmt.list.push({
-				range: new vscode.Range(startPos, endPos),
+				range: new vscode.Range(document.positionAt(style.start), document.positionAt(style.end)),
 				hoverMessage: fmt.hoverMessage
 			});
 		}
@@ -123,7 +118,7 @@ function parseFormatting(formattingLines: string[], formats: Record<string, Form
 	return res;
 }
 
-export function activate(context: vscode.ExtensionContext, cfg: CommonplaceConfig) {
+export function activate(context: vscode.ExtensionContext) {
 	const formats = initFormats(context);
 	let activeEditor: vscode.TextEditor | null = null;
 
@@ -153,16 +148,8 @@ export function activate(context: vscode.ExtensionContext, cfg: CommonplaceConfi
 	async function updateDecorations() {
 		if (!activeEditor) return;
 
-		let formatLines: string[];
-		try {
-			formatLines = await formatTodos(activeEditor.document, cfg.getRestUrl());
-		}
-		catch (err) {
-			vscode.window.showErrorMessage(`Failed format todos: ${err}`);
-			return;
-		}
-
-		const fmts = parseFormatting(formatLines, formats, activeEditor.document);
+		const styles = await requestFormat(activeEditor.document);
+		const fmts = applyFormatting(styles, formats, activeEditor.document)
 		for (let key in fmts) {
 			const fmt = fmts[key];
 			// Note: it's important to also set if the list is empty, to disable old decorations on the line.

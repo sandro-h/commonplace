@@ -1,32 +1,18 @@
 import * as vscode from 'vscode';
-import { CommonplaceConfig } from './config';
-import { foldTodos } from './client';
+import { requestFold } from './lib';
 import { todoOrTrashSelector } from './util';
 
-export function activate(cfg: CommonplaceConfig) {
+export function activate() {
 	vscode.languages.registerFoldingRangeProvider(
 		todoOrTrashSelector,
-		new CommonplaceFoldingRangeProvider(cfg.getRestUrl())
+		new CommonplaceFoldingRangeProvider()
 	);
 }
 
 class CommonplaceFoldingRangeProvider implements vscode.FoldingRangeProvider {
 
-	restUrl: string;
-
-	constructor(restUrl: string) {
-		this.restUrl = restUrl
-	}
-
 	async provideFoldingRanges(document: vscode.TextDocument, context: vscode.FoldingContext, token: vscode.CancellationToken): Promise<vscode.FoldingRange[]> {
-		const foldLines = await foldTodos(document, this.restUrl);
-		return foldLines.map(line => {
-			let parts = line.split('-');
-			return new vscode.FoldingRange(
-				parseInt(parts[0]),
-				parseInt(parts[1]),
-				vscode.FoldingRangeKind.Region
-			);
-		});
+		const foldLines = await requestFold(document);
+		return foldLines.map(fold => new vscode.FoldingRange(fold[0], fold[1], vscode.FoldingRangeKind.Region));
 	}
 }

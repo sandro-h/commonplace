@@ -66,11 +66,11 @@ def request_outline(content, format_type=TODO_FORMAT, target="commonplace_js"):
     return resp.json()
 
 
-def request_clean(target="commonplace"):
+def request_clean(target="commonplace_js"):
     requests.post(f"{get_url(target)}/clean")
 
 
-def request_trash(fixed_time="2022-06-05", target="commonplace"):
+def request_trash(fixed_time="2022-06-05", target="commonplace_js"):
     requests.post(f"{get_url(target)}/trash?fixed_time={fixed_time}")
 
 

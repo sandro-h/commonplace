@@ -1,10 +1,10 @@
 import { Line } from './models';
 
 export function StringLineIterator(content: string): LineIterator {
-    return new LineIterator(splitLikeFile(content));
+    return new LineIteratorImpl(splitLikeFile(content));
 }
 
-function* splitLikeFile(content: string) {
+export function* splitLikeFile(content: string) {
     let prev: string | null = null;
     for (const line of content.split(/(\n)/)) {
         if (prev === null) {
@@ -21,7 +21,11 @@ function* splitLikeFile(content: string) {
     }
 }
 
-export class LineIterator implements Iterator<Line> {
+export interface LineIterator extends Iterator<Line> {
+    undo(): void
+}
+
+export class LineIteratorImpl implements LineIterator {
 
     private lines: Iterator<string>
     private lineNumber: number
@@ -70,6 +74,7 @@ export class LineIterator implements Iterator<Line> {
             content: line.trimEnd(),
             lineNum: this.lineNumber,
             offset: this.offset,
+            originalLineLength: line.length
         };
 
         this.lastLine = line
@@ -77,5 +82,39 @@ export class LineIterator implements Iterator<Line> {
         this.offset += line.length
 
         return { done: false, value: result }
+    }
+}
+
+export class ExistingLineIterator implements LineIterator {
+    private lines: Line[]
+    private index: number
+    private undoing: boolean
+
+    constructor(lines: Line[]) {
+        this.lines = lines
+        this.index = 0
+        this.undoing = false
+    }
+
+    undo() {
+        if (this.index === 0) {
+            throw new Error('Cannot undo before reading at least one line')
+        }
+        if (this.undoing) {
+            // Mimic same behavior as LineIteratorImpl: can only undo last read line
+            return;
+        }
+        this.index--;
+        this.undoing = true;
+    }
+
+    next(): IteratorResult<Line, any> {
+        this.undoing = false;
+
+        if (this.index >= this.lines.length) {
+            return { done: true, value: null }
+        }
+
+        return { done: false, value: this.lines[this.index++] }
     }
 }

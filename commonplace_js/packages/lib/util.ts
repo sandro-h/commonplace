@@ -29,3 +29,19 @@ export function getBottomLine(mom: Moment): number {
         mom.subMoments.length > 0 ? getBottomLine(mom.subMoments[mom.subMoments.length - 1]) : -1,
     )
 }
+
+export function withNewline(content: string): string {
+    if (!content) {
+        return content
+    }
+
+    return content + (content.endsWith('\n') ? '' : '\n')
+}
+
+export function listFromIterator<T>(iter: Iterator<T>): T[] {
+    const res = []
+    for (let next = iter.next(); !next.done; next = iter.next()) {
+        res.push(next.value);
+    }
+    return res;
+}

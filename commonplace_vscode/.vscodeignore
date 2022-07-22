@@ -8,3 +8,5 @@ node_modules/**/*
 !node_modules/fullcalendar/dist/fullcalendar.min.css
 !node_modules/moment/min/moment.min.js
 !node_modules/jquery/dist/jquery.min.js
+!node_modules/@commonplace/lib/dist/**/*
+!node_modules/date-fns/index.js

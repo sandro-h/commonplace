@@ -4,9 +4,8 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "compile": "rm -rf dist/* && tsc",
-    "watch": "tsc -w",
-    "build": "webpack",
+    "compile": "rm -rf dist/* && webpack",
+    "watch": "webpack --watch",
     "test": "jest"
   },
   "keywords": [],

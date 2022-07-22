@@ -1,8 +1,9 @@
 import { parseMomentsString } from './parse'
-import { createParseConfig } from './models'
+import { createParseConfig, WorkState, Outline, Edit, EditType, InsertEdit, DeleteEdit, EOF_OFFSET } from './models'
 import { formatTodos, foldTodos, outlineTodos, TODO_FORMAT, TRASH_FORMAT, FormatStyle } from './format'
 import { generateInstances, generateInstancesOfMoment } from './instantiate'
-import { inLocalTimezone, isoTimezoneOffset } from './util'
+import { cleanDoneMoments, trashDoneMoments } from './clean'
+import { inLocalTimezone, isoTimezoneOffset, getBottomLine } from './util'
 
 
 export {
@@ -17,5 +18,15 @@ export {
     TRASH_FORMAT,
     inLocalTimezone,
     isoTimezoneOffset,
-    FormatStyle
+    FormatStyle,
+    WorkState,
+    Outline,
+    Edit,
+    EditType,
+    InsertEdit,
+    DeleteEdit,
+    EOF_OFFSET,
+    cleanDoneMoments,
+    trashDoneMoments,
+    getBottomLine
 }

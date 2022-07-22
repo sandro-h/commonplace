@@ -1,5 +1,5 @@
 import { addDays, endOfDay, isValid, parse, setDay, startOfDay } from "date-fns"
-import { LineIterator, StringLineIterator } from "./LineIterator"
+import { LineIterator, LineIteratorImpl, StringLineIterator } from "./LineIterator"
 import {
     Category, createTodos as createTodos, getNow, Line, Moment, MomentDateTime, ParseConfig, Recurrence, RecurrenceType,
     RecurringMoment, SingleMoment, Todos, WorkState
@@ -19,18 +19,16 @@ interface ParseState {
 // }
 
 export function parseMomentsString(content: string, config: ParseConfig): Todos {
-    return _parseMoments(StringLineIterator(content), config)
+    return parseMomentsLines(StringLineIterator(content), config)
 
 
 }
 
 export function parseMoments(lines: Iterator<string>, config: ParseConfig): Todos {
-    return _parseMoments(new LineIterator(lines), config)
-
-
+    return parseMomentsLines(new LineIteratorImpl(lines), config)
 }
 
-function _parseMoments(lineIter: LineIterator, config: ParseConfig): Todos {
+export function parseMomentsLines(lineIter: LineIterator, config: ParseConfig): Todos {
     const state: ParseState = { config, lineIter, todos: createTodos() }
     let line = nextLine(state.lineIter)
     while (line !== null) {

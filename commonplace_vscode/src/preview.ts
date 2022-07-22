@@ -1,12 +1,10 @@
 import * as vscode from 'vscode';
-import { preview } from './client';
-import { CommonplaceConfig } from './config';
 import { debounce } from './util';
 
-export function activate(context: vscode.ExtensionContext, cfg: CommonplaceConfig) {
+export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('commonplace.showPreview', () => {
-			CommonplacePreviewPanel.createOrShow(context.extensionUri, vscode.window.activeTextEditor, cfg);
+			CommonplacePreviewPanel.createOrShow(context.extensionUri, vscode.window.activeTextEditor);
 		})
 	);
 
@@ -15,7 +13,7 @@ export function activate(context: vscode.ExtensionContext, cfg: CommonplaceConfi
 		vscode.window.registerWebviewPanelSerializer(CommonplacePreviewPanel.viewType, {
 			async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
 				console.log(`Got state: ${state}`);
-				CommonplacePreviewPanel.revive(webviewPanel, context.extensionUri, vscode.window.activeTextEditor, cfg);
+				CommonplacePreviewPanel.revive(webviewPanel, context.extensionUri, vscode.window.activeTextEditor);
 			}
 		});
 	}
@@ -35,10 +33,9 @@ class CommonplacePreviewPanel {
 	private readonly _panel: vscode.WebviewPanel;
 	private readonly _extensionUri: vscode.Uri;
 	private readonly _editor: vscode.TextEditor;
-	private readonly _cfg: CommonplaceConfig;
 	private _disposables: vscode.Disposable[] = [];
 
-	public static createOrShow(extensionUri: vscode.Uri, editor: vscode.TextEditor, cfg: CommonplaceConfig) {
+	public static createOrShow(extensionUri: vscode.Uri, editor: vscode.TextEditor) {
 		const column = vscode.ViewColumn.Two;
 
 		// If we already have a panel, show it.
@@ -64,18 +61,17 @@ class CommonplacePreviewPanel {
 			}
 		);
 
-		CommonplacePreviewPanel.currentPanel = new CommonplacePreviewPanel(panel, extensionUri, editor, cfg);
+		CommonplacePreviewPanel.currentPanel = new CommonplacePreviewPanel(panel, extensionUri, editor);
 	}
 
-	public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, editor: vscode.TextEditor, cfg: CommonplaceConfig) {
-		CommonplacePreviewPanel.currentPanel = new CommonplacePreviewPanel(panel, extensionUri, editor, cfg);
+	public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, editor: vscode.TextEditor) {
+		CommonplacePreviewPanel.currentPanel = new CommonplacePreviewPanel(panel, extensionUri, editor);
 	}
 
-	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, editor: vscode.TextEditor, cfg: CommonplaceConfig) {
+	private constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, editor: vscode.TextEditor) {
 		this._panel = panel;
 		this._extensionUri = extensionUri;
 		this._editor = editor;
-		this._cfg = cfg;
 
 		// Set the webview's initial html content
 		this._updateWebview(this._panel.webview);
@@ -121,14 +117,14 @@ class CommonplacePreviewPanel {
 	}
 
 	public async updatePreview() {
-		try {
-			const previewResp = await preview(this._editor.document, this._cfg.getRestUrl());
-			this._panel.webview.postMessage({ command: 'update', preview: previewResp });
-		}
-		catch (err) {
-			vscode.window.showErrorMessage(`Failed preview todos: ${err}`);
-			return;
-		}
+		// try {
+		// 	const previewResp = await preview(this._editor.document);
+		// 	this._panel.webview.postMessage({ command: 'update', preview: previewResp });
+		// }
+		// catch (err) {
+		// 	vscode.window.showErrorMessage(`Failed preview todos: ${err}`);
+		// 	return;
+		// }
 	}
 
 	public dispose() {

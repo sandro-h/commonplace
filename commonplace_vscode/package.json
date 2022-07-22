@@ -78,11 +78,6 @@
     "configuration": {
       "title": "Commonplace",
       "properties": {
-        "commonplace.restUrl": {
-          "type": "string",
-          "default": "http://localhost:8082",
-          "description": "REST url of the Commonplace backend"
-        },
         "commonplace.ticketPattern": {
           "type": "string",
           "default": "",

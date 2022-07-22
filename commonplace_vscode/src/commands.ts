@@ -1,22 +1,24 @@
 import * as vscode from 'vscode';
-import { CommonplaceConfig } from './config';
-import { cleanTodos, trashTodos } from './client';
+import { cleanTodos, trashTodos } from './lib';
 
 const INDENT_PATTERN = /(^|\r?\n)(\s+)/;
+const log = vscode.window.createOutputChannel("commonplace.commands");
 
-async function handleClean(cfg: CommonplaceConfig) {
+async function handleClean() {
 	try {
-		await cleanTodos(cfg.getRestUrl());
+		await cleanTodos(vscode.window.activeTextEditor.document);
 		vscode.window.showInformationMessage('Cleaned done todos!');
 	}
 	catch (err) {
+		log.appendLine(err)
+		log.appendLine(err.stack);
 		vscode.window.showErrorMessage(`Failed to clean done todos: ${err}`);
 	}
 }
 
-async function handleTrash(cfg: CommonplaceConfig) {
+async function handleTrash() {
 	try {
-		await trashTodos(cfg.getRestUrl());
+		await trashTodos(vscode.window.activeTextEditor.document);
 		vscode.window.showInformationMessage('Trashed done todos!');
 	}
 	catch (err) {
@@ -45,8 +47,8 @@ async function handleCopyWithoutIndent() {
 	}
 }
 
-export function activate(context: vscode.ExtensionContext, cfg: CommonplaceConfig) {
-	context.subscriptions.push(vscode.commands.registerCommand('commonplace.clean', () => handleClean(cfg)));
-	context.subscriptions.push(vscode.commands.registerCommand('commonplace.trash', () => handleTrash(cfg)));
+export function activate(context: vscode.ExtensionContext) {
+	context.subscriptions.push(vscode.commands.registerCommand('commonplace.clean', handleClean));
+	context.subscriptions.push(vscode.commands.registerCommand('commonplace.trash', handleTrash));
 	context.subscriptions.push(vscode.commands.registerCommand('commonplace.copy', handleCopyWithoutIndent));
 }

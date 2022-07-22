@@ -6,17 +6,13 @@ import * as commands from './commands';
 import * as preview from './preview';
 import * as links from './links';
 import { VSCodeCommonplaceConfig } from './config';
-import { foo, bar } from '@commonplace/lib';
 
 // this method is called when vs code is activated
 export function activate(context: vscode.ExtensionContext) {
-	formatting.activate(context, VSCodeCommonplaceConfig);
-	folding.activate(VSCodeCommonplaceConfig);
-	outline.activate(VSCodeCommonplaceConfig);
-	commands.activate(context, VSCodeCommonplaceConfig);
-	preview.activate(context, VSCodeCommonplaceConfig);
+	formatting.activate(context);
+	folding.activate();
+	outline.activate();
+	commands.activate(context);
+	preview.activate(context);
 	links.activate(VSCodeCommonplaceConfig);
-	let orange = vscode.window.createOutputChannel("Orange");
-	orange.appendLine(foo());
-	orange.appendLine(bar());
 }

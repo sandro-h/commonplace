@@ -68,6 +68,7 @@ export interface Line {
     content: string
     lineNum: number
     offset: number
+    originalLineLength: number
 }
 
 export interface DocPosition {
@@ -168,3 +169,24 @@ export interface Outline {
     endLine: number
     detail: string
 }
+
+export enum EditType {
+    INSERT,
+    DELETE
+}
+
+export interface Edit {
+    type: EditType
+}
+
+export interface InsertEdit extends Edit {
+    offset: number
+    content: string
+}
+
+export interface DeleteEdit extends Edit {
+    startOffset: number
+    endOffset: number
+}
+
+export const EOF_OFFSET = -1
