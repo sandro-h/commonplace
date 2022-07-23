@@ -3,6 +3,8 @@ import { todoOrTrashSelector } from './util';
 import { FormatStyle, } from '@commonplace/lib';
 import { requestFormat } from './lib';
 
+const log = vscode.window.createOutputChannel("commonplace.formatting");
+
 type FormatDefinition = {
 	dec: vscode.TextEditorDecorationType;
 	hoverMessage?: string;
@@ -148,12 +150,15 @@ export function activate(context: vscode.ExtensionContext) {
 	async function updateDecorations() {
 		if (!activeEditor) return;
 
-		const styles = await requestFormat(activeEditor.document);
-		const fmts = applyFormatting(styles, formats, activeEditor.document)
-		for (let key in fmts) {
-			const fmt = fmts[key];
-			// Note: it's important to also set if the list is empty, to disable old decorations on the line.
-			activeEditor.setDecorations(fmt.dec, fmt.list);
-		}
+		// Using then syntax here because we ignore the reject case which happens if a newer doc version
+		// was created in the meantime.
+		requestFormat(activeEditor.document).then(styles => {
+			const fmts = applyFormatting(styles, formats, activeEditor.document)
+			for (let key in fmts) {
+				const fmt = fmts[key];
+				// Note: it's important to also set if the list is empty, to disable old decorations on the line.
+				activeEditor.setDecorations(fmt.dec, fmt.list);
+			}
+		});
 	}
 }

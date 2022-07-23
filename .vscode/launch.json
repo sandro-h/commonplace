@@ -6,11 +6,12 @@
     "configurations": [
         {
             "args": [
-                "--extensionDevelopmentPath=${workspaceFolder}"
+                "--extensionDevelopmentPath=${workspaceFolder}/vscode_extension",
+                "--disable-extensions"
             ],
             "name": "Launch Extension",
             "outFiles": [
-                "${workspaceFolder}/out/**/*.js"
+                "${workspaceFolder}/vscode_extension/out/**/*.js"
             ],
             "request": "launch",
             "type": "pwa-extensionHost"

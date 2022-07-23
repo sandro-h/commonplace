@@ -65,8 +65,14 @@ async function doFetchAll(doc: vscode.TextDocument) {
 
 function getter<T>(key: string): (document: vscode.TextDocument) => Promise<T> {
     return async (document: vscode.TextDocument) => {
+        const docVersion = document.version;
         const res = await fetchAll(document);
-        return res[key];
+        if (document.version > docVersion) {
+            // Don't use result if a new doc version was created already, otherwise we run into
+            // race conditions where it may use the result of an older doc version.
+            return Promise.reject();
+        }
+        return Promise.resolve(res[key]);
     }
 }
 
