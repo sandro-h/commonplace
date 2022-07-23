@@ -2,7 +2,7 @@ VENV_BIN=$(shell [ -d venv/bin ] && echo 'venv/bin' || echo 'venv/Scripts')
 PIP=${VENV_BIN}/pip
 PYTEST=${VENV_BIN}/pytest
 PYLINT=${VENV_BIN}/pylint
-BASE_VERSION=0.3.0
+BASE_VERSION=0.4.0
 BUILD_NUMBER=0
 VERSION=${BASE_VERSION}.${BUILD_NUMBER}
 
@@ -78,6 +78,14 @@ freeze:
 .PHONY: system_tests
 system-test: install
 	${PYTEST} system_tests
+
+###################################################################
+# Release
+###################################################################
+
+.PHONY: print-version
+print-version:
+	@echo "::set-output name=version::${VERSION}"
 
 .PHONY: release
 release:

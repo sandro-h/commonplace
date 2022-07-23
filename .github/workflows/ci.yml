@@ -1,13 +1,11 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-
-name: CI
+name: CI (js)
 
 on:
   push:
-    branches: [ nonexistent ]
+    branches: ["**"]
+    tags: ["**", "!v*"]
   pull_request:
-    branches: [ nonexistent ]
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -15,21 +13,43 @@ permissions:
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
-    - name: Lint
-      run: .\makew.cmd lint
-    - name: Test
-      run: .\makew.cmd test
-    - name: Package
-      run: .\makew.cmd pkg BUILD_NUMBER=$env:GITHUB_RUN_NUMBER-$($env:GITHUB_SHA.Substring(0,7))
-    - name: Run app
-      run: .\makew.cmd start-background
-    - name: System test
-      run: .\makew.cmd system-test
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+
+      - name: Fetch dependencies
+        run: make dependencies
+
+      - name: Build core
+        run: make core
+
+      - name: Unit test core
+        run: make test
+
+      - name: Run test server
+        run: make start-test-server
+
+      - name: System test library
+        run: make system-test
+
+      - name: Upload test server log
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-server-log
+          path: core/test_server/test_server.log
+
+      - name: Build VSCode extension
+        run: make vscode-extension BUILD_NUMBER=$env:GITHUB_RUN_NUMBER-${GITHUB_SHA:0:7}

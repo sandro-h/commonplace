@@ -10,37 +10,47 @@ permissions:
 jobs:
   release:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
 
-    - name: Package
-      id: package
-      run: .\makew.cmd pkg BUILD_NUMBER=$env:GITHUB_RUN_NUMBER-$($env:GITHUB_SHA.Substring(0,7))
+      - name: Fetch dependencies
+        run: make dependencies
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ steps.package.outputs.version }}
-        draft: false
-        prerelease: false
+      - name: Build core
+        run: make core
 
-    - name: Upload Release Assets
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: dist/commonplace-${{ steps.package.outputs.version }}.tar
-        asset_name: commonplace-${{ steps.package.outputs.version }}.tar
-        asset_content_type: application/tar
+      - name: Build VSCode extension
+        run: make vscode-extension BUILD_NUMBER=${GITHUB_RUN_NUMBER}-${GITHUB_SHA:0:7}
+
+      - name: Print version
+        id: print_version
+        run: make print-version BUILD_NUMBER=${GITHUB_RUN_NUMBER}-${GITHUB_SHA:0:7}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ steps.print_version.outputs.version }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: vscode_extension/commonplace.vsix
+          asset_name: commonplace-${{ steps.print_version.outputs.version }}.vsix
+          asset_content_type: application/vsix
