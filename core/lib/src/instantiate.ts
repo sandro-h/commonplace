@@ -12,9 +12,7 @@ export function generateInstancesOfMoment(moment: Moment, start: Date, end: Date
     end = endOfDay(end)
     const instances: Instance[] = createInstances(moment, start, end).filter(i => !predicate || predicate(i))
     if (inclSubs) {
-        for (const inst of instances) {
-            inst.subInstances = generateInstances(moment.subMoments, inst.start, inst.end, inclSubs, predicate)
-        }
+        instances.forEach(inst => inst.subInstances = generateInstances(moment.subMoments, inst.start, inst.end, inclSubs, predicate))
     }
 
     return instances

@@ -38,10 +38,16 @@ export function withNewline(content: string): string {
     return content + (content.endsWith('\n') ? '' : '\n')
 }
 
+export function* each<T>(iter: Iterator<T>): Generator<T> {
+    for (let next = iter.next(); !next.done; next = iter.next()) {
+        yield next.value;
+    }
+}
+
 export function listFromIterator<T>(iter: Iterator<T>): T[] {
     const res = []
-    for (let next = iter.next(); !next.done; next = iter.next()) {
-        res.push(next.value);
+    for (const line of each(iter)) {
+        res.push(line);
     }
     return res;
 }

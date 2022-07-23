@@ -2,9 +2,10 @@ import { addDays, endOfDay, isValid, parse, setDay, startOfDay } from "date-fns"
 import { LineIterator, LineIteratorImpl, StringLineIterator } from "./LineIterator"
 import {
     Category, createTodos as createTodos, getNow, Line, Moment, MomentDateTime, ParseConfig, Recurrence, RecurrenceType,
+    RecurrenceWithoutDocPos,
     RecurringMoment, SingleMoment, Todos, WorkState
 } from "./models"
-import { epochWeek } from "./util"
+import { epochWeek, each } from "./util"
 
 interface ParseState {
     config: ParseConfig
@@ -12,16 +13,8 @@ interface ParseState {
     todos: Todos
 }
 
-
-// function parseMomentsFile(path: string, config: ParseConfig): Todos {
-//      with open(path, "rU", encoding="utf8") as file:
-//          return parseMoments(LineIterator(file), config)
-// }
-
 export function parseMomentsString(content: string, config: ParseConfig): Todos {
     return parseMomentsLines(StringLineIterator(content), config)
-
-
 }
 
 export function parseMoments(lines: Iterator<string>, config: ParseConfig): Todos {
@@ -30,12 +23,9 @@ export function parseMoments(lines: Iterator<string>, config: ParseConfig): Todo
 
 export function parseMomentsLines(lineIter: LineIterator, config: ParseConfig): Todos {
     const state: ParseState = { config, lineIter, todos: createTodos() }
-    let line = nextLine(state.lineIter)
-    while (line !== null) {
+    for (const line of each(state.lineIter)) {
         parseLine(line, state)
-        line = nextLine(state.lineIter)
     }
-
     return state.todos
 }
 
@@ -190,31 +180,37 @@ function parseRecurrence(line: Line, lineContent: string, config: ParseConfig): 
     let timeOfDay
     [timeOfDay, recurStr] = parseTimeSuffix(recurStr, config);
     if (timeOfDay) {
-        timeOfDay.docPos!.offset += line.offset + untrimmedPos
+        timeOfDay.docPos.offset += line.offset + untrimmedPos
     }
 
-    let recur = null
+    let recurWithoutDocPos = null
     for (let parseFunc of [tryParseDaily, tryParseWeekly, tryParseNWeekly, tryParseMonthly, tryParseYearly]) {
-        recur = parseFunc(recurStr, config)
-        if (recur) {
+        recurWithoutDocPos = parseFunc(recurStr, config)
+        if (recurWithoutDocPos) {
             break
         }
     }
 
-    if (!recur) {
+    if (!recurWithoutDocPos) {
         return [null, null, lineContent]
     }
 
-    recur.refDate.docPos = {
-        lineNum: line.lineNum,
-        offset: line.offset + untrimmedPos,
-        length: recurStr.length,
+    const recur = {
+        ...recurWithoutDocPos,
+        refDate: {
+            ...recurWithoutDocPos.refDate,
+            docPos: {
+                lineNum: line.lineNum,
+                offset: line.offset + untrimmedPos,
+                length: recurStr.length,
+            }
+        }
     }
 
     return [recur, timeOfDay, lineContent.slice(0, lbracketPos).trim()]
 }
 
-function tryParseDaily(content: string, config: ParseConfig): Recurrence | null {
+function tryParseDaily(content: string, config: ParseConfig): RecurrenceWithoutDocPos | null {
     if (!content.match(config.dailyPattern)) {
         return null
     }
@@ -225,7 +221,7 @@ function tryParseDaily(content: string, config: ParseConfig): Recurrence | null 
     }
 }
 
-function tryParseWeekly(content: string, config: ParseConfig): Recurrence | null {
+function tryParseWeekly(content: string, config: ParseConfig): RecurrenceWithoutDocPos | null {
     const match = content.match(config.weeklyPattern)
     if (!match) {
         return null
@@ -248,7 +244,7 @@ function parseWeekday(content: string, config: ParseConfig): number {
 }
 
 
-function tryParseNWeekly(content: string, config: ParseConfig): Recurrence | null {
+function tryParseNWeekly(content: string, config: ParseConfig): RecurrenceWithoutDocPos | null {
     const match = content.match(config.nWeeklyPattern)
     if (!match) {
         return null
@@ -286,7 +282,7 @@ function parseNth(content: string, config: ParseConfig): [number, RecurrenceType
     }
 }
 
-function tryParseMonthly(content: string, config: ParseConfig): Recurrence | null {
+function tryParseMonthly(content: string, config: ParseConfig): RecurrenceWithoutDocPos | null {
     const match = content.match(config.monthlyPattern)
     if (!match) {
         return null
@@ -306,7 +302,7 @@ function tryParseMonthly(content: string, config: ParseConfig): Recurrence | nul
     }
 }
 
-function tryParseYearly(content: string, config: ParseConfig): Recurrence | null {
+function tryParseYearly(content: string, config: ParseConfig): RecurrenceWithoutDocPos | null {
     const match = content.match(config.yearlyPattern)
     if (!match) {
         return null
@@ -338,16 +334,19 @@ function parseSingleMoment(line: Line, lineContent: string, config: ParseConfig)
         end.dt = endOfDay(end.dt)
     }
 
-    return [{
-        start,
-        end,
-        timeOfDay,
-        docPos: {
-            lineNum: line.lineNum,
-            offset: line.offset,
-            length: line.content.length,
-        }
-    }, lineContent]
+    return [
+        {
+            start,
+            end,
+            timeOfDay,
+            docPos: {
+                lineNum: line.lineNum,
+                offset: line.offset,
+                length: line.content.length,
+            }
+        },
+        lineContent
+    ]
 }
 
 function parseDateSuffix(line: Line, lineContent: string, config: ParseConfig): [MomentDateTime | null, MomentDateTime | null, MomentDateTime | null, string] {
@@ -380,7 +379,7 @@ function parseDateSuffix(line: Line, lineContent: string, config: ParseConfig): 
         start = parseDateSingle(suffixStr, config)
         if (start) {
             end = { ...start }
-            end.docPos = { ...start.docPos! }
+            end.docPos = { ...start.docPos }
         }
     }
 
@@ -482,13 +481,13 @@ function parseTimeSuffix(lineContent: string, config: ParseConfig): [MomentDateT
 
 function finalizeDocPos(date: MomentDateTime | null, line: Line, offsetDelta: number) {
     if (date) {
-        date.docPos!.lineNum = line.lineNum
-        date.docPos!.offset += line.offset + offsetDelta
+        date.docPos.lineNum = line.lineNum
+        date.docPos.offset += line.offset + offsetDelta
     }
 }
 
 function parseStateMark(lineContent: string, config: ParseConfig): [WorkState | null, string] {
-    const match = config.stateMarkPattern.exec(lineContent) // lineContent.match(config.stateMarkPattern)
+    const match = config.stateMarkPattern.exec(lineContent)
     if (!match) {
         return [null, lineContent]
     }
@@ -499,8 +498,7 @@ function parseStateMark(lineContent: string, config: ParseConfig): [WorkState | 
 function parseCommentsAndSubMoments(mom: Moment, state: ParseState, indent: number) {
     const nextIndent = indent + state.config.tabSize
 
-    for (let next = state.lineIter.next(); !next.done; next = state.lineIter.next()) {
-        const line: Line = next.value
+    for (const line of each(state.lineIter)) {
         const [lineIndent, indentCharCnt] = countIndent(line.content, state.config.tabSize, nextIndent)
 
         if (lineIndent >= nextIndent) {

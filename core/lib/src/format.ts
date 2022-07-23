@@ -30,11 +30,9 @@ export interface FormatStyle {
 export function formatTodos(todos: Todos, rawContent: string, formatType: string = TODO_FORMAT, fixedTime: Date | null = null): FormatStyle[] {
     const state: FormatState = { rawContent, fixedTime, styles: [] }
 
-    for (const cat of todos.categories) {
-        addFormatLine(state, CAT_STYLE, cat.docPos)
-    }
+    todos.categories.forEach(cat => addFormatLine(state, CAT_STYLE, cat.docPos));
 
-    for (const mom of todos.moments) {
+    todos.moments.forEach(mom => {
         if (formatType === TODO_FORMAT) {
             formatMoment(state, mom)
         }
@@ -44,7 +42,7 @@ export function formatTodos(todos: Todos, rawContent: string, formatType: string
         else {
             throw Error(`Unknown format '{formatType}'`)
         }
-    }
+    })
 
     if (state.lastStyle) {
         flushLastStyle(state)
@@ -69,44 +67,37 @@ function formatMoment(state: FormatState, mom: Moment, parentDone = false) {
     addFormatLine(state, style, mom.docPos)
 
     if (done) {
-        for (const com of mom.comments) {
-            addFormatLine(state, COM_STYLE + DONE_SUFFIX, com.docPos)
-        }
+        mom.comments.forEach(com => addFormatLine(state, COM_STYLE + DONE_SUFFIX, com.docPos))
     }
     else {
         formatDates(state, mom)
     }
 
-    for (const sub of mom.subMoments) {
-        formatMoment(state, sub, done)
-    }
+    mom.subMoments.forEach(sub => formatMoment(state, sub, done))
 }
 
 function formatTrashMoment(state: FormatState, mom: Moment) {
     addFormatLine(state, MOM_STYLE, mom.docPos)
     formatDates(state, mom)
-
-    for (const sub of mom.subMoments) {
-        formatTrashMoment(state, sub)
-    }
+    mom.subMoments.forEach(sub => formatTrashMoment(state, sub))
 }
 
 function formatDates(state: FormatState, mom: Moment) {
     if (isSingleMoment(mom)) {
         const singleMom = mom as SingleMoment;
         if (singleMom.start) {
-            addFormatLine(state, DATE_STYLE, singleMom.start.docPos!)
+            addFormatLine(state, DATE_STYLE, singleMom.start.docPos)
         }
         if (singleMom.end && (!singleMom.start || singleMom.end.docPos !== singleMom.start.docPos)) {
-            addFormatLine(state, DATE_STYLE, singleMom.end.docPos!)
+            addFormatLine(state, DATE_STYLE, singleMom.end.docPos)
         }
     }
     else if (isRecurringMoment(mom)) {
-        addFormatLine(state, DATE_STYLE, (mom as RecurringMoment).recurrence.refDate.docPos!)
+        addFormatLine(state, DATE_STYLE, (mom as RecurringMoment).recurrence.refDate.docPos)
     }
 
     if (mom.timeOfDay) {
-        addFormatLine(state, TIME_STYLE, mom.timeOfDay.docPos!)
+        addFormatLine(state, TIME_STYLE, mom.timeOfDay.docPos)
     }
 }
 
@@ -118,19 +109,17 @@ function formatDueSoon(mom: Moment, fixedTime: Date | null) {
     const nRealHours = differenceInHours(nDaysFromToday, today)
     const instances = generateInstancesOfMoment(mom, today, nDaysFromToday, false)
     let earliest = cutoff
-    for (const inst of instances) {
+    instances.forEach(inst => {
         // We need to compare hours here because of daylight saving time.
         // Instead of 264h (=11 days) it might only be 263h or 265h,
         // which would lead to the wrong number of days calculated.
-        if (differenceInHours(inst.end, today) >= nRealHours) {
-            continue
+        if (differenceInHours(inst.end, today) < nRealHours) {
+            const dueDays = differenceInDays(inst.end, today)
+            if (dueDays < earliest) {
+                earliest = dueDays
+            }
         }
-
-        const dueDays = differenceInDays(inst.end, today)
-        if (dueDays < earliest) {
-            earliest = dueDays
-        }
-    }
+    })
 
     if (earliest < cutoff) {
         return `${UNTIL_SUFFIX}${earliest}`
@@ -188,18 +177,18 @@ function outline(mom: Moment, raw_content: string): Outline {
     if (isSingleMoment(mom)) {
         const singleMom = mom as SingleMoment;
         if (singleMom.start) {
-            detail += extract(raw_content, singleMom.start.docPos!)
+            detail += extract(raw_content, singleMom.start.docPos)
         }
         if (singleMom.end && (!singleMom.start || singleMom.end.docPos?.offset !== singleMom.start.docPos?.offset)) {
-            detail += " - " + extract(raw_content, singleMom.end.docPos!)
+            detail += " - " + extract(raw_content, singleMom.end.docPos)
         }
     }
     else if (isRecurringMoment(mom)) {
-        detail += extract(raw_content, (mom as RecurringMoment).recurrence.refDate.docPos!)
+        detail += extract(raw_content, (mom as RecurringMoment).recurrence.refDate.docPos)
     }
 
     if (mom.timeOfDay) {
-        detail += " " + extract(raw_content, mom.timeOfDay.docPos!)
+        detail += " " + extract(raw_content, mom.timeOfDay.docPos)
     }
 
     return {

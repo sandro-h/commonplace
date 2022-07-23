@@ -1,5 +1,3 @@
-import { getWeekOfMonthWithOptions } from "date-fns/fp"
-
 export enum WorkState {
     NEW = 'new',
     WAITING = 'waiting',
@@ -91,7 +89,7 @@ export interface Comment {
 
 export interface MomentDateTime {
     dt: Date
-    docPos?: DocPosition
+    docPos: DocPosition
 }
 
 export interface Moment {
@@ -127,6 +125,10 @@ export enum RecurrenceType {
 export interface Recurrence {
     recurrenceType: RecurrenceType
     refDate: MomentDateTime
+}
+
+export interface RecurrenceWithoutDocPos extends Omit<Recurrence, "refDate"> {
+    refDate: Omit<MomentDateTime, "docPos">
 }
 
 export interface RecurringMoment extends Moment {
