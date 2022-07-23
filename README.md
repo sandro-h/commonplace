@@ -8,3 +8,9 @@
 ### Testing approach
 
 Where possible, use system tests against the REST API of the running app. Rationale: this makes the test portable against other implementations.
+
+### Note on @commonplace/lib dependencies
+
+We declare date-fns as a *dev* dependency because we explicitly allowed webpack to bundle it with our code (instead of excluding
+it as an external). We do this because we can profit from tree  shaking so that we don't need to depend on the full date-fns
+library when using the commonplace library.

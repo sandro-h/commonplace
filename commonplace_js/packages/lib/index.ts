@@ -3,6 +3,7 @@ import { createParseConfig, WorkState, Outline, Edit, EditType, InsertEdit, Dele
 import { formatTodos, foldTodos, outlineTodos, TODO_FORMAT, TRASH_FORMAT, FormatStyle } from './format'
 import { generateInstances, generateInstancesOfMoment } from './instantiate'
 import { cleanDoneMoments, trashDoneMoments } from './clean'
+import { backup } from './backup'
 import { inLocalTimezone, isoTimezoneOffset, getBottomLine } from './util'
 
 
@@ -28,5 +29,6 @@ export {
     EOF_OFFSET,
     cleanDoneMoments,
     trashDoneMoments,
-    getBottomLine
+    getBottomLine,
+    backup
 }

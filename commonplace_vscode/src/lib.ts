@@ -1,8 +1,10 @@
 import {
     cleanDoneMoments, createParseConfig, DeleteEdit, Edit, EditType, EOF_OFFSET, foldTodos, FormatStyle, formatTodos, InsertEdit, Outline, outlineTodos,
-    parseMomentsString, TODO_FORMAT, trashDoneMoments, TRASH_FORMAT
+    parseMomentsString, TODO_FORMAT, trashDoneMoments, TRASH_FORMAT, backup
 } from '@commonplace/lib';
 import * as vscode from 'vscode';
+import * as path from 'path';
+import * as fs from 'fs';
 import { trashLangId } from './util';
 
 interface CacheEntry {
@@ -74,16 +76,23 @@ export const requestOutline = getter<Outline[]>("outline");
 export const requestPreview = getter("preview");
 
 export async function cleanTodos(document: vscode.TextDocument): Promise<void> {
+    await doBackup(document.uri.fsPath);
+
     const workspaceEdit = toTodoWorkspaceEdit(cleanDoneMoments(document.getText()), document);
     await vscode.workspace.applyEdit(workspaceEdit);
-    document.save();
+    await document.save();
 }
 
 export async function trashTodos(document: vscode.TextDocument): Promise<void> {
+    const trashFileUri = vscode.Uri.parse(document.uri.toString().replace(/\.([^.]+)$/, '-trash.$1'))
+
+    await Promise.all([
+        doBackup(document.uri.fsPath),
+        doBackup(trashFileUri.fsPath)
+    ]);
+
     const [todoEdits, trashEdits] = trashDoneMoments(document.getText())
     const todoWorkspaceEdit = toTodoWorkspaceEdit(todoEdits, document);
-
-    const trashFileUri = vscode.Uri.parse(document.uri.toString().replace(/\.([^.]+)$/, '-trash.$1'))
     const trashWorkspaceEdit = toTrashWorkspaceEdits(trashEdits, trashFileUri);
 
     await Promise.all([
@@ -92,8 +101,10 @@ export async function trashTodos(document: vscode.TextDocument): Promise<void> {
     ]);
 
     const trashDoc = vscode.workspace.textDocuments.find(doc => doc.uri.toString() === trashFileUri.toString())
-    trashDoc.save();
-    document.save();
+    await Promise.all([
+        trashDoc.save(),
+        document.save()
+    ])
 }
 
 function toTodoWorkspaceEdit(edits: Edit[], document: vscode.TextDocument): vscode.WorkspaceEdit {
@@ -129,4 +140,19 @@ function toTrashWorkspaceEdits(edits: Edit[], uri: vscode.Uri): vscode.Workspace
     })
 
     return workspaceEdit
+}
+
+async function doBackup(file: string) {
+    try {
+        await fs.promises.stat(file)
+    }
+    catch (err) {
+        if (err.code === 'ENOENT') {
+            return
+        }
+        throw err
+    }
+
+    const backupDir = path.join(path.dirname(file), 'backup');
+    return backup(file, backupDir);
 }

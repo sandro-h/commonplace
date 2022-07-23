@@ -9,11 +9,16 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: "index.js", // <--- Will be compiled to this single file
+        filename: "index.js",
         library: { type: "commonjs" }
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
+    },
+    externals: {
+        // "date-fns": "commonjs date-fns",
+        fs: "commonjs fs",
+        path: "commonjs path",
     },
     module: {
         rules: [
