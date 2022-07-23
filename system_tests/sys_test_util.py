@@ -1,14 +1,13 @@
 import base64
+import dataclasses
 from datetime import datetime
 import json
 import os
 import re
 from functools import reduce
+from time import time
 
 import requests
-from commonplace.format import TODO_FORMAT
-from commonplace.rest import EnhancedJSONEncoder
-from commonplace.util import format_ymd
 
 TESTDATA_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "testdata")
 SIBYL_URL = "http://localhost:8082"
@@ -42,7 +41,7 @@ def request_instances(content, start: str, end: str, target="commonplace_js"):
     return resp.json()
 
 
-def request_format(content, format_type=TODO_FORMAT, fixed_time="2022-06-05", target="commonplace_js"):
+def request_format(content, format_type="todo", fixed_time="2022-06-05", target="commonplace_js"):
     resp = requests.post(f"{get_url(target)}/format?fixed_time={fixed_time}&type={format_type}",
                          data=base64.b64encode(content.encode("utf8")),
                          headers={"Content-Type": "application/text"})
@@ -58,7 +57,7 @@ def request_fold(content, target="commonplace_js"):
     return resp.content.decode("utf8")
 
 
-def request_outline(content, format_type=TODO_FORMAT, target="commonplace_js"):
+def request_outline(content, format_type="todo", target="commonplace_js"):
     resp = requests.post(f"{get_url(target)}/outline?type={format_type}",
                          data=base64.b64encode(content.encode("utf8")),
                          headers={"Content-Type": "application/text"})
@@ -174,3 +173,19 @@ def reformat_to_ymd(dmy_str):
 
 def parse_dmy(dmy_str):
     return datetime.strptime(dmy_str, "%d.%m.%Y").astimezone(tz=None)
+
+
+def format_ymd(date: datetime) -> str:
+    return date.strftime("%Y-%m-%d")
+
+
+class EnhancedJSONEncoder(json.JSONEncoder):
+
+    def default(self, o):
+        if dataclasses.is_dataclass(o):
+            return dataclasses.asdict(o)
+        if isinstance(o, datetime):
+            return o.isoformat()
+        if isinstance(o, time):
+            return o.isoformat()
+        return super().default(o)

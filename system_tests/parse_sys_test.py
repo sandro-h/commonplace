@@ -3,7 +3,7 @@ import os
 import re
 
 import pytest
-from commonplace.models import Category, DocPosition
+from system_tests.models import Category, DocPosition
 
 from system_tests.sys_test_util import (TESTDATA_DIR, dataclass_to_dict, dedent, request_parse)
 

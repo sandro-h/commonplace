@@ -1,13 +1,7 @@
 # build tooling
-pyinstaller
 yapf
 pylint
-pillow
 # test dependencies
 pytest
 pytest-golden
 requests
-# app dependencies
-flask
-pyyaml
-dacite

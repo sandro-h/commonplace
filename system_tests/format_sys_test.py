@@ -1,7 +1,6 @@
 import os
 
 import pytest
-from commonplace.format import TRASH_FORMAT
 
 from system_tests.sys_test_util import TESTDATA_DIR, dedent, request_fold, request_format, request_outline
 
@@ -146,7 +145,7 @@ def test_format_trash(golden):
         todo = file.read().decode("utf8").replace("\r", "")
 
     # When
-    fmt = request_format(todo, format_type=TRASH_FORMAT)
+    fmt = request_format(todo, format_type="trash")
 
     # Then
     assert fmt == golden.out["output"]
@@ -215,7 +214,7 @@ def test_outline_trash(golden):
         todo = file.read()
 
     # When
-    fmt = request_outline(todo.decode("utf8"), format_type=TRASH_FORMAT)
+    fmt = request_outline(todo.decode("utf8"), format_type="trash")
 
     # Then
     assert fmt == golden.out["output"]

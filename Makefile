@@ -1,7 +1,5 @@
 VENV_BIN=$(shell [ -d venv/bin ] && echo 'venv/bin' || echo 'venv/Scripts')
 PIP=${VENV_BIN}/pip
-PYINSTALLER=${VENV_BIN}/pyinstaller
-FLASK=${VENV_BIN}/flask
 PYTEST=${VENV_BIN}/pytest
 PYLINT=${VENV_BIN}/pylint
 BASE_VERSION=0.3.0
@@ -29,33 +27,9 @@ fresh: clean-venv venv
 freeze:
 	${PIP} freeze > requirements.txt
 
-.PHONY: lint
-lint: install
-	${PYLINT} commonplace
-
-.PHONY: test
-test: install
-	${PYTEST} tests
-
 .PHONY: system_tests
 system-test: install
 	${PYTEST} system_tests
-
-.PHONY: start
-start: install
-	COMMONPLACE_CONFIG=system_test_config.yaml \
-	FLASK_APP=commonplace.__main__ \
-	FLASK_ENV=development \
-	${FLASK} run --port=$(shell grep port system_test_config.yaml | grep -Eo "[0-9]+")
-
-.PHONY: start-background
-start-background: install
-	( \
-		COMMONPLACE_CONFIG=system_test_config.yaml \
-		FLASK_APP=commonplace.__main__ \
-		FLASK_ENV=development \
-		${FLASK} run > commonplace.log 2>&1 & \
-	)
 
 .PHONY: vscode_extension
 vscode_extension: commonplace_vscode/node_modules
@@ -86,12 +60,6 @@ dist/commonplace.tar: dist/commonplace.exe config_sample.yml vscode_extension
 	touch dist/todo.txt
 	cp commonplace_vscode/commonplace.vsix dist/
 	cd dist && tar cf "commonplace-${VERSION}.tar" *
-
-dist/commonplace.exe: build/.install $(shell find commonplace -name '*.py') icon.png
-	${PYINSTALLER} \
-		--icon icon.png \
-		--onefile commonplace/__main__.py \
-		--name commonplace
 
 .PHONY: release
 release:

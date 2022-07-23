@@ -1,8 +1,13 @@
-import pytest
-from commonplace.models import Category, Instance
-from commonplace.util import with_end_of_day
+from datetime import datetime
 
+import pytest
+
+from system_tests.models import Category, Instance
 from system_tests.sys_test_util import (dataclass_to_dict, dedent, parse_dmy, request_instances)
+
+
+def with_end_of_day(date: datetime) -> datetime:
+    return date.replace(hour=23, minute=59, second=59, microsecond=999999)
 
 
 @pytest.mark.parametrize(
