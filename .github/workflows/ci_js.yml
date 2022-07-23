@@ -1,0 +1,63 @@
+name: CI (js)
+
+on:
+  push:
+  pull_request:
+    branches: [ ts ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+          cache-dependency-path: commonplace_js/package-lock.json
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+   
+      - name: Install dependencies
+        run: npm ci
+        working-directory: commonplace_js
+
+      - name: Compile library and test server
+        run: npm run compile -ws
+        working-directory: commonplace_js
+
+      - name: Unit test library
+        run: npm test
+        working-directory: commonplace_js/packages/lib
+
+      - name: Run test server
+        run: npm run serve
+        working-directory: commonplace_js/packages/test_server
+
+      - name: System test library
+        run: make system-test
+
+      - name: Upload test server log
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-server-log
+          path: commonplace_js/packages/test_server/test_server.log
+
+      - name: Package library
+        run: npm run package
+        working-directory: commonplace_js/packages/lib
+
+      - name: Build VSCode extension
+        run: npm install --save ../commonplace_js/packages/lib/dist/commonplace-lib-1.0.0.tgz && npm ci && npm run package
+        working-directory: commonplace_vscode

@@ -133,7 +133,7 @@ app.post('/outline', (req, res) => {
 
 app.post('/clean', (req, res) => {
     try {
-        const testTodoDir = path.join("c:/temp", 'commonplace_system_test')
+        const testTodoDir = getTestTodoDir()
         const todoFile = path.join(testTodoDir, "todo.txt");
         const content = fs.readFileSync(todoFile).toString()
         const edits = cleanDoneMoments(content)
@@ -154,7 +154,7 @@ app.post('/trash', (req, res) => {
             cfg.fixedTime = parse((req.query.fixedTime ?? req.query.fixed_time) as string, 'yyyy-MM-dd', new Date())
         }
 
-        const testTodoDir = path.join("c:/temp", 'commonplace_system_test')
+        const testTodoDir = getTestTodoDir()
         const todoFile = path.join(testTodoDir, "todo.txt");
         const trashFile = path.join(testTodoDir, "todo-trash.txt");
         const content = fs.readFileSync(todoFile).toString()
@@ -173,6 +173,10 @@ app.post('/trash', (req, res) => {
         res.json({});
     }
 })
+
+function getTestTodoDir() {
+    return path.join(process.platform === 'win32' ? 'c:/temp' : '/tmp', 'commonplace_system_test')
+}
 
 function applyEdits(content: string, edits: Edit[]): string {
     const inserts = edits.filter(e => e.type === EditType.INSERT);

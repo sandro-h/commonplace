@@ -128,10 +128,11 @@ def test_due_soon_daylight_savings():
 def test_full_format(golden):
     # Given
     with open(os.path.join(TESTDATA_DIR, golden["input"]["todo_file"]), "rb") as file:
-        todo = file.read()
+        # Remove carrier returns to get same offsets on windows and linux.
+        todo = file.read().decode("utf8").replace("\r", "")
 
     # When
-    fmt = request_format(todo.decode("utf8"))
+    fmt = request_format(todo)
 
     # Then
     assert fmt == golden.out["output"]
@@ -141,10 +142,11 @@ def test_full_format(golden):
 def test_format_trash(golden):
     # Given
     with open(os.path.join(TESTDATA_DIR, golden["input"]["todo_file"]), "rb") as file:
-        todo = file.read()
+        # Remove carrier returns to get same offsets on windows and linux.
+        todo = file.read().decode("utf8").replace("\r", "")
 
     # When
-    fmt = request_format(todo.decode("utf8"), format_type=TRASH_FORMAT)
+    fmt = request_format(todo, format_type=TRASH_FORMAT)
 
     # Then
     assert fmt == golden.out["output"]

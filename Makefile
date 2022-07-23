@@ -1,8 +1,9 @@
-PIP=venv/Scripts/pip
-PYINSTALLER=venv/Scripts/pyinstaller
-FLASK=venv/Scripts/flask
-PYTEST=venv/Scripts/pytest
-PYLINT=venv/Scripts/pylint
+VENV_BIN=$(shell [ -d venv/bin ] && echo 'venv/bin' || echo 'venv/Scripts')
+PIP=${VENV_BIN}/pip
+PYINSTALLER=${VENV_BIN}/pyinstaller
+FLASK=${VENV_BIN}/flask
+PYTEST=${VENV_BIN}/pytest
+PYLINT=${VENV_BIN}/pylint
 BASE_VERSION=0.3.0
 BUILD_NUMBER=0
 VERSION=${BASE_VERSION}.${BUILD_NUMBER}

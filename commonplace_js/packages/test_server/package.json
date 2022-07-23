@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "compile": "rm -rf dist/* && tsc",
+    "serve": "node dist/app.js > test_server.log 2>&1 &",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

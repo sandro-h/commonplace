@@ -1,4 +1,4 @@
-import { backup, listBackupsNewestFirst } from '../backup'
+import { backup, listBackupsNewestFirst } from '../src/backup'
 import * as tmp from 'tmp';
 import * as path from 'path';
 import * as fs from 'fs';

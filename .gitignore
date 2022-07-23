@@ -4,7 +4,7 @@ build/
 dist/
 *.spec
 notes.txt
-commonplace.log
+*.log
 config.yaml
 node_modules
 commonplace_vscode/out

@@ -1,4 +1,4 @@
-import { StringLineIterator } from '../LineIterator'
+import { StringLineIterator } from '../src/LineIterator'
 
 const TEST_LINES = `\
 line1
