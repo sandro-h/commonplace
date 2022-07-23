@@ -7,6 +7,6 @@ notes.txt
 *.log
 config.yaml
 node_modules
-commonplace_vscode/out
-commonplace_vscode/*.vsix
+out/
+*.vsix
 *.tgz

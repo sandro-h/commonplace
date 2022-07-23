@@ -21,7 +21,7 @@ endif
 .PHONY: core
 core:
 	npm run compile -ws
-	cd packages/lib && npm run package
+	cd core/lib && npm run package
 
 .PHONY: test
 test:
@@ -29,25 +29,25 @@ test:
 
 .PHONY: start-test-server
 start-test-server:
-	cd packages/test_server && npm run serve
+	cd core/test_server && npm run serve
 
 ###################################################################
 # VSCode extension
 ###################################################################
 
 .PHONY: vscode-extension
-vscode-extension: commonplace_vscode/node_modules
-	cd commonplace_vscode && \
+vscode-extension: vscode_extension/node_modules
+	cd vscode_extension && \
 	npm version ${BASE_VERSION} --allow-same-version && \
 	npm run package
 
-commonplace_vscode/node_modules: commonplace_vscode/package.json
-	cd commonplace_vscode && npm install --save ../packages/lib/dist/commonplace-lib-1.0.0.tgz
+vscode_extension/node_modules: vscode_extension/package.json
+	cd vscode_extension && npm install --save ../core/lib/dist/commonplace-lib-1.0.0.tgz
 
 ifeq ($(CI),true)
-	cd commonplace_vscode && npm ci
+	cd vscode_extension && npm ci
 else
-	cd commonplace_vscode && npm install
+	cd vscode_extension && npm install
 endif
 
 ###################################################################
@@ -78,26 +78,6 @@ freeze:
 .PHONY: system_tests
 system-test: install
 	${PYTEST} system_tests
-
-.PHONY: update-version
-update-version:
-	sed 's/^VERSION = .*/VERSION = "${VERSION}"/' commonplace/__main__.py > commonplace/__main__.py.tmp
-	diff commonplace/__main__.py commonplace/__main__.py.tmp > /dev/null || mv commonplace/__main__.py.tmp commonplace/__main__.py
-	rm -f commonplace/__main__.py.tmp
-
-.PHONY: pkg
-pkg: update-version dist/commonplace.tar
-	@echo "::set-output name=version::${VERSION}"
-	@echo ======================
-	@echo "Version: $(shell dist\commonplace.exe --version)"
-	@echo "Executable size: $(shell ls -lh dist/commonplace.exe | awk '{print $$5}')"
-	@echo "Archive size: $(shell ls -lh dist/commonplace-${VERSION}.tar | awk '{print $$5}')"
-
-dist/commonplace.tar: dist/commonplace.exe config_sample.yml vscode_extension
-	cp config_sample.yml dist/config.yml
-	touch dist/todo.txt
-	cp commonplace_vscode/commonplace.vsix dist/
-	cd dist && tar cf "commonplace-${VERSION}.tar" *
 
 .PHONY: release
 release:

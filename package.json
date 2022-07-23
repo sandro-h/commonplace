@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "workspaces": [
-        "./packages/*"
+        "./core/*"
     ],
     "devDependencies": {
         "ts-loader": "^9.3.1",

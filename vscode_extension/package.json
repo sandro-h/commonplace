@@ -99,7 +99,7 @@
     "watch": "tsc -watch -p ./"
   },
   "dependencies": {
-    "@commonplace/lib": "file:../packages/lib/dist/commonplace-lib-1.0.0.tgz",
+    "@commonplace/lib": "file:../core/lib/dist/commonplace-lib-1.0.0.tgz",
     "fullcalendar": "^3.9.0",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",

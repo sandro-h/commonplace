@@ -15,7 +15,7 @@
         "declaration": true,
         "paths": {
             "@commonplace/*": [
-                "./packages/*/"
+                "./core/*/"
             ]
         }
     }

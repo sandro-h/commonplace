@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-server-log
-          path: packages/test_server/test_server.log
+          path: core/test_server/test_server.log
 
       - name: Build VSCode extension
-        run: make vscode-extension
+        run: make vscode-extension BUILD_NUMBER=$env:GITHUB_RUN_NUMBER-${GITHUB_SHA:0:7}
