@@ -4,7 +4,7 @@
   "description": "Commonplace VSCode extension",
   "publisher": "sandro-h",
   "repository": "commonplace",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "license": "MIT",
   "engines": {
     "vscode": "^1.47.0"
@@ -99,7 +99,7 @@
     "watch": "tsc -watch -p ./"
   },
   "dependencies": {
-    "@commonplace/lib": "file:../commonplace_js/packages/lib/dist/commonplace-lib-1.0.0.tgz",
+    "@commonplace/lib": "file:../packages/lib/dist/commonplace-lib-1.0.0.tgz",
     "fullcalendar": "^3.9.0",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
@@ -109,7 +109,7 @@
     "@types/node": "^10.14.17",
     "@types/node-fetch": "^2.5.7",
     "@types/vscode": "^1.47.0",
-    "typescript": "^3.5.1",
+    "typescript": "^4.7.4",
     "vsce": "^2.6.7"
   }
 }

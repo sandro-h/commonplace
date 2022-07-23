@@ -6,6 +6,54 @@ BASE_VERSION=0.3.0
 BUILD_NUMBER=0
 VERSION=${BASE_VERSION}.${BUILD_NUMBER}
 
+###################################################################
+# Core code
+###################################################################
+
+.PHONY: dependencies
+dependencies:
+ifeq ($(CI),true)
+	npm ci
+else
+	npm install
+endif
+
+.PHONY: core
+core:
+	npm run compile -ws
+	cd packages/lib && npm run package
+
+.PHONY: test
+test:
+	npm run test -ws
+
+.PHONY: start-test-server
+start-test-server:
+	cd packages/test_server && npm run serve
+
+###################################################################
+# VSCode extension
+###################################################################
+
+.PHONY: vscode-extension
+vscode-extension: commonplace_vscode/node_modules
+	cd commonplace_vscode && \
+	npm version ${BASE_VERSION} --allow-same-version && \
+	npm run package
+
+commonplace_vscode/node_modules: commonplace_vscode/package.json
+	cd commonplace_vscode && npm install --save ../packages/lib/dist/commonplace-lib-1.0.0.tgz
+
+ifeq ($(CI),true)
+	cd commonplace_vscode && npm ci
+else
+	cd commonplace_vscode && npm install
+endif
+
+###################################################################
+# Python system tests
+###################################################################
+
 venv:
 	python3 -m venv venv
 
@@ -30,16 +78,6 @@ freeze:
 .PHONY: system_tests
 system-test: install
 	${PYTEST} system_tests
-
-.PHONY: vscode_extension
-vscode_extension: commonplace_vscode/node_modules
-	cd commonplace_vscode && \
-	npm version ${BASE_VERSION} --allow-same-version && \
-	npm run package
-
-commonplace_vscode/node_modules: commonplace_vscode/package.json
-	cd commonplace_vscode && \
-	npm install --unsafe-perm
 
 .PHONY: update-version
 update-version:
