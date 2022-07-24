@@ -44,7 +44,7 @@ jobs:
       - name: Run test server
         run: make start-test-server
 
-      - name: System test library
+      - name: System test core
         run: make system-test
 
       - name: Upload test server log
