@@ -3,59 +3,59 @@ import { CommonplaceConfig } from './config'
 import { todoOrTrashSelector } from './util'
 
 interface CommonplaceLinkDefinition {
-  pattern: string;
-  url: string;
+    pattern: string;
+    url: string;
 }
 
 export function activate(cfg: CommonplaceConfig) {
-  vscode.languages.registerDocumentLinkProvider(
-    todoOrTrashSelector,
-    new CommonplaceDocumentLinkProvider(cfg)
-  )
+    vscode.languages.registerDocumentLinkProvider(
+        todoOrTrashSelector,
+        new CommonplaceDocumentLinkProvider(cfg)
+    )
 }
 
 class CommonplaceDocumentLinkProvider implements vscode.DocumentLinkProvider {
-  cfg: CommonplaceConfig
+    cfg: CommonplaceConfig
 
-  constructor(cfg: CommonplaceConfig) {
-    this.cfg = cfg
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  provideDocumentLinks(document: vscode.TextDocument, _token: vscode.CancellationToken): vscode.DocumentLink[] {
-    const linkDefs = this.getLinkDefs()
-    if (!linkDefs.length) {
-      return
+    constructor(cfg: CommonplaceConfig) {
+        this.cfg = cfg
     }
 
-    const text = document.getText()
-    return linkDefs.flatMap(def => this.extractLinksForDef(def, text, document))
-  }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    provideDocumentLinks(document: vscode.TextDocument, _token: vscode.CancellationToken): vscode.DocumentLink[] {
+        const linkDefs = this.getLinkDefs()
+        if (!linkDefs.length) {
+            return
+        }
 
-  getLinkDefs(): CommonplaceLinkDefinition[] {
-    if (!this.cfg.getTicketPattern() || !this.cfg.getTicketUrl()) {
-      return []
+        const text = document.getText()
+        return linkDefs.flatMap(def => this.extractLinksForDef(def, text, document))
     }
 
-    return [
-      {
-        pattern: this.cfg.getTicketPattern(),
-        url: this.cfg.getTicketUrl()
-      }
-    ]
-  }
+    getLinkDefs(): CommonplaceLinkDefinition[] {
+        if (!this.cfg.getTicketPattern() || !this.cfg.getTicketUrl()) {
+            return []
+        }
 
-  extractLinksForDef(def: CommonplaceLinkDefinition, text: string, document: vscode.TextDocument): vscode.DocumentLink[] {
-    const re = new RegExp(def.pattern, 'g')
-    const links = []
-    let match: RegExpExecArray
-    while ((match = re.exec(text)) !== null) {
-      const uri = vscode.Uri.parse(def.url.replace('$1', text.substr(match.index, match[0].length)))
-      const pos = document.positionAt(match.index)
-      const link = new vscode.DocumentLink(new vscode.Range(pos, pos.translate(0, match[0].length)), uri)
-      links.push(link)
+        return [
+            {
+                pattern: this.cfg.getTicketPattern(),
+                url: this.cfg.getTicketUrl()
+            }
+        ]
     }
 
-    return links
-  }
+    extractLinksForDef(def: CommonplaceLinkDefinition, text: string, document: vscode.TextDocument): vscode.DocumentLink[] {
+        const re = new RegExp(def.pattern, 'g')
+        const links = []
+        let match: RegExpExecArray
+        while ((match = re.exec(text)) !== null) {
+            const uri = vscode.Uri.parse(def.url.replace('$1', text.substr(match.index, match[0].length)))
+            const pos = document.positionAt(match.index)
+            const link = new vscode.DocumentLink(new vscode.Range(pos, pos.translate(0, match[0].length)), uri)
+            links.push(link)
+        }
+
+        return links
+    }
 }

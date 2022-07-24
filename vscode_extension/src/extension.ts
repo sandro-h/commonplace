@@ -9,10 +9,10 @@ import { VSCodeCommonplaceConfig } from './config'
 
 // this method is called when vs code is activated
 export function activate(context: vscode.ExtensionContext) {
-  formatting.activate(context)
-  folding.activate()
-  outline.activate()
-  commands.activate(context)
-  preview.activate(context)
-  links.activate(VSCodeCommonplaceConfig)
+    formatting.activate(context)
+    folding.activate()
+    outline.activate()
+    commands.activate(context)
+    preview.activate(context)
+    links.activate(VSCodeCommonplaceConfig)
 }
