@@ -27,6 +27,10 @@ core:
 test:
 	npm run test -ws
 
+.PHONY: lint
+lint:
+	cd core/lib && npm run lint
+
 .PHONY: start-test-server
 start-test-server:
 	cd core/test_server && npm run serve

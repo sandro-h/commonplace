@@ -38,6 +38,9 @@ jobs:
       - name: Unit test core
         run: make test
 
+      - name: Lint core
+        run: make lint
+
       - name: Run test server
         run: make start-test-server
 
