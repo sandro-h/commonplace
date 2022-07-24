@@ -30,6 +30,7 @@ test:
 .PHONY: lint
 lint:
 	cd core/lib && npm run lint
+	cd vscode_extension && npm run lint
 
 .PHONY: start-test-server
 start-test-server:
