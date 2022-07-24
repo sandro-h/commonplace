@@ -50,7 +50,7 @@ class CommonplaceDocumentLinkProvider implements vscode.DocumentLinkProvider {
         const links = []
         let match: RegExpExecArray
         while ((match = re.exec(text)) !== null) {
-            const uri = vscode.Uri.parse(def.url.replace('$1', text.substr(match.index, match[0].length)))
+            const uri = vscode.Uri.parse(def.url.replace('$1', text.slice(match.index, match[0].length)))
             const pos = document.positionAt(match.index)
             const link = new vscode.DocumentLink(new vscode.Range(pos, pos.translate(0, match[0].length)), uri)
             links.push(link)

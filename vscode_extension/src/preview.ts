@@ -118,14 +118,13 @@ class CommonplacePreviewPanel {
     }
 
     public async updatePreview() {
-        // try {
-        //   const previewResp = await preview(this._editor.document);
-        //   this._panel.webview.postMessage({ command: 'update', preview: previewResp });
-        // }
-        // catch (err) {
-        //   vscode.window.showErrorMessage(`Failed preview todos: ${err}`);
-        //   return;
-        // }
+        try {
+            //   const previewResp = await preview(this._editor.document);
+            //   this._panel.webview.postMessage({ command: 'update', preview: previewResp });
+        }
+        catch (err) {
+            vscode.window.showErrorMessage(`Failed preview todos: ${err}`)
+        }
     }
 
     public dispose() {

@@ -148,8 +148,6 @@ export function activate(context: vscode.ExtensionContext) {
     async function updateDecorations() {
         if (!activeEditor) return
 
-        // Using then syntax here because we ignore the reject case which happens if a newer doc version
-        // was created in the meantime.
         requestFormat(activeEditor.document)
             .then(styles => {
                 const fmts = applyFormatting(styles, formats, activeEditor.document)
@@ -159,6 +157,6 @@ export function activate(context: vscode.ExtensionContext) {
                     activeEditor.setDecorations(fmt.dec, fmt.list)
                 }
             })
-            .catch(() => { })
+            .catch(() => { /* ignore if rejected because of newer doc version */ })
     }
 }
