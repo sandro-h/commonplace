@@ -2,18 +2,21 @@ import { addDays, addYears, endOfDay, getDay, getDaysInMonth, isAfter, isBefore,
 import { Instance, isRecurringMoment, isSingleMoment, Moment, MomentDateTime, Recurrence, RecurrenceType, RecurringMoment, SingleMoment, WorkState } from './models'
 import { epochWeek } from './util'
 
-type InstPredicate = (i: Instance) => boolean
-
-export function generateInstances(moments: Moment[], start: Date, end: Date, inclSubs = true, predicate: InstPredicate | null = null) {
-    return moments.flatMap(m => generateInstancesOfMoment(m, start, end, inclSubs, predicate))
+interface GenerateOptions {
+    inclSubs?: boolean
+    predicate?: (i: Instance) => boolean
 }
 
-export function generateInstancesOfMoment(moment: Moment, start: Date, end: Date, inclSubs = true, predicate: InstPredicate | null = null) {
+export function generateInstances(moments: Moment[], start: Date, end: Date, options: GenerateOptions = { inclSubs: true }) {
+    return moments.flatMap(m => generateInstancesOfMoment(m, start, end, options))
+}
+
+export function generateInstancesOfMoment(moment: Moment, start: Date, end: Date, options: GenerateOptions = { inclSubs: true }) {
     end = endOfDay(end)
-    const instances: Instance[] = createInstances(moment, start, end).filter(i => !predicate || predicate(i))
-    if (inclSubs) {
+    const instances: Instance[] = createInstances(moment, start, end).filter(i => !options.predicate || options.predicate(i))
+    if (options.inclSubs === undefined || options.inclSubs) {
         instances.forEach(inst => {
-            inst.subInstances = generateInstances(moment.subMoments, inst.start, inst.end, inclSubs, predicate)
+            inst.subInstances = generateInstances(moment.subMoments, inst.start, inst.end, options)
         })
     }
 

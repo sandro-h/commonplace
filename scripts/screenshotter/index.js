@@ -42,7 +42,9 @@ const samples = [
             a comment for the child todo`,
 
     'specific_day',
-    `<strong>[] get groceries (15.11.20${calImg})</strong>`,
+    `<strong>[] get groceries (15.11.20${calImg})</strong>
+    <strong><span style="color:#ff7d7d">[] this one is due soon (10.11.20${calImg})</span></strong>
+    `,
 
     'specific_day_time',
     `<strong>[] get groceries (15.11.20${calImg} 08:00${timeImg})</strong>`,

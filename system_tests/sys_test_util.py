@@ -65,6 +65,14 @@ def request_outline(content, format_type="todo", target="commonplace_js"):
     return resp.json()
 
 
+def request_preview(content, target="commonplace_js", fixed_time="2021-04-17"):
+    resp = requests.post(f"{get_url(target)}/preview?fixed_time={fixed_time}&localTime=true",
+                         data=base64.b64encode(content.encode("utf8")),
+                         headers={"Content-Type": "application/text"})
+
+    return resp.json()
+
+
 def request_clean(target="commonplace_js"):
     requests.post(f"{get_url(target)}/clean")
 

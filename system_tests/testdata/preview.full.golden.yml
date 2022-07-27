@@ -1,0 +1,697 @@
+input:
+  todo_file: test_todo.txt
+output: |-
+  {
+    "overview": {
+      "categories": [
+        {
+          "name": "Lor-em-ips",
+          "moments": [
+            {
+              "name": "umdolo",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 4,
+                "offset": 51,
+                "length": 9
+              }
+            },
+            {
+              "name": "iquaUt en ima dminimv eniamqui",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 7,
+                "offset": 181,
+                "length": 33
+              }
+            },
+            {
+              "name": "uat Duisauteiru",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 11,
+                "offset": 298,
+                "length": 29
+              }
+            },
+            {
+              "name": "nrep rehen",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 14,
+                "offset": 340,
+                "length": 25
+              }
+            },
+            {
+              "name": "velites",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 17,
+                "offset": 387,
+                "length": 10
+              }
+            },
+            {
+              "name": "rExc",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 23,
+                "offset": 456,
+                "length": 7
+              }
+            },
+            {
+              "name": "ade seruntm",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 27,
+                "offset": 544,
+                "length": 14
+              }
+            },
+            {
+              "name": "radipis",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 36,
+                "offset": 653,
+                "length": 10
+              }
+            },
+            {
+              "name": "turE xcepte urs",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 45,
+                "offset": 996,
+                "length": 18
+              }
+            },
+            {
+              "name": "tcon se ctetu",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 49,
+                "offset": 1142,
+                "length": 16
+              }
+            },
+            {
+              "name": "duntutla boree",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 53,
+                "offset": 1211,
+                "length": 17
+              }
+            },
+            {
+              "name": "ecatcup idatatn \"onproi dentsu ntinculp aquioffi ciades eruntmo\" ll itani mide stla bo Lor emipsum dolorsi",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 87,
+                "offset": 2552,
+                "length": 109
+              }
+            },
+            {
+              "name": "por inci-did",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 90,
+                "offset": 2723,
+                "length": 15
+              }
+            },
+            {
+              "name": "untu tlab oree tdolor",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 91,
+                "offset": 2739,
+                "length": 33
+              }
+            },
+            {
+              "name": "em ag naali quaU teni",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 92,
+                "offset": 2773,
+                "length": 33
+              }
+            },
+            {
+              "name": "amcola",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 95,
+                "offset": 2860,
+                "length": 9
+              }
+            },
+            {
+              "name": "iaturE",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 100,
+                "offset": 3019,
+                "length": 9
+              }
+            },
+            {
+              "name": "dmini mveniam",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 120,
+                "offset": 3786,
+                "length": 16
+              }
+            },
+            {
+              "name": "ur edolorinrep",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 123,
+                "offset": 3900,
+                "length": 17
+              }
+            },
+            {
+              "name": "eufugi atnullap ariatu / rExcepteur",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 126,
+                "offset": 3973,
+                "length": 38
+              }
+            },
+            {
+              "name": "ntmol litan imi dest laboru Lorem",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 129,
+                "offset": 4084,
+                "length": 37
+              }
+            },
+            {
+              "name": "ipsum dolors ita?",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 131,
+                "offset": 4123,
+                "length": 20
+              }
+            },
+            {
+              "name": "metcon sect",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 133,
+                "offset": 4145,
+                "length": 14
+              }
+            }
+          ]
+        },
+        {
+          "name": "gelitse",
+          "moments": [
+            {
+              "name": "ddoei://usm.odtempo.rin/cidid?u=ntutlabore8 etdol ore mag naaliquaU",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 141,
+                "offset": 4230,
+                "length": 70
+              }
+            },
+            {
+              "name": "teirured olori",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 144,
+                "offset": 4423,
+                "length": 17
+              }
+            },
+            {
+              "name": "nrepreh ender it inv",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 145,
+                "offset": 4441,
+                "length": 23
+              }
+            }
+          ]
+        },
+        {
+          "name": "itanimid",
+          "moments": [
+            {
+              "name": "est Loremipsu mdo lorsi",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 161,
+                "offset": 4733,
+                "length": 26
+              }
+            },
+            {
+              "name": "tam etco ns ectetu",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 163,
+                "offset": 4761,
+                "length": 21
+              }
+            },
+            {
+              "name": "radip iscinge lits eddoeiusmo dt emp",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 165,
+                "offset": 4784,
+                "length": 39
+              }
+            },
+            {
+              "name": "reeuf",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 174,
+                "offset": 5063,
+                "length": 8
+              }
+            },
+            {
+              "name": "etcons",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 186,
+                "offset": 5258,
+                "length": 9
+              }
+            },
+            {
+              "name": "ecte tu",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 187,
+                "offset": 5268,
+                "length": 10
+              }
+            },
+            {
+              "name": "trudex",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 217,
+                "offset": 5982,
+                "length": 9
+              }
+            }
+          ]
+        },
+        {
+          "name": "eprehender",
+          "moments": [
+            {
+              "name": "itinvolu ptate velitesse ci llumdol",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 225,
+                "offset": 6148,
+                "length": 38
+              }
+            },
+            {
+              "name": "oreeufu++ giat nullap",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 226,
+                "offset": 6187,
+                "length": 24
+              }
+            },
+            {
+              "name": "ariat urExc epteur sint occa",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 227,
+                "offset": 6212,
+                "length": 31
+              }
+            }
+          ]
+        },
+        {
+          "name": "ecatcupi",
+          "moments": [
+            {
+              "name": "datatn",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 233,
+                "offset": 6294,
+                "length": 9
+              }
+            },
+            {
+              "name": "tincu lpaqu ioff iciadese",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 254,
+                "offset": 7282,
+                "length": 28
+              }
+            },
+            {
+              "name": "sectetura dipisci",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 257,
+                "offset": 7371,
+                "length": 20
+              }
+            },
+            {
+              "name": "ngelit",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 258,
+                "offset": 7392,
+                "length": 9
+              }
+            },
+            {
+              "name": "uipe",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 262,
+                "offset": 7567,
+                "length": 7
+              }
+            },
+            {
+              "name": "isaut eiru redo",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 264,
+                "offset": 7603,
+                "length": 18
+              }
+            }
+          ]
+        },
+        {
+          "name": "itessecil",
+          "moments": [
+            {
+              "name": "eeufug",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 292,
+                "offset": 8704,
+                "length": 23
+              }
+            },
+            {
+              "name": "iatnu",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 293,
+                "offset": 8728,
+                "length": 21
+              }
+            },
+            {
+              "name": "llap",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 294,
+                "offset": 8750,
+                "length": 20
+              }
+            },
+            {
+              "name": "ari",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 295,
+                "offset": 8771,
+                "length": 20
+              }
+            },
+            {
+              "name": "atu",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 296,
+                "offset": 8792,
+                "length": 20
+              }
+            },
+            {
+              "name": "rExc",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 297,
+                "offset": 8813,
+                "length": 21
+              }
+            },
+            {
+              "name": "epte",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 298,
+                "offset": 8835,
+                "length": 21
+              }
+            },
+            {
+              "name": "ursin",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 299,
+                "offset": 8857,
+                "length": 22
+              }
+            },
+            {
+              "name": "tocc",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 300,
+                "offset": 8880,
+                "length": 21
+              }
+            }
+          ]
+        },
+        {
+          "name": "aecatcupi datat",
+          "moments": [
+            {
+              "name": "nonpro/ident",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 305,
+                "offset": 8959,
+                "length": 36
+              }
+            },
+            {
+              "name": "sun",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 306,
+                "offset": 8996,
+                "length": 27
+              }
+            },
+            {
+              "name": "tincu & lpaquio",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 307,
+                "offset": 9024,
+                "length": 30
+              }
+            },
+            {
+              "name": "ffici & adeseru",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 308,
+                "offset": 9055,
+                "length": 30
+              }
+            },
+            {
+              "name": "ntmoll itanim idestl",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 309,
+                "offset": 9086,
+                "length": 34
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "today": [
+      {
+        "name": "nonpro/ident",
+        "start": "2021-04-17T00:00:00.000",
+        "end": "2021-04-17T23:59:59.999",
+        "timeOfDay": null,
+        "priority": 0,
+        "category": {
+          "name": "aecatcupi datat",
+          "color": "",
+          "priority": 1,
+          "docPos": {
+            "lineNum": 303,
+            "offset": 8922,
+            "length": 17
+          }
+        },
+        "done": false,
+        "workState": "new",
+        "endsInRange": true,
+        "originDocPos": {
+          "lineNum": 305,
+          "offset": 8959,
+          "length": 36
+        }
+      },
+      {
+        "name": "sun",
+        "start": "2021-04-17T00:00:00.000",
+        "end": "2021-04-17T23:59:59.999",
+        "timeOfDay": null,
+        "priority": 0,
+        "category": {
+          "name": "aecatcupi datat",
+          "color": "",
+          "priority": 1,
+          "docPos": {
+            "lineNum": 303,
+            "offset": 8922,
+            "length": 17
+          }
+        },
+        "done": false,
+        "workState": "new",
+        "endsInRange": true,
+        "originDocPos": {
+          "lineNum": 306,
+          "offset": 8996,
+          "length": 27
+        }
+      }
+    ],
+    "week": [
+      {
+        "name": "tincu & lpaquio",
+        "start": "2021-04-15T00:00:00.000",
+        "end": "2021-04-15T23:59:59.999",
+        "timeOfDay": null,
+        "priority": 0,
+        "category": {
+          "name": "aecatcupi datat",
+          "color": "",
+          "priority": 1,
+          "docPos": {
+            "lineNum": 303,
+            "offset": 8922,
+            "length": 17
+          }
+        },
+        "done": false,
+        "workState": "new",
+        "endsInRange": true,
+        "originDocPos": {
+          "lineNum": 307,
+          "offset": 9024,
+          "length": 30
+        }
+      },
+      {
+        "name": "nonpro/ident",
+        "start": "2021-04-17T00:00:00.000",
+        "end": "2021-04-17T23:59:59.999",
+        "timeOfDay": null,
+        "priority": 0,
+        "category": {
+          "name": "aecatcupi datat",
+          "color": "",
+          "priority": 1,
+          "docPos": {
+            "lineNum": 303,
+            "offset": 8922,
+            "length": 17
+          }
+        },
+        "done": false,
+        "workState": "new",
+        "endsInRange": true,
+        "originDocPos": {
+          "lineNum": 305,
+          "offset": 8959,
+          "length": 36
+        }
+      },
+      {
+        "name": "sun",
+        "start": "2021-04-17T00:00:00.000",
+        "end": "2021-04-17T23:59:59.999",
+        "timeOfDay": null,
+        "priority": 0,
+        "category": {
+          "name": "aecatcupi datat",
+          "color": "",
+          "priority": 1,
+          "docPos": {
+            "lineNum": 303,
+            "offset": 8922,
+            "length": 17
+          }
+        },
+        "done": false,
+        "workState": "new",
+        "endsInRange": true,
+        "originDocPos": {
+          "lineNum": 306,
+          "offset": 8996,
+          "length": 27
+        }
+      }
+    ],
+    "calendar": [
+      {
+        "title": "tincu & lpaquio",
+        "start": "2021-04-15",
+        "end": "2021-04-16",
+        "color": ""
+      },
+      {
+        "title": "nonpro/ident",
+        "start": "2021-04-17",
+        "end": "2021-04-18",
+        "color": ""
+      },
+      {
+        "title": "sun",
+        "start": "2021-04-17",
+        "end": "2021-04-18",
+        "color": ""
+      }
+    ]
+  }

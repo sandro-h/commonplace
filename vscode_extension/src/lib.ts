@@ -1,6 +1,6 @@
 import {
     cleanDoneMoments, createParseConfig, DeleteEdit, Edit, EditType, EOF_OFFSET, foldTodos, FormatStyle, formatTodos, InsertEdit, Outline, outlineTodos,
-    parseMomentsString, TODO_FORMAT, trashDoneMoments, TRASH_FORMAT, backup
+    parseMomentsString, TODO_FORMAT, trashDoneMoments, TRASH_FORMAT, backup, previewMoments
 } from '@commonplace/lib'
 import * as vscode from 'vscode'
 import * as path from 'path'
@@ -60,7 +60,8 @@ async function doFetchAll(doc: vscode.TextDocument) {
     return {
         format: formatTodos(todos, doc.getText(), formatType),
         fold: foldTodos(todos),
-        outline: outlineTodos(todos, doc.getText(), formatType)
+        outline: outlineTodos(todos, doc.getText(), formatType),
+        preview: previewMoments(todos)
     }
 }
 

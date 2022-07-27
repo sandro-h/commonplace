@@ -20,8 +20,8 @@ ul {
 	padding-left: var(--container-paddding);
 }
 
-body > *,
-form > * {
+body>*,
+form>* {
 	margin-block-start: var(--input-margin-vertical);
 	margin-block-end: var(--input-margin-vertical);
 }
@@ -130,13 +130,15 @@ textarea::placeholder {
 	border-bottom: solid 1px gray;
 }
 
-.kanban-table th, .kanban-table td {
+.kanban-table th,
+.kanban-table td {
 	width: 33%;
 	max-width: 33%;
 	border-right: solid 1px gray;
 }
 
-.kanban-table th:last-child, .kanban-table td:last-child {
+.kanban-table th:last-child,
+.kanban-table td:last-child {
 	border-right: none;
 }
 
@@ -153,8 +155,12 @@ textarea::placeholder {
 	background-color: rgb(58, 135, 173);
 	border: solid 1px black;
 	border-radius: 4px;
-	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	cursor: pointer;
+}
+
+.fc-day-grid-event>.fc-content {
+	white-space: normal !important;
+	overflow: hidden;
 }

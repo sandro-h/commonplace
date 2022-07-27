@@ -1,3 +1,5 @@
+export const EOF_OFFSET = -1
+
 export enum WorkState {
     NEW = 'new',
     WAITING = 'waiting',
@@ -191,4 +193,29 @@ export interface DeleteEdit extends Edit {
     endOffset: number
 }
 
-export const EOF_OFFSET = -1
+export interface CalendarEntry {
+    title: string
+    start: string
+    end: string
+    color: string | null
+}
+
+export type PreviewMoment = Pick<Moment, 'name' | 'workState' | 'docPos'>
+
+export type PreviewInstance = Omit<Instance, 'subInstances'>
+
+export interface PreviewCategory {
+    name: string
+    moments: PreviewMoment[]
+}
+
+export interface PreviewOverview {
+    categories: PreviewCategory[]
+}
+
+export interface Preview {
+    today: PreviewInstance[]
+    week: PreviewInstance[]
+    overview: PreviewOverview
+    calendar: CalendarEntry[]
+}

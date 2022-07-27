@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { debounce } from './util'
+import { requestPreview } from './lib'
 
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
@@ -106,11 +106,10 @@ class CommonplacePreviewPanel {
             this._disposables
         )
 
-        const debouncedUpdatePreview = debounce(() => this.updatePreview(), 250)
         vscode.workspace.onDidChangeTextDocument(
             (e: vscode.TextDocumentChangeEvent) => {
                 if (e.document === this._editor.document) {
-                    debouncedUpdatePreview()
+                    this.updatePreview()
                 }
             },
             null,
@@ -119,11 +118,11 @@ class CommonplacePreviewPanel {
 
     public async updatePreview() {
         try {
-            //   const previewResp = await preview(this._editor.document);
-            //   this._panel.webview.postMessage({ command: 'update', preview: previewResp });
+            const previewResp = await requestPreview(this._editor.document)
+            this._panel.webview.postMessage({ command: 'update', preview: previewResp })
         }
         catch (err) {
-            vscode.window.showErrorMessage(`Failed preview todos: ${err}`)
+            // Ignore
         }
     }
 
@@ -171,18 +170,13 @@ class CommonplacePreviewPanel {
           Use a content security policy to only allow loading images from https or from our extension directory,
           and only allow scripts that have a specific nonce.
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; img-src ${webview.cspSource} https:; script-src 'nonce-${nonce}';">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src-elem ${webview.cspSource}; style-src 'unsafe-inline'; img-src ${webview.cspSource} https:; script-src 'nonce-${nonce}';">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link href="${stylesResetUri}" rel="stylesheet">
         <link href="${stylesMainUri}" rel="stylesheet">
         <link href="${stylesCalendarUri}" rel="stylesheet">
-        <style type="text/css">
-          .fc-today {
-            background-color: yellow !important;
-          }
-        </style>
 
         <title>Commonplace Preview</title>
       </head>

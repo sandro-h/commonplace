@@ -12,10 +12,14 @@ VSCode extension for text-based TODO lists and notes.
 * Simple, human-readable text format
 * Hierarchical todos, recurring todos, priorities, date ranges, due dates
 * Arbitrary comments under todos allow to keep a work log for each todo. E.g. copy-pasting shell commands used to complete a todo.
-* Format highlighting in VSCode
+* Format highlighting
+* Outline of todos
+* Preview panel with overview of upcoming todos and kanban-ish new/waiting/in progress board.
 * Commands to `clean` and `trash` done todos. `clean` moves them to end of file, `trash` moves them to todo-trash.txt
 * Command to copy a todo comment without the indentation..
 * Create links for ticket keys (e.g. JIRA).
+
+![VSCode syntax highlighting and preview panel](images/format_preview.png "VSCode syntax highlighting and preview panel")
 
 ## Limitations
 

@@ -4,6 +4,7 @@ import { formatTodos, foldTodos, outlineTodos, TODO_FORMAT, TRASH_FORMAT, Format
 import { generateInstances, generateInstancesOfMoment } from './instantiate'
 import { cleanDoneMoments, trashDoneMoments } from './clean'
 import { backup } from './backup'
+import { previewMoments } from './preview'
 import { inLocalTimezone, isoTimezoneOffset, getBottomLine } from './util'
 
 export {
@@ -29,5 +30,6 @@ export {
     cleanDoneMoments,
     trashDoneMoments,
     getBottomLine,
-    backup
+    backup,
+    previewMoments
 }

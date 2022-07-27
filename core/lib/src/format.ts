@@ -107,7 +107,7 @@ function formatDueSoon(mom: Moment, fixedTime: Date | null) {
     const today = startOfDay(fixedTime || new Date())
     const nDaysFromToday = addDays(today, cutoff)
     const nRealHours = differenceInHours(nDaysFromToday, today)
-    const instances = generateInstancesOfMoment(mom, today, nDaysFromToday, false)
+    const instances = generateInstancesOfMoment(mom, today, nDaysFromToday, { inclSubs: false })
     let earliest = cutoff
     instances.forEach(inst => {
         // We need to compare hours here because of daylight saving time.
