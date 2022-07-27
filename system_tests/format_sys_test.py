@@ -40,14 +40,14 @@ from system_tests.sys_test_util import TESTDATA_DIR, dedent, request_fold, reque
                 comments
             [x] bla3
                 comments
-	            comments
+                comments
             """,
             """\
             0,7,mom
             8,19,mom.done
             20,27,mom
             54,62,mom.done
-            67,75,com.done
+            67,88,com.done
             """,
         ),
         # Due soon. Note fixed date is 2022-06-05
@@ -87,6 +87,33 @@ from system_tests.sys_test_util import TESTDATA_DIR, dedent, request_fold, reque
             """\
             1,20,mom
             48,55,mom
+            """,
+        ),
+        # State styles
+        (
+            """
+            [] new
+            [p] in progress
+                [] sub should not get state style
+            [w] waiting
+                [] sub should not get state style
+            [x] done
+                [] sub should get done style
+            [p] due soon overrides state style (07.06.22)
+            [p] priority progress!
+            [w] priority waiting!
+            """,
+            """\
+            1,7,mom
+            8,23,mom.inProgress
+            24,61,mom
+            62,73,mom.waiting
+            74,111,mom
+            112,153,mom.done
+            154,199,mom.until2
+            190,198,date
+            200,222,mom.inProgress.priority
+            223,244,mom.waiting.priority
             """,
         ),
     ],

@@ -29,8 +29,8 @@ const samples = [
 
     'workstates',
     `<strong>[] my open todo</strong>
-    <strong>[p] my in progress todo</strong>
-    <strong>[w] my waiting todo</strong>
+    <span style="color:#72ff96"><strong>[p] my in progress todo</strong></span>
+    <span style="color:gray"><strong>[w] my waiting todo</strong></span>
     <span style="color:darkgreen">[x] my done todo</span>`,
 
     'comments',

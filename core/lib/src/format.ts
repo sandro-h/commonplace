@@ -52,18 +52,8 @@ export function formatTodos(todos: Todos, rawContent: string, formatType: string
 }
 
 function formatMoment(state: FormatState, mom: Moment, parentDone = false) {
-    let style = MOM_STYLE
     const done = parentDone || mom.workState === WorkState.DONE
-    if (done) {
-        style += DONE_SUFFIX
-    }
-    else {
-        style += formatDueSoon(mom, state.fixedTime)
-        if (mom.priority > 0) {
-            style += PRIORITY_SUFFIX
-        }
-    }
-
+    const style = MOM_STYLE + determineBaseStyle(mom, done, state.fixedTime)
     addFormatLine(state, style, mom.docPos)
 
     if (done) {
@@ -74,6 +64,27 @@ function formatMoment(state: FormatState, mom: Moment, parentDone = false) {
     }
 
     mom.subMoments.forEach(sub => formatMoment(state, sub, done))
+}
+
+function determineBaseStyle(mom: Moment, done: boolean, fixedTime: Date | null) {
+    if (done) {
+        return DONE_SUFFIX
+    }
+
+    let suffix = ''
+    const dueSoon = formatDueSoon(mom, fixedTime)
+    if (dueSoon) {
+        suffix = dueSoon
+    }
+    else if (mom.workState !== WorkState.NEW) {
+        suffix = `.${mom.workState}`
+    }
+
+    if (mom.priority > 0) {
+        suffix += PRIORITY_SUFFIX
+    }
+
+    return suffix
 }
 
 function formatTrashMoment(state: FormatState, mom: Moment) {

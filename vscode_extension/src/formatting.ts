@@ -11,6 +11,11 @@ type FormatDefinition = {
 type Format = FormatDefinition & { list: vscode.DecorationOptions[] };
 
 function initFormats(context: vscode.ExtensionContext): Record<string, FormatDefinition> {
+    const priorityStyle = { border: 'solid 1px red' }
+    const newStyle = { color: 'inherit; font-weight: bold' }
+    const inProgressStyle = { color: '#72ff96; font-weight: bold' }
+    const waitingStyle = { color: 'gray; font-weight: bold' }
+
     const fmts: Record<string, FormatDefinition> = {
         cat: {
             dec: vscode.window.createTextEditorDecorationType({
@@ -18,14 +23,30 @@ function initFormats(context: vscode.ExtensionContext): Record<string, FormatDef
             })
         },
         mom: {
-            dec: vscode.window.createTextEditorDecorationType({
-                color: 'inherit; font-weight: bold'
-            })
+            dec: vscode.window.createTextEditorDecorationType(newStyle)
+        },
+        'mom.inProgress': {
+            dec: vscode.window.createTextEditorDecorationType(inProgressStyle)
+        },
+        'mom.waiting': {
+            dec: vscode.window.createTextEditorDecorationType(waitingStyle)
         },
         'mom.priority': {
             dec: vscode.window.createTextEditorDecorationType({
-                color: 'inherit; font-weight: bold',
-                border: 'solid 1px red'
+                ...priorityStyle,
+                ...newStyle
+            })
+        },
+        'mom.inProgress.priority': {
+            dec: vscode.window.createTextEditorDecorationType({
+                ...priorityStyle,
+                ...inProgressStyle
+            })
+        },
+        'mom.waiting.priority': {
+            dec: vscode.window.createTextEditorDecorationType({
+                ...priorityStyle,
+                ...waitingStyle
             })
         },
         'mom.done': {
