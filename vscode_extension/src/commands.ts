@@ -1,5 +1,6 @@
 import * as vscode from 'vscode'
 import { cleanTodos, trashTodos } from './lib'
+import { showSearchPick } from './search'
 
 const INDENT_PATTERN = /(^|\r?\n)(\s+)/
 const log = vscode.window.createOutputChannel('commonplace.commands')
@@ -51,4 +52,5 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand('commonplace.clean', handleClean))
     context.subscriptions.push(vscode.commands.registerCommand('commonplace.trash', handleTrash))
     context.subscriptions.push(vscode.commands.registerCommand('commonplace.copy', handleCopyWithoutIndent))
+    context.subscriptions.push(vscode.commands.registerCommand('commonplace.search', showSearchPick))
 }

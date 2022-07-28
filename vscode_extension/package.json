@@ -51,6 +51,10 @@
                 "command": "commonplace.showPreview",
                 "title": "Show Commonplace preview",
                 "icon": "$(open-preview)"
+            },
+            {
+                "command": "commonplace.search",
+                "title": "Search Todos"
             }
         ],
         "menus": {
@@ -68,7 +72,7 @@
                 {
                     "command": "commonplace.copy",
                     "when": "resourceLangId == todo || resourceLangId == todo-trash",
-                    "group": "commonplace@3"
+                    "group": "9_cutcopypaste"
                 }
             ],
             "editor/title": [
@@ -76,6 +80,28 @@
                     "command": "commonplace.showPreview",
                     "when": "resourceLangId == todo",
                     "group": "navigation"
+                }
+            ],
+            "commandPalette": [
+                {
+                    "command": "commonplace.clean",
+                    "when": "resourceLangId == todo"
+                },
+                {
+                    "command": "commonplace.trash",
+                    "when": "resourceLangId == todo"
+                },
+                {
+                    "command": "commonplace.copy",
+                    "when": "resourceLangId == todo || resourceLangId == todo-trash"
+                },
+                {
+                    "command": "commonplace.showPreview",
+                    "when": "resourceLangId == todo"
+                },
+                {
+                    "command": "commonplace.search",
+                    "when": "resourceLangId == todo || resourceLangId == todo-trash"
                 }
             ]
         },

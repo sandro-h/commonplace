@@ -15,8 +15,9 @@ VSCode extension for text-based TODO lists and notes.
 * Format highlighting
 * Outline of todos
 * Preview panel with overview of upcoming todos and kanban-ish new/waiting/in progress board.
-* Commands to `clean` and `trash` done todos. `clean` moves them to end of file, `trash` moves them to todo-trash.txt
-* Command to copy a todo comment without the indentation..
+* `Clean Done Todos (commonplace.clean)` and `Trash Done Todos (commonplace.trash)` commands to `clean` and `trash` done todos. `clean` moves them to end of file, `trash` moves them to `todo-trash.txt`.
+* `Copy Without Indentation (commonplace.copy)` command to copy a todo comment without the indentation.
+* `Search Todos (commonplace.search)` command to quickly search through todos.
 * Create links for ticket keys (e.g. JIRA).
 
 ![VSCode syntax highlighting and preview panel](images/format_preview.png "VSCode syntax highlighting and preview panel")

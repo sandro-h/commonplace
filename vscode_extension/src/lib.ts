@@ -6,6 +6,7 @@ import * as vscode from 'vscode'
 import * as path from 'path'
 import * as fs from 'fs'
 import { trashLangId } from './util'
+import { Todos } from '@commonplace/lib/models'
 
 interface CacheEntry {
     version: number;
@@ -58,6 +59,7 @@ async function doFetchAll(doc: vscode.TextDocument) {
     const todos = parseMomentsString(doc.getText(), createParseConfig())
     const formatType = doc.languageId === trashLangId ? TRASH_FORMAT : TODO_FORMAT
     return {
+        todos,
         format: formatTodos(todos, doc.getText(), formatType),
         fold: foldTodos(todos),
         outline: outlineTodos(todos, doc.getText(), formatType),
@@ -82,6 +84,7 @@ export const requestFormat = getter<FormatStyle[]>('format')
 export const requestFold = getter<number[][]>('fold')
 export const requestOutline = getter<Outline[]>('outline')
 export const requestPreview = getter('preview')
+export const requestTodos = getter<Todos>('todos')
 
 export async function cleanTodos(document: vscode.TextDocument): Promise<void> {
     await doBackup(document.uri.fsPath)
