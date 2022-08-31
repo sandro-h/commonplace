@@ -2,7 +2,7 @@ VENV_BIN=$(shell [ -d venv/bin ] && echo 'venv/bin' || echo 'venv/Scripts')
 PIP=${VENV_BIN}/pip
 PYTEST=${VENV_BIN}/pytest
 PYLINT=${VENV_BIN}/pylint
-BASE_VERSION=0.4.0
+BASE_VERSION=0.4.1
 BUILD_NUMBER=0
 VERSION=${BASE_VERSION}.${BUILD_NUMBER}
 
