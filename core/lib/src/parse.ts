@@ -65,7 +65,9 @@ function parseCategoryBlock(state: ParseState) {
 
 function parseCategory(line: Line, config: ParseConfig): Category {
     let color, content, priority
+    // eslint-disable-next-line prefer-const
     [color, content] = parseCategoryColor(line.content);
+    // eslint-disable-next-line prefer-const
     [priority, content] = parsePriority(content, config)
     return {
         name: content.trimStart(),
@@ -178,6 +180,7 @@ function parseRecurrence(line: Line, lineContent: string, config: ParseConfig): 
     const untrimmedPos = line.content.lastIndexOf(config.leftDateBracket) + 1
     let recurStr = lineContent.slice(lbracketPos + 1, -1)
     let timeOfDay
+    // eslint-disable-next-line prefer-const
     [timeOfDay, recurStr] = parseTimeSuffix(recurStr, config)
     if (timeOfDay) {
         timeOfDay.docPos.offset += line.offset + untrimmedPos
@@ -357,6 +360,7 @@ function parseDateSuffix(line: Line, lineContent: string, config: ParseConfig): 
     const untrimmedPos = line.content.lastIndexOf(config.leftDateBracket) + 1
     let suffixStr = lineContent.slice(leftPos + 1, -1)
     let timeOfDay
+    // eslint-disable-next-line prefer-const
     [timeOfDay, suffixStr] = parseTimeSuffix(suffixStr, config)
     finalizeDocPos(timeOfDay, line, untrimmedPos)
 

@@ -5,7 +5,6 @@ import json
 import os
 import re
 from functools import reduce
-from time import time
 
 import requests
 
@@ -16,9 +15,11 @@ COMMONPLACE_JS_URL = "http://127.0.0.1:3000"
 
 
 def request_parse(content, target="commonplace_js"):
-    resp = requests.post(f"{get_url(target)}/parse?fixed_time=2022-05-22&localTime=true",
-                         data=base64.b64encode(content.encode("utf8")),
-                         headers={"Content-Type": "application/text"})
+    resp = requests.post(
+        f"{get_url(target)}/parse?fixed_time=2022-05-22&localTime=true",
+        data=base64.b64encode(content.encode("utf8")),
+        headers={"Content-Type": "application/text"},
+    )
     if target == "sibyl":
         return align_sibylgo_result(resp.json())
     if target == "commonplace_js":
@@ -28,9 +29,11 @@ def request_parse(content, target="commonplace_js"):
 
 
 def request_instances(content, start: str, end: str, target="commonplace_js"):
-    resp = requests.post(f"{get_url(target)}/instances?start={reformat_to_ymd(start)}&end={reformat_to_ymd(end)}&localTime=true",
-                         data=base64.b64encode(content.encode("utf8")),
-                         headers={"Content-Type": "application/text"})
+    resp = requests.post(
+        f"{get_url(target)}/instances?start={reformat_to_ymd(start)}&end={reformat_to_ymd(end)}&localTime=true",
+        data=base64.b64encode(content.encode("utf8")),
+        headers={"Content-Type": "application/text"},
+    )
 
     if target == "sibyl":
         return align_sibylgo_result(resp.json())
@@ -41,34 +44,44 @@ def request_instances(content, start: str, end: str, target="commonplace_js"):
     return resp.json()
 
 
-def request_format(content, format_type="todo", fixed_time="2022-06-05", target="commonplace_js"):
-    resp = requests.post(f"{get_url(target)}/format?fixed_time={fixed_time}&type={format_type}",
-                         data=base64.b64encode(content.encode("utf8")),
-                         headers={"Content-Type": "application/text"})
+def request_format(
+    content, format_type="todo", fixed_time="2022-06-05", target="commonplace_js"
+):
+    resp = requests.post(
+        f"{get_url(target)}/format?fixed_time={fixed_time}&type={format_type}",
+        data=base64.b64encode(content.encode("utf8")),
+        headers={"Content-Type": "application/text"},
+    )
 
     return resp.content.decode("utf8")
 
 
 def request_fold(content, target="commonplace_js"):
-    resp = requests.post(f"{get_url(target)}/folding",
-                         data=base64.b64encode(content.encode("utf8")),
-                         headers={"Content-Type": "application/text"})
+    resp = requests.post(
+        f"{get_url(target)}/folding",
+        data=base64.b64encode(content.encode("utf8")),
+        headers={"Content-Type": "application/text"},
+    )
 
     return resp.content.decode("utf8")
 
 
 def request_outline(content, format_type="todo", target="commonplace_js"):
-    resp = requests.post(f"{get_url(target)}/outline?type={format_type}",
-                         data=base64.b64encode(content.encode("utf8")),
-                         headers={"Content-Type": "application/text"})
+    resp = requests.post(
+        f"{get_url(target)}/outline?type={format_type}",
+        data=base64.b64encode(content.encode("utf8")),
+        headers={"Content-Type": "application/text"},
+    )
 
     return resp.json()
 
 
 def request_preview(content, target="commonplace_js", fixed_time="2021-04-17"):
-    resp = requests.post(f"{get_url(target)}/preview?fixed_time={fixed_time}&localTime=true",
-                         data=base64.b64encode(content.encode("utf8")),
-                         headers={"Content-Type": "application/text"})
+    resp = requests.post(
+        f"{get_url(target)}/preview?fixed_time={fixed_time}&localTime=true",
+        data=base64.b64encode(content.encode("utf8")),
+        headers={"Content-Type": "application/text"},
+    )
 
     return resp.json()
 
@@ -84,13 +97,13 @@ def request_trash(fixed_time="2022-06-05", target="commonplace_js"):
 def get_url(target):
     if target == "commonplace":
         return COMMONPLACE_URL
-    elif target == "sibyl":
+    if target == "sibyl":
         return SIBYL_URL
-    elif target == "commonplace_js":
+    if target == "commonplace_js":
         print("ja")
         return COMMONPLACE_JS_URL
-    else:
-        assert False, f"Invalid target {target}"
+
+    assert False, f"Invalid target {target}"
 
 
 def align_sibylgo_result(data):
@@ -163,7 +176,8 @@ def add_null_categories(instances):
 
 def dedent(content):
     """Removes the base indentation from a multi-line string.
-    Allows to properly indent multiline strings in these tests for better readability."""
+    Allows to properly indent multiline strings in these tests for better readability.
+    """
     if not content:
         return content
     parts = content.split("\n")
@@ -193,7 +207,5 @@ class EnhancedJSONEncoder(json.JSONEncoder):
         if dataclasses.is_dataclass(o):
             return dataclasses.asdict(o)
         if isinstance(o, datetime):
-            return o.isoformat()
-        if isinstance(o, time):
             return o.isoformat()
         return super().default(o)

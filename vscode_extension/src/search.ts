@@ -36,7 +36,7 @@ export async function showSearchPick() {
     pick.matchOnDetail = true
 
     pick.onDidChangeActive(items => {
-        if (!items.length) return
+        if (!items.length || !vscode.window.activeTextEditor) return
 
         vscode.window.activeTextEditor.revealRange(
             items[0].range, vscode.TextEditorRevealType.InCenter)

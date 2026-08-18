@@ -1,8 +1,8 @@
 import * as vscode from 'vscode'
 
 export interface CommonplaceConfig {
-    getTicketPattern(): string;
-    getTicketUrl(): string;
+    getTicketPattern(): string | undefined;
+    getTicketUrl(): string | undefined;
 }
 
 export const VSCodeCommonplaceConfig: CommonplaceConfig = {
@@ -10,6 +10,6 @@ export const VSCodeCommonplaceConfig: CommonplaceConfig = {
     getTicketUrl: () => getConfig('ticketUrl')
 }
 
-function getConfig<T>(key: string): T {
+function getConfig<T>(key: string): T | undefined {
     return vscode.workspace.getConfiguration('commonplace').get<T>(key)
 }

@@ -1,7 +1,6 @@
 [MESSAGES CONTROL]
 
-; disable=C0114,C0115,C0116,missing-docstring,fixme
-disable=missing-docstring,duplicate-code,fixme
+disable=missing-docstring,duplicate-code,fixme,missing-timeout
 
 [FORMAT]
 

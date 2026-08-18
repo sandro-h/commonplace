@@ -7,9 +7,10 @@
         "dist"
     ],
     "compilerOptions": {
+        "rootDir": "src",
         "outDir": "./dist/"
     },
     "include": [
-        "./src/**/*.ts"
+        "src/**/*.ts"
     ]
 }

@@ -43,7 +43,7 @@ export class LineIteratorImpl implements LineIterator {
         this.undoing = true
     }
 
-    next(): IteratorResult<Line, any> {
+    next(): IteratorResult<Line> {
         let line: string | null
         if (this.undoing) {
             line = this.lastLine
@@ -103,7 +103,7 @@ export class ExistingLineIterator implements LineIterator {
         this.undoing = true
     }
 
-    next(): IteratorResult<Line, any> {
+    next(): IteratorResult<Line> {
         this.undoing = false
 
         if (this.index >= this.lines.length) {

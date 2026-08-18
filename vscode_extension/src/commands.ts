@@ -7,22 +7,26 @@ const log = vscode.window.createOutputChannel('commonplace.commands')
 
 async function handleClean() {
     try {
-        await cleanTodos(vscode.window.activeTextEditor.document)
-        vscode.window.showInformationMessage('Cleaned done todos!')
+        if (vscode.window.activeTextEditor) {
+            await cleanTodos(vscode.window.activeTextEditor.document)
+            vscode.window.showInformationMessage('Cleaned done todos!')
+        }
     }
     catch (err) {
-        log.appendLine(err)
-        log.appendLine(err.stack)
+        logError(err);
         vscode.window.showErrorMessage(`Failed to clean done todos: ${err}`)
     }
 }
 
 async function handleTrash() {
     try {
-        await trashTodos(vscode.window.activeTextEditor.document)
-        vscode.window.showInformationMessage('Trashed done todos!')
+        if (vscode.window.activeTextEditor) {
+            await trashTodos(vscode.window.activeTextEditor.document)
+            vscode.window.showInformationMessage('Trashed done todos!')
+        }
     }
     catch (err) {
+        logError(err);
         vscode.window.showErrorMessage(`Failed to trash done todos: ${err}`)
     }
 }
@@ -45,6 +49,13 @@ async function handleCopyWithoutIndent() {
     }
     catch (err) {
         vscode.window.showErrorMessage(`Failed to copy without indentation: ${err}`)
+    }
+}
+
+function logError(error: unknown) {
+    log.appendLine(String(error))
+    if (error instanceof Error) {
+        log.appendLine(String(error.stack))
     }
 }
 
