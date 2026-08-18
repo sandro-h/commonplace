@@ -20,7 +20,7 @@ endif
 
 .PHONY: core
 core:
-	npm run compile -ws
+	npm run compile --workspaces && \
 	cd core/lib && npm run package
 
 .PHONY: test
@@ -28,9 +28,9 @@ test:
 	npm run test -ws
 
 .PHONY: lint
-lint:
+lint: python-lint
 	cd core/lib && npm run lint
-	cd vscode_extension && npm run lint
+	cd vscode_extension && npm run lint	
 
 .PHONY: start-test-server
 start-test-server:
@@ -85,6 +85,10 @@ freeze:
 .PHONY: system_tests
 system-test: install
 	${PYTEST} system_tests
+
+.PHONY: python-lint
+python-lint: install
+	${PYLINT} system_tests
 
 ###################################################################
 # Release

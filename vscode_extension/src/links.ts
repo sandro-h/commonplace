@@ -22,7 +22,7 @@ class CommonplaceDocumentLinkProvider implements vscode.DocumentLinkProvider {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    provideDocumentLinks(document: vscode.TextDocument, _token: vscode.CancellationToken): vscode.DocumentLink[] {
+    provideDocumentLinks(document: vscode.TextDocument, _token: vscode.CancellationToken): vscode.ProviderResult<vscode.DocumentLink[]> {
         const linkDefs = this.getLinkDefs()
         if (!linkDefs.length) {
             return
@@ -39,8 +39,8 @@ class CommonplaceDocumentLinkProvider implements vscode.DocumentLinkProvider {
 
         return [
             {
-                pattern: this.cfg.getTicketPattern(),
-                url: this.cfg.getTicketUrl()
+                pattern: this.cfg.getTicketPattern()!,
+                url: this.cfg.getTicketUrl()!
             }
         ]
     }
@@ -48,7 +48,7 @@ class CommonplaceDocumentLinkProvider implements vscode.DocumentLinkProvider {
     extractLinksForDef(def: CommonplaceLinkDefinition, text: string, document: vscode.TextDocument): vscode.DocumentLink[] {
         const re = new RegExp(def.pattern, 'g')
         const links = []
-        let match: RegExpExecArray
+        let match: RegExpExecArray | null
         while ((match = re.exec(text)) !== null) {
             const uri = vscode.Uri.parse(def.url.replace('$1', text.slice(match.index, match.index + match[0].length)))
             const pos = document.positionAt(match.index)

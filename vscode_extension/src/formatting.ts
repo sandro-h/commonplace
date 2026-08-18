@@ -91,7 +91,7 @@ function initFormats(context: vscode.ExtensionContext): Record<string, FormatDef
         { textDecoration: 'none; font-weight: bold', color: '#fec7c7' }
     ]
 
-    const momUntilDecorationTypes = {}
+    const momUntilDecorationTypes: Record<string, vscode.TextEditorDecorationType> = {}
     for (let i = 0; i <= 11; i += 1) {
         let styleIndex = -1
         if (i <= 1) styleIndex = 0
@@ -157,11 +157,11 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }, null, context.subscriptions)
 
-    function setActiveEditor(editor: vscode.TextEditor) {
-        activeEditor = isTodoEditor(editor) ? editor : null
+    function setActiveEditor(editor: vscode.TextEditor | undefined) {
+        activeEditor = isTodoEditor(editor) ? editor! : null
     }
 
-    function isTodoEditor(editor: vscode.TextEditor) {
+    function isTodoEditor(editor: vscode.TextEditor | undefined) {
         if (!editor || !editor.document) return false
         return vscode.languages.match(todoOrTrashSelector, editor.document) > 0
     }
@@ -171,11 +171,11 @@ export function activate(context: vscode.ExtensionContext) {
 
         requestFormat(activeEditor.document)
             .then(styles => {
-                const fmts = applyFormatting(styles, formats, activeEditor.document)
+                const fmts = applyFormatting(styles, formats, activeEditor!.document)
                 for (const key in fmts) {
                     const fmt = fmts[key]
                     // Note: it's important to also set if the list is empty, to disable old decorations on the line.
-                    activeEditor.setDecorations(fmt.dec, fmt.list)
+                    activeEditor!.setDecorations(fmt.dec, fmt.list)
                 }
             })
             .catch(() => { /* ignore if rejected because of newer doc version */ })

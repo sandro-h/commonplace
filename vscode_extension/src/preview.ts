@@ -4,16 +4,20 @@ import { requestPreview } from './lib'
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand('commonplace.showPreview', () => {
-            CommonplacePreviewPanel.createOrShow(context.extensionUri, vscode.window.activeTextEditor)
+            if (vscode.window.activeTextEditor) {
+                CommonplacePreviewPanel.createOrShow(context.extensionUri, vscode.window.activeTextEditor)
+            }
         })
     )
 
     if (vscode.window.registerWebviewPanelSerializer) {
         // Make sure we register a serializer in activation event
         vscode.window.registerWebviewPanelSerializer(CommonplacePreviewPanel.viewType, {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
             async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
-                console.log(`Got state: ${state}`)
-                CommonplacePreviewPanel.revive(webviewPanel, context.extensionUri, vscode.window.activeTextEditor)
+                if (vscode.window.activeTextEditor) {
+                    CommonplacePreviewPanel.revive(webviewPanel, context.extensionUri, vscode.window.activeTextEditor)
+                }
             }
         })
     }
@@ -26,7 +30,6 @@ class CommonplacePreviewPanel {
     /**
      * Track the currently panel. Only allow a single panel to exist at a time.
      */
-    // eslint-disable-next-line no-use-before-define
     public static currentPanel: CommonplacePreviewPanel | undefined
 
     public static readonly viewType = 'commonplacePreview'
@@ -121,7 +124,7 @@ class CommonplacePreviewPanel {
             const previewResp = await requestPreview(this._editor.document)
             this._panel.webview.postMessage({ command: 'update', preview: previewResp })
         }
-        catch (err) {
+        catch {
             // Ignore
         }
     }

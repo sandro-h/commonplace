@@ -11,7 +11,7 @@ export function activate() {
 
 class CommonplaceSymbolProvider implements vscode.DocumentSymbolProvider {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async provideDocumentSymbols(document: vscode.TextDocument, _token: vscode.CancellationToken): Promise<vscode.DocumentSymbol[]> {
+    async provideDocumentSymbols(document: vscode.TextDocument, _token: vscode.CancellationToken): Promise<vscode.DocumentSymbol[] | null> {
         try {
             const outline = await requestOutline(document)
             return outline.map(o => new vscode.DocumentSymbol(

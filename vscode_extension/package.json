@@ -3,7 +3,7 @@
     "displayName": "Commonplace",
     "description": "Commonplace VSCode extension",
     "publisher": "sandro-h",
-    "version": "0.4.1",
+    "version": "0.5.0",
     "license": "MIT",
     "icon": "icon.png",
     "repository": {
@@ -11,7 +11,7 @@
         "url": "https://github.com/sandro-h/commonplace.git"
     },
     "engines": {
-        "vscode": "^1.47.0"
+        "vscode": "^1.125.0"
     },
     "categories": [
         "Other"
@@ -131,23 +131,20 @@
     },
     "dependencies": {
         "@commonplace/lib": "file:../core/lib/dist/commonplace-lib-1.0.0.tgz",
-        "fullcalendar": "^3.9.0",
-        "jquery": "^3.6.0",
-        "moment": "^2.29.4",
-        "node-fetch": "^2.6.7"
+        "fullcalendar": "^7.0.1",
+        "jquery": "^4.0.0",
+        "moment": "^2.30.1",
+        "node-fetch": "^3.3.2"
     },
     "devDependencies": {
-        "@types/node": "^10.14.17",
-        "@types/node-fetch": "^2.5.7",
-        "@types/vscode": "^1.47.0",
-        "@typescript-eslint/eslint-plugin": "^5.30.7",
-        "@typescript-eslint/parser": "^5.30.7",
-        "eslint": "^8.20.0",
-        "eslint-config-standard": "^17.0.0",
-        "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-n": "^15.2.4",
-        "eslint-plugin-promise": "^6.0.0",
-        "typescript": "^4.7.4",
-        "vsce": "^2.6.7"
+        "@eslint/js": "^10.0.1",
+        "@types/node": "^26.1.1",
+        "@types/node-fetch": "^2.6.13",
+        "@types/vscode": "^1.125.0",
+        "eslint": "^10.7.0",
+        "globals": "^17.7.0",
+        "typescript": "<7",
+        "typescript-eslint": "^8.64.0",
+        "vsce": "^2.15.0"
     }
 }
