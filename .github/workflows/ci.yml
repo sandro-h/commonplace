@@ -2,32 +2,29 @@ name: CI
 
 on:
   push:
-    branches: ["**"]
-    tags: ["**", "!v*"]
+    branches: [main]
   pull_request:
-    branches: [ main ]
 
 permissions:
   contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v7
         with:
-          node-version: 16.x
-          cache: 'npm'
+          node-version: 26.x
+          cache: "npm"
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v7
         with:
-          python-version: "3.10"
+          python-version: "3.13"
 
       - name: Fetch dependencies
         run: make dependencies
@@ -49,7 +46,7 @@ jobs:
 
       - name: Upload test server log
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7
         with:
           name: test-server-log
           path: core/test_server/test_server.log

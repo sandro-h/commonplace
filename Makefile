@@ -2,7 +2,7 @@ VENV_BIN=$(shell [ -d venv/bin ] && echo 'venv/bin' || echo 'venv/Scripts')
 PIP=${VENV_BIN}/pip
 PYTEST=${VENV_BIN}/pytest
 PYLINT=${VENV_BIN}/pylint
-BASE_VERSION=0.4.1
+BASE_VERSION=0.5.0
 BUILD_NUMBER=0
 VERSION=${BASE_VERSION}.${BUILD_NUMBER}
 
@@ -44,7 +44,9 @@ start-test-server:
 vscode-extension: vscode_extension/node_modules
 	cd vscode_extension && \
 	npm version ${BASE_VERSION} --allow-same-version && \
-	npm run package
+	npm run package && \
+	mv commonplace.vsix commonplace-${VERSION}.vsix
+	
 
 vscode_extension/node_modules: vscode_extension/package.json
 	cd vscode_extension && npm install --save ../core/lib/dist/commonplace-lib-1.0.0.tgz

@@ -1,5 +1,5 @@
 # build tooling
-yapf
+black
 pylint
 # test dependencies
 pytest
