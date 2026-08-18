@@ -1,12 +1,3 @@
 {
-    "python.formatting.provider": "yapf",
-    "editor.formatOnSave": true,
-    "python.formatting.yapfArgs": [
-        "--style",
-        "${workspaceFolder}/.yapfrc"
-    ],
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintPath": "venv\\Scripts\\pylint.exe",
-    "python.formatting.yapfPath": "venv\\Scripts\\yapf.exe",
-    "python.pythonPath": "d:\\Projects\\python\\commonplace\\venv\\Scripts\\python.exe"
+    "editor.formatOnSave": true
 }
