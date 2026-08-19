@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { requestTodos } from './lib'
+import { requestTodos } from './libfacade'
 import { todoOrTrashSelector } from './util'
 import { getBottomLine } from '@commonplace/lib'
 

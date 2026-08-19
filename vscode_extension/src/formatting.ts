@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'
 import { todoOrTrashSelector } from './util'
 import { FormatStyle } from '@commonplace/lib'
-import { requestFormat } from './lib'
+import { requestFormat } from './libfacade'
 
 type FormatDefinition = {
     dec: vscode.TextEditorDecorationType;
