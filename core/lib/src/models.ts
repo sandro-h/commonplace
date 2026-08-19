@@ -158,6 +158,7 @@ export interface Instance {
     start: Date
     end: Date
     endsInRange: boolean
+    recurring: boolean
     originDocPos: DocPosition
     timeOfDay: Date | null
     priority: number
@@ -216,6 +217,7 @@ export interface PreviewOverview {
 export interface Preview {
     today: PreviewInstance[]
     week: PreviewInstance[]
+    overdue: PreviewInstance[]
     overview: PreviewOverview
     calendar: CalendarEntry[]
 }

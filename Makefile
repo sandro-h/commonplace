@@ -34,7 +34,7 @@ lint: python-lint
 
 .PHONY: start-test-server
 start-test-server:
-	cd core/test_server && npm run serve
+	(kill $(shell lsof -i :3000 -t) || true) && cd core/test_server && npm run serve
 
 ###################################################################
 # VSCode extension

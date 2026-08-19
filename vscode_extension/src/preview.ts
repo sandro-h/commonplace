@@ -197,6 +197,8 @@ class CommonplacePreviewPanel {
               <div id="due-week" />
             </td>
             <td>
+              <h3>Overdue</h3>
+              <div id="overdue" />
             </td>
           </tr>
         </table>

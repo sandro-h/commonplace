@@ -16,7 +16,7 @@ import { Preview, Todos } from '@commonplace/lib/models'
 export const requestFormat = makeCachedGetter<FormatStyle[]>('format')
 export const requestFold = makeCachedGetter<number[][]>('fold')
 export const requestOutline = makeCachedGetter<Outline[]>('outline')
-export const requestPreview = makeCachedGetter('preview')
+export const requestPreview = makeCachedGetter<Preview>('preview')
 export const requestTodos = makeCachedGetter<Todos>('todos')
 
 export async function cleanTodos(document: vscode.TextDocument): Promise<void> {

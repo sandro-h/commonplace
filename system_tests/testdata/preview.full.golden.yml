@@ -550,6 +550,8 @@ output: |-
         "name": "nonpro/ident",
         "start": "2021-04-17T00:00:00.000",
         "end": "2021-04-17T23:59:59.999",
+        "endsInRange": true,
+        "recurring": true,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -564,7 +566,6 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 305,
           "offset": 8959,
@@ -575,6 +576,8 @@ output: |-
         "name": "sun",
         "start": "2021-04-17T00:00:00.000",
         "end": "2021-04-17T23:59:59.999",
+        "endsInRange": true,
+        "recurring": true,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -589,7 +592,6 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 306,
           "offset": 8996,
@@ -602,6 +604,8 @@ output: |-
         "name": "tincu & lpaquio",
         "start": "2021-04-15T00:00:00.000",
         "end": "2021-04-15T23:59:59.999",
+        "endsInRange": true,
+        "recurring": true,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -616,7 +620,6 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 307,
           "offset": 9024,
@@ -627,6 +630,8 @@ output: |-
         "name": "nonpro/ident",
         "start": "2021-04-17T00:00:00.000",
         "end": "2021-04-17T23:59:59.999",
+        "endsInRange": true,
+        "recurring": true,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -641,7 +646,6 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 305,
           "offset": 8959,
@@ -652,6 +656,8 @@ output: |-
         "name": "sun",
         "start": "2021-04-17T00:00:00.000",
         "end": "2021-04-17T23:59:59.999",
+        "endsInRange": true,
+        "recurring": true,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -666,7 +672,6 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 306,
           "offset": 8996,
@@ -674,6 +679,7 @@ output: |-
         }
       }
     ],
+    "overdue": [],
     "calendar": [
       {
         "title": "tincu & lpaquio",

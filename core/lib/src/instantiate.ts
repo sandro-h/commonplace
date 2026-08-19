@@ -59,12 +59,13 @@ function createInstance(moment: Moment, instStart: Date, instEnd: Date, endsInRa
         name: moment.name,
         start: instStart,
         end: instEnd,
+        endsInRange,
+        recurring: isRecurringMoment(moment),
         timeOfDay: moment.timeOfDay?.dt ?? null,
         priority: moment.priority,
         category: moment.category,
         done: moment.workState === WorkState.DONE,
         workState: moment.workState,
-        endsInRange,
         originDocPos: moment.docPos,
         subInstances: []
     }
