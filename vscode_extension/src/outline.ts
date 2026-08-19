@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { requestOutline } from './lib'
+import { requestOutline } from './libfacade'
 import { todoOrTrashSelector } from './util'
 
 export function activate() {

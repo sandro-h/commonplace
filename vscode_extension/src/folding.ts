@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { requestFold } from './lib'
+import { requestFold } from './libfacade'
 import { todoOrTrashSelector } from './util'
 
 export function activate() {

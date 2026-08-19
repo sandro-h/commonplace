@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { cleanTodos, trashTodos } from './lib'
+import { cleanTodos, trashTodos } from './libfacade'
 import { showSearchPick } from './search'
 
 const INDENT_PATTERN = /(^|\r?\n)(\s+)/
