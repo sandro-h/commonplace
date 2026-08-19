@@ -131,8 +131,8 @@
     },
     "dependencies": {
         "@commonplace/lib": "file:../core/lib/dist/commonplace-lib-1.0.0.tgz",
-        "fullcalendar": "^7.0.1",
-        "jquery": "^4.0.0",
+        "fullcalendar": "^3.10.5",
+        "jquery": "^3.6.0",
         "moment": "^2.30.1",
         "node-fetch": "^3.3.2"
     },

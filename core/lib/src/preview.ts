@@ -1,15 +1,16 @@
-import { addDays, compareAsc, endOfDay, endOfWeek, format, startOfDay, startOfWeek } from 'date-fns'
+import { addDays, compareAsc, endOfDay, endOfWeek, format, startOfDay, startOfWeek, subDays, subYears } from 'date-fns'
 import { generateInstances } from './instantiate'
 import { Instance, Preview, PreviewCategory, PreviewOverview, Todos, WorkState, PreviewInstance, CalendarEntry } from './models'
 
 export function previewMoments(todos: Todos, fixedTime?: Date | null): Preview {
     const now = fixedTime || new Date()
-    const [today, week] = compileReminders(todos, now)
+    const [today, week, overdue] = compileReminders(todos, now)
 
     return {
         overview: compileTopLevelMoments(todos),
         today,
         week,
+        overdue,
         calendar: toCalendarEntries(week)
     }
 }
@@ -37,15 +38,18 @@ function compileTopLevelMoments(todos: Todos) {
 function compileReminders(todos: Todos, now: Date) {
     const today = compileMomentsEndingInRange(todos, startOfDay(now), endOfDay(now))
     const week = compileMomentsEndingInRange(todos, startOfWeek(now, { weekStartsOn: 1 }), endOfWeek(now, { weekStartsOn: 1 }))
+    const overdue = compileMomentsEndingInRange(todos, subYears(now, 1), subDays(now, 1), inst => !inst.recurring)
     return [
         flattenReminders(today),
-        flattenReminders(week)
+        flattenReminders(week),
+        flattenReminders(overdue)
     ]
 }
 
-function compileMomentsEndingInRange(todos: Todos, start: Date, end: Date): Instance[] {
+function compileMomentsEndingInRange(todos: Todos, start: Date, end: Date, predicate: ((inst: Instance) => boolean) | null = null): Instance[] {
+    const generate_predicate = (inst: Instance) => !inst.done && (!predicate || predicate(inst))
     const instances = filterMomentsEndingInRange(
-        generateInstances(todos.moments, start, end, { predicate: inst => !inst.done })
+        generateInstances(todos.moments, start, end, { predicate: generate_predicate })
     )
 
     instances.sort((a, b) => compareAsc(a.start, b.start))

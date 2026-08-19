@@ -32,6 +32,7 @@ class Instance:  # pylint: disable=too-many-instance-attributes
     start: datetime
     end: datetime
     ends_in_range: bool
+    recurring: bool = False
     origin_doc_pos: DocPosition | None = None
     time_of_day: time | None = None
     priority: int = 0

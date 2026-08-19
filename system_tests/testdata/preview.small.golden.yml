@@ -43,6 +43,24 @@ output: |-
                 "offset": 221,
                 "length": 40
               }
+            },
+            {
+              "name": "overdue",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 20,
+                "offset": 311,
+                "length": 20
+              }
+            },
+            {
+              "name": "has overdue children",
+              "workState": "new",
+              "docPos": {
+                "lineNum": 22,
+                "offset": 333,
+                "length": 23
+              }
             }
           ]
         }
@@ -53,6 +71,8 @@ output: |-
         "name": "has now children/child now",
         "start": "2021-04-17T00:00:00.000",
         "end": "2021-04-17T23:59:59.999",
+        "endsInRange": true,
+        "recurring": false,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -67,7 +87,6 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 8,
           "offset": 86,
@@ -78,6 +97,8 @@ output: |-
         "name": "has now children/has sub now children/sub child now",
         "start": "2021-04-17T00:00:00.000",
         "end": "2021-04-17T23:59:59.999",
+        "endsInRange": true,
+        "recurring": false,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -92,7 +113,6 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 10,
           "offset": 141,
@@ -103,6 +123,8 @@ output: |-
         "name": "is now and has now children",
         "start": "2021-04-17T00:00:00.000",
         "end": "2021-04-17T23:59:59.999",
+        "endsInRange": true,
+        "recurring": false,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -117,7 +139,6 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 16,
           "offset": 221,
@@ -128,6 +149,8 @@ output: |-
         "name": "is now and has now children/child now",
         "start": "2021-04-17T00:00:00.000",
         "end": "2021-04-17T23:59:59.999",
+        "endsInRange": true,
+        "recurring": false,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -142,7 +165,6 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 17,
           "offset": 262,
@@ -155,6 +177,8 @@ output: |-
         "name": "has now children/child now",
         "start": "2021-04-17T00:00:00.000",
         "end": "2021-04-17T23:59:59.999",
+        "endsInRange": true,
+        "recurring": false,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -169,7 +193,6 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 8,
           "offset": 86,
@@ -180,6 +203,8 @@ output: |-
         "name": "has now children/has sub now children/sub child now",
         "start": "2021-04-12T00:00:00.000",
         "end": "2021-04-17T23:59:59.999",
+        "endsInRange": true,
+        "recurring": false,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -194,7 +219,6 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 10,
           "offset": 141,
@@ -205,6 +229,8 @@ output: |-
         "name": "is now and has now children",
         "start": "2021-04-17T00:00:00.000",
         "end": "2021-04-17T23:59:59.999",
+        "endsInRange": true,
+        "recurring": false,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -219,7 +245,6 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 16,
           "offset": 221,
@@ -230,6 +255,8 @@ output: |-
         "name": "is now and has now children/child now",
         "start": "2021-04-17T00:00:00.000",
         "end": "2021-04-17T23:59:59.999",
+        "endsInRange": true,
+        "recurring": false,
         "timeOfDay": null,
         "priority": 0,
         "category": {
@@ -244,11 +271,64 @@ output: |-
         },
         "done": false,
         "workState": "new",
-        "endsInRange": true,
         "originDocPos": {
           "lineNum": 17,
           "offset": 262,
           "length": 26
+        }
+      }
+    ],
+    "overdue": [
+      {
+        "name": "has overdue children/overdue child",
+        "start": "2020-04-17T00:00:00.000",
+        "end": "2020-11-09T23:59:59.999",
+        "endsInRange": true,
+        "recurring": false,
+        "timeOfDay": null,
+        "priority": 0,
+        "category": {
+          "name": "LeDog",
+          "color": "red",
+          "priority": 0,
+          "docPos": {
+            "lineNum": 13,
+            "offset": 193,
+            "length": 11
+          }
+        },
+        "done": false,
+        "workState": "new",
+        "originDocPos": {
+          "lineNum": 23,
+          "offset": 357,
+          "length": 31
+        }
+      },
+      {
+        "name": "overdue",
+        "start": "2021-03-10T00:00:00.000",
+        "end": "2021-03-10T23:59:59.999",
+        "endsInRange": true,
+        "recurring": false,
+        "timeOfDay": null,
+        "priority": 0,
+        "category": {
+          "name": "LeDog",
+          "color": "red",
+          "priority": 0,
+          "docPos": {
+            "lineNum": 13,
+            "offset": 193,
+            "length": 11
+          }
+        },
+        "done": false,
+        "workState": "new",
+        "originDocPos": {
+          "lineNum": 20,
+          "offset": 311,
+          "length": 20
         }
       }
     ],

@@ -3,7 +3,12 @@ from datetime import datetime
 import pytest
 
 from system_tests.models import Category, Instance
-from system_tests.sys_test_util import (dataclass_to_dict, dedent, parse_dmy, request_instances)
+from system_tests.sys_test_util import (
+    dataclass_to_dict,
+    dedent,
+    parse_dmy,
+    request_instances,
+)
 
 
 def with_end_of_day(date: datetime) -> datetime:
@@ -78,20 +83,22 @@ def with_end_of_day(date: datetime) -> datetime:
             "01.06.2016",
             "01.08.2016",
             [
-                Instance(name="1",
-                         start=parse_dmy("01.06.2016"),
-                         end=with_end_of_day(parse_dmy("01.08.2016")),
-                         ends_in_range=False,
-                         category=Category(name="a cat"),
-                         sub_instances=[
-                             Instance(
-                                 name="1.1",
-                                 start=parse_dmy("01.06.2016"),
-                                 end=with_end_of_day(parse_dmy("01.08.2016")),
-                                 ends_in_range=False,
-                                 category=Category(name="a cat"),
-                             ),
-                         ]),
+                Instance(
+                    name="1",
+                    start=parse_dmy("01.06.2016"),
+                    end=with_end_of_day(parse_dmy("01.08.2016")),
+                    ends_in_range=False,
+                    category=Category(name="a cat"),
+                    sub_instances=[
+                        Instance(
+                            name="1.1",
+                            start=parse_dmy("01.06.2016"),
+                            end=with_end_of_day(parse_dmy("01.08.2016")),
+                            ends_in_range=False,
+                            category=Category(name="a cat"),
+                        ),
+                    ],
+                ),
                 Instance(
                     name="2",
                     start=parse_dmy("01.06.2016"),
@@ -191,11 +198,26 @@ def with_end_of_day(date: datetime) -> datetime:
             "22.06.2016",
             [
                 Instance(
-                    name="bla", start=parse_dmy("20.06.2016"), end=with_end_of_day(parse_dmy("20.06.2016")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("20.06.2016"),
+                    end=with_end_of_day(parse_dmy("20.06.2016")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
                 Instance(
-                    name="bla", start=parse_dmy("21.06.2016"), end=with_end_of_day(parse_dmy("21.06.2016")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("21.06.2016"),
+                    end=with_end_of_day(parse_dmy("21.06.2016")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
                 Instance(
-                    name="bla", start=parse_dmy("22.06.2016"), end=with_end_of_day(parse_dmy("22.06.2016")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("22.06.2016"),
+                    end=with_end_of_day(parse_dmy("22.06.2016")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
             ],
         ),
         # recurring every week
@@ -205,9 +227,19 @@ def with_end_of_day(date: datetime) -> datetime:
             "30.05.2022",
             [
                 Instance(
-                    name="bla", start=parse_dmy("20.05.2022"), end=with_end_of_day(parse_dmy("20.05.2022")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("20.05.2022"),
+                    end=with_end_of_day(parse_dmy("20.05.2022")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
                 Instance(
-                    name="bla", start=parse_dmy("27.05.2022"), end=with_end_of_day(parse_dmy("27.05.2022")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("27.05.2022"),
+                    end=with_end_of_day(parse_dmy("27.05.2022")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
             ],
         ),
         # recurring every 2nd week
@@ -217,9 +249,19 @@ def with_end_of_day(date: datetime) -> datetime:
             "31.05.2022",
             [
                 Instance(
-                    name="bla", start=parse_dmy("13.05.2022"), end=with_end_of_day(parse_dmy("13.05.2022")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("13.05.2022"),
+                    end=with_end_of_day(parse_dmy("13.05.2022")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
                 Instance(
-                    name="bla", start=parse_dmy("27.05.2022"), end=with_end_of_day(parse_dmy("27.05.2022")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("27.05.2022"),
+                    end=with_end_of_day(parse_dmy("27.05.2022")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
             ],
         ),
         # recurring every 3rd week
@@ -229,9 +271,19 @@ def with_end_of_day(date: datetime) -> datetime:
             "30.06.2022",
             [
                 Instance(
-                    name="bla", start=parse_dmy("20.05.2022"), end=with_end_of_day(parse_dmy("20.05.2022")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("20.05.2022"),
+                    end=with_end_of_day(parse_dmy("20.05.2022")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
                 Instance(
-                    name="bla", start=parse_dmy("10.06.2022"), end=with_end_of_day(parse_dmy("10.06.2022")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("10.06.2022"),
+                    end=with_end_of_day(parse_dmy("10.06.2022")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
             ],
         ),
         # recurring every 4th week
@@ -241,9 +293,19 @@ def with_end_of_day(date: datetime) -> datetime:
             "30.06.2022",
             [
                 Instance(
-                    name="bla", start=parse_dmy("13.05.2022"), end=with_end_of_day(parse_dmy("13.05.2022")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("13.05.2022"),
+                    end=with_end_of_day(parse_dmy("13.05.2022")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
                 Instance(
-                    name="bla", start=parse_dmy("10.06.2022"), end=with_end_of_day(parse_dmy("10.06.2022")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("10.06.2022"),
+                    end=with_end_of_day(parse_dmy("10.06.2022")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
             ],
         ),
         # recurring every month
@@ -253,9 +315,19 @@ def with_end_of_day(date: datetime) -> datetime:
             "30.07.2016",
             [
                 Instance(
-                    name="bla", start=parse_dmy("23.06.2016"), end=with_end_of_day(parse_dmy("23.06.2016")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("23.06.2016"),
+                    end=with_end_of_day(parse_dmy("23.06.2016")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
                 Instance(
-                    name="bla", start=parse_dmy("23.07.2016"), end=with_end_of_day(parse_dmy("23.07.2016")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("23.07.2016"),
+                    end=with_end_of_day(parse_dmy("23.07.2016")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
             ],
         ),
         # recurring every year
@@ -265,9 +337,19 @@ def with_end_of_day(date: datetime) -> datetime:
             "30.07.2017",
             [
                 Instance(
-                    name="bla", start=parse_dmy("23.06.2016"), end=with_end_of_day(parse_dmy("23.06.2016")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("23.06.2016"),
+                    end=with_end_of_day(parse_dmy("23.06.2016")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
                 Instance(
-                    name="bla", start=parse_dmy("23.06.2017"), end=with_end_of_day(parse_dmy("23.06.2017")), ends_in_range=True),
+                    name="bla",
+                    start=parse_dmy("23.06.2017"),
+                    end=with_end_of_day(parse_dmy("23.06.2017")),
+                    ends_in_range=True,
+                    recurring=True,
+                ),
             ],
         ),
         # recurring not in range
@@ -298,24 +380,28 @@ def with_end_of_day(date: datetime) -> datetime:
                             start=parse_dmy("20.06.2016"),
                             end=with_end_of_day(parse_dmy("20.06.2016")),
                             ends_in_range=True,
+                            recurring=True,
                         ),
                         Instance(
                             name="1.2",
                             start=parse_dmy("18.06.2016"),
                             end=with_end_of_day(parse_dmy("18.06.2016")),
                             ends_in_range=True,
+                            recurring=True,
                         ),
                         Instance(
                             name="1.2",
                             start=parse_dmy("19.06.2016"),
                             end=with_end_of_day(parse_dmy("19.06.2016")),
                             ends_in_range=True,
+                            recurring=True,
                         ),
                         Instance(
                             name="1.2",
                             start=parse_dmy("20.06.2016"),
                             end=with_end_of_day(parse_dmy("20.06.2016")),
                             ends_in_range=True,
+                            recurring=True,
                         ),
                     ],
                 ),
@@ -331,41 +417,53 @@ def with_end_of_day(date: datetime) -> datetime:
             "01.06.2016",
             "30.07.2016",
             [
-                Instance(name="1",
-                         start=parse_dmy("20.06.2016"),
-                         end=with_end_of_day(parse_dmy("20.06.2016")),
-                         ends_in_range=True,
-                         sub_instances=[
-                             Instance(
-                                 name="1.1",
-                                 start=parse_dmy("20.06.2016"),
-                                 end=with_end_of_day(parse_dmy("20.06.2016")),
-                                 ends_in_range=True,
-                             ),
-                         ]),
-                Instance(name="1",
-                         start=parse_dmy("20.07.2016"),
-                         end=with_end_of_day(parse_dmy("20.07.2016")),
-                         ends_in_range=True,
-                         sub_instances=[
-                             Instance(
-                                 name="1.2",
-                                 start=parse_dmy("20.07.2016"),
-                                 end=with_end_of_day(parse_dmy("20.07.2016")),
-                                 ends_in_range=True,
-                             ),
-                         ]),
+                Instance(
+                    name="1",
+                    start=parse_dmy("20.06.2016"),
+                    end=with_end_of_day(parse_dmy("20.06.2016")),
+                    ends_in_range=True,
+                    recurring=True,
+                    sub_instances=[
+                        Instance(
+                            name="1.1",
+                            start=parse_dmy("20.06.2016"),
+                            end=with_end_of_day(parse_dmy("20.06.2016")),
+                            ends_in_range=True,
+                            recurring=True,
+                        ),
+                    ],
+                ),
+                Instance(
+                    name="1",
+                    start=parse_dmy("20.07.2016"),
+                    end=with_end_of_day(parse_dmy("20.07.2016")),
+                    ends_in_range=True,
+                    recurring=True,
+                    sub_instances=[
+                        Instance(
+                            name="1.2",
+                            start=parse_dmy("20.07.2016"),
+                            end=with_end_of_day(parse_dmy("20.07.2016")),
+                            ends_in_range=True,
+                        ),
+                    ],
+                ),
             ],
         ),
-        ("[] bla (21.06.2016 13:15)", "20.06.2016", "22.06.2016", [
-            Instance(
-                name="bla",
-                start=parse_dmy("21.06.2016"),
-                end=with_end_of_day(parse_dmy("21.06.2016")),
-                ends_in_range=True,
-                time_of_day="13:15:00",
-            ),
-        ])
+        (
+            "[] bla (21.06.2016 13:15)",
+            "20.06.2016",
+            "22.06.2016",
+            [
+                Instance(
+                    name="bla",
+                    start=parse_dmy("21.06.2016"),
+                    end=with_end_of_day(parse_dmy("21.06.2016")),
+                    ends_in_range=True,
+                    time_of_day="13:15:00",
+                ),
+            ],
+        ),
     ],
 )
 def test_instantiate(content, start, end, expected_instances):
@@ -373,7 +471,9 @@ def test_instantiate(content, start, end, expected_instances):
     result = request_instances(content, start, end)
 
     # Then
-    assert [without_doc_pos(r) for r in result] == [without_doc_pos(dataclass_to_dict(i)) for i in expected_instances]
+    assert [without_doc_pos(r) for r in result] == [
+        without_doc_pos(dataclass_to_dict(i)) for i in expected_instances
+    ]
 
 
 def without_doc_pos(inst: dict):

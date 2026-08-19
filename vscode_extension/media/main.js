@@ -30,6 +30,7 @@
             case 'update':
                 $('#due-today').empty().append(createInstanceList(message.preview.today, 'due-today'));
                 $('#due-week').empty().append(createInstanceList(message.preview.week, 'due-week', true));
+                $('#overdue').empty().append(createInstanceList(message.preview.overdue, 'overdue', true));
                 $('#overview').empty().append(createOverviewBoard(message.preview.overview));
                 calEvents = message.preview.calendar;
                 $('#calendar').fullCalendar('refetchEvents');
